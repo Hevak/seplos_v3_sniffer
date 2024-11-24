@@ -251,6 +251,10 @@ void SeplosParser::setup() {
 }
 
 void SeplosParser::loop() {
+  if (!this->uart_->available()) {
+    ESP_LOGW("seplos_parser", "UART not available!");
+    return;
+  }
   while (available()) {
     uint8_t byte = read();
     buffer.push_back(byte);
