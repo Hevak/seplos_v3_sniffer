@@ -49,14 +49,16 @@ class SeplosParser : public UARTDevice {
     Sensor *power_temp;
   };
 
-  SeplosParser(UARTComponent *parent, int bms_count);
+  SeplosParser(UARTComponent *uart, int bms_count, int throttle_interval);
   void setup() override;
   void loop() override;
 
  private:
+  UARTComponent *uart_;
   std::vector<uint8_t> buffer;
   std::vector<BMSData> bms;
   int max_bms_count;
+  int throttle_interval_; 
 
   bool is_valid_header();
   size_t get_expected_length();
