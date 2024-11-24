@@ -5,7 +5,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-SeplosParser::SeplosParser(UARTComponent *parent, int bms_count) : UARTDevice(parent), max_bms_count(bms_count) {
+SeplosParser::SeplosParser(UARTComponent *uart, int bms_count) : UARTDevice(uart), uart_(uart), max_bms_count(bms_count) {
   for (int i = 0; i < max_bms_count; i++) {
     bms.emplace_back(BMSData());
   }
