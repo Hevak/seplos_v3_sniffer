@@ -6,7 +6,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-SeplosParser::SeplosParser(UARTComponent *uart, int bms_count, int throttle_interval) : UARTDevice(uart), uart_(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval)  {
+SeplosParser::SeplosParser(UARTComponent *uart, int bms_count, int throttle_interval) : UARTDevice(uart), uart_(uart), max_bms_count(bms_count), throttle_interval(throttle_interval)  {
   for (int i = 0; i < max_bms_count; i++) {
     bms.emplace_back(BMSData());
   }
