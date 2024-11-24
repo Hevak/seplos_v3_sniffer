@@ -3,12 +3,22 @@ external_components:
       type: git
       url: https://github.com/DpunktS/seplos_v3_sniffer
 
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
 uart:
+- id: seplos
   tx_pin: GPIO1
   rx_pin: GPIO3
   baud_rate: 19200
+  rx_buffer_size: 2048
 
 sensor:
-  - platform: seplos_parser
-    bms_count: 2
+  - platform: seplos_parser  # Alle Sensoren werden automatisch angelt!
+    bms_count: 2  # Anzahl der Akku's (max. 16)
+    uart_id: seplos  # SeplosParser verwendet die UART ID
+    throttle_interval: 5  # Standardintervall in Millisekunden (5 Sekunden)
+
 
