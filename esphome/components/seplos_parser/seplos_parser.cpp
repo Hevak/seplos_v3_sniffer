@@ -5,15 +5,13 @@
 namespace esphome {
 namespace seplos_parser {
 
-SeplosParser::SeplosParser(UARTComponent *uart, int bms_count) : UARTDevice(uart), uart_(uart), max_bms_count(bms_count) {
+SeplosParser::SeplosParser(UARTComponent *uart, int bms_count, int throttle_interval) : UARTDevice(uart), uart_(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval)  {
   for (int i = 0; i < max_bms_count; i++) {
     bms.emplace_back(BMSData());
   }
 }
 
 void SeplosParser::setup() {
-  int throttle_interval = id(sensor_throttle_interval);  // Intervall aus der YAML
-
   for (int i = 0; i < max_bms_count; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
 
