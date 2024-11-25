@@ -34,6 +34,7 @@ async def to_code(config):
         uart_var,  # Die aufgelöste UART-Variable
         config[CONF_BMS_COUNT],
         config[CONF_THROTTLE_INTERVAL]
+    print(f"SeplosParser instance created: {var}")
     )
 
     # Registriere die SeplosParser-Komponente
