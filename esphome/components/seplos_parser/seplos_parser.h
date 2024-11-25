@@ -54,7 +54,6 @@ class SeplosParser : public UARTDevice {
   void loop() override;
 
  private:
-  UARTComponent *uart_;
   std::vector<uint8_t> buffer;
   std::vector<BMSData> bms;
   int max_bms_count;
