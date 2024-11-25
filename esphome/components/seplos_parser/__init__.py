@@ -1,3 +1,1 @@
-from esphome import core
-
-CORE.register_component('seplos_parser', 'sensor')
+# Dies ist die Initialisierungsdatei für seplos_parser.
