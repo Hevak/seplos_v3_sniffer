@@ -6,7 +6,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-class SeplosParser : public UARTDevice {
+class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice {
  public:
   struct BMSData {
     Sensor *pack_voltage;
