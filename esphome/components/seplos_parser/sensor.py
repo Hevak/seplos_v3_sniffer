@@ -32,7 +32,6 @@ async def to_code(config):
         config[CONF_THROTTLE_INTERVAL]
     )
     
-    # Registriere die Komponente
+    # Registriere die Komponente nur einmal
     await cg.register_component(var, config)
     await uart.register_uart_device(var, config[CONF_UART_ID])
-
