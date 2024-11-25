@@ -21,6 +21,10 @@ CONFIG_SCHEMA = cv.Schema({
 }).extend(sensor.SENSOR_SCHEMA)
 
 async def to_code(config):
+    # Debugging-Ausgabe
+    print(f"Registering SeplosParser with ID: {config[CONF_ID]}")
+
+    
     # Registriere die UART-Komponente
     uart_var = await cg.get_variable(config[CONF_UART_ID])
 
