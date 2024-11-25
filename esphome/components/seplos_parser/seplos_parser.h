@@ -2,6 +2,11 @@
 #define ESPHOME_COMPONENTS_SEPLOS_PARSER_H
 
 #include "esphome.h"
+#include "esphome/components/uart/uart.h"
+#include "esphome/core/component.h"
+#include "esphome/components/sensor/sensor.h"  // Sensor-Klasse importieren
+#include "esphome/components/sensor/filter.h"
+
 
 namespace esphome {
 namespace seplos_parser {
@@ -57,7 +62,7 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
   std::vector<uint8_t> buffer;
   std::vector<BMSData> bms;
   int max_bms_count;
-  int throttle_interval_; 
+  int throttle_interval_;
 
   bool is_valid_header();
   size_t get_expected_length();
@@ -69,5 +74,4 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
 }  // namespace seplos_parser
 }  // namespace esphome
 
-#endif  // ESPHOME_COMPONENTS_SEPLOS_PARSER_H
-
+#endif
