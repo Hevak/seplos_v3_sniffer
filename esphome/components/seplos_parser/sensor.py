@@ -26,6 +26,8 @@ async def to_code(config):
  
     # Registriere die UART-Komponente
     uart_var = await cg.get_variable(config[CONF_UART_ID])
+    print(f"Resolved UART variable: {uart_var}")
+
 
     # Erstelle die SeplosParser-Instanz
     var = cg.new_Pvariable(
@@ -39,7 +41,13 @@ async def to_code(config):
     # Registriere die SeplosParser-Komponente
     try:
         await cg.register_component(var, config)
+        print("SeplosParser registered successfully.")
     except Exception as e:
         print(f"Error during component registration: {e}")
-    await uart.register_uart_device(var, config[CONF_UART_ID])
-
+    
+    # Registriere die UART-Instanz für die SeplosParser-Komponente
+    try:
+        await uart.register_uart_device(var, config[CONF_UART_ID])
+        print("UART device registered successfully.")
+    except Exception as e:
+        print(f"Error during UART device registration: {e}")
