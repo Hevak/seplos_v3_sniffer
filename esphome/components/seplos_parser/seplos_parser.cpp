@@ -116,101 +116,101 @@ void SeplosParser::setup() {
     bms_data.maxchgcurt->set_accuracy_decimals(2);
     bms_data.maxchgcurt->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_1_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_1_voltage->set_name((prefix + "cell_1_voltage").c_str());
-    bms_data.cell_1_voltage->set_unit_of_measurement("V");
-    bms_data.cell_1_voltage->set_accuracy_decimals(3);
-    bms_data.cell_1_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_1 = new esphome::sensor::Sensor();
+    bms_data.cell_1->set_name((prefix + "cell_1").c_str());
+    bms_data.cell_1->set_unit_of_measurement("V");
+    bms_data.cell_1->set_accuracy_decimals(3);
+    bms_data.cell_1->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_2_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_2_voltage->set_name((prefix + "cell_2_voltage").c_str());
-    bms_data.cell_2_voltage->set_unit_of_measurement("V");
-    bms_data.cell_2_voltage->set_accuracy_decimals(3);
-    bms_data.cell_2_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_2 = new esphome::sensor::Sensor();
+    bms_data.cell_2->set_name((prefix + "cell_2").c_str());
+    bms_data.cell_2->set_unit_of_measurement("V");
+    bms_data.cell_2->set_accuracy_decimals(3);
+    bms_data.cell_2->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_3_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_3_voltage->set_name((prefix + "cell_3_voltage").c_str());
-    bms_data.cell_3_voltage->set_unit_of_measurement("V");
-    bms_data.cell_3_voltage->set_accuracy_decimals(3);
-    bms_data.cell_3_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_3 = new esphome::sensor::Sensor();
+    bms_data.cell_3->set_name((prefix + "cell_3").c_str());
+    bms_data.cell_3->set_unit_of_measurement("V");
+    bms_data.cell_3->set_accuracy_decimals(3);
+    bms_data.cell_3->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_4_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_4_voltage->set_name((prefix + "cell_4_voltage").c_str());
-    bms_data.cell_4_voltage->set_unit_of_measurement("V");
-    bms_data.cell_4_voltage->set_accuracy_decimals(3);
-    bms_data.cell_4_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_4 = new esphome::sensor::Sensor();
+    bms_data.cell_4->set_name((prefix + "cell_4").c_str());
+    bms_data.cell_4->set_unit_of_measurement("V");
+    bms_data.cell_4->set_accuracy_decimals(3);
+    bms_data.cell_4->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_5_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_5_voltage->set_name((prefix + "cell_5_voltage").c_str());
-    bms_data.cell_5_voltage->set_unit_of_measurement("V");
-    bms_data.cell_5_voltage->set_accuracy_decimals(3);
-    bms_data.cell_5_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_5 = new esphome::sensor::Sensor();
+    bms_data.cell_5->set_name((prefix + "cell_5").c_str());
+    bms_data.cell_5->set_unit_of_measurement("V");
+    bms_data.cell_5->set_accuracy_decimals(3);
+    bms_data.cell_5->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_6_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_6_voltage->set_name((prefix + "cell_6_voltage").c_str());
-    bms_data.cell_6_voltage->set_unit_of_measurement("V");
-    bms_data.cell_6_voltage->set_accuracy_decimals(3);
-    bms_data.cell_6_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_6 = new esphome::sensor::Sensor();
+    bms_data.cell_6->set_name((prefix + "cell_6").c_str());
+    bms_data.cell_6->set_unit_of_measurement("V");
+    bms_data.cell_6->set_accuracy_decimals(3);
+    bms_data.cell_6->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_7_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_7_voltage->set_name((prefix + "cell_7_voltage").c_str());
-    bms_data.cell_7_voltage->set_unit_of_measurement("V");
-    bms_data.cell_7_voltage->set_accuracy_decimals(3);
-    bms_data.cell_7_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_7 = new esphome::sensor::Sensor();
+    bms_data.cell_7->set_name((prefix + "cell_7").c_str());
+    bms_data.cell_7->set_unit_of_measurement("V");
+    bms_data.cell_7->set_accuracy_decimals(3);
+    bms_data.cell_7->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_8_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_8_voltage->set_name((prefix + "cell_8_voltage").c_str());
-    bms_data.cell_8_voltage->set_unit_of_measurement("V");
-    bms_data.cell_8_voltage->set_accuracy_decimals(3);
-    bms_data.cell_8_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_8 = new esphome::sensor::Sensor();
+    bms_data.cell_8->set_name((prefix + "cell_8").c_str());
+    bms_data.cell_8->set_unit_of_measurement("V");
+    bms_data.cell_8->set_accuracy_decimals(3);
+    bms_data.cell_8->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_9_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_9_voltage->set_name((prefix + "cell_9_voltage").c_str());
-    bms_data.cell_9_voltage->set_unit_of_measurement("V");
-    bms_data.cell_9_voltage->set_accuracy_decimals(3);
-    bms_data.cell_9_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_9 = new esphome::sensor::Sensor();
+    bms_data.cell_9->set_name((prefix + "cell_9").c_str());
+    bms_data.cell_9->set_unit_of_measurement("V");
+    bms_data.cell_9->set_accuracy_decimals(3);
+    bms_data.cell_9->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_10_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_10_voltage->set_name((prefix + "cell_10_voltage").c_str());
-    bms_data.cell_10_voltage->set_unit_of_measurement("V");
-    bms_data.cell_10_voltage->set_accuracy_decimals(3);
-    bms_data.cell_10_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_10 = new esphome::sensor::Sensor();
+    bms_data.cell_10->set_name((prefix + "cell_10").c_str());
+    bms_data.cell_10->set_unit_of_measurement("V");
+    bms_data.cell_10->set_accuracy_decimals(3);
+    bms_data.cell_10->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_11_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_11_voltage->set_name((prefix + "cell_11_voltage").c_str());
-    bms_data.cell_11_voltage->set_unit_of_measurement("V");
-    bms_data.cell_11_voltage->set_accuracy_decimals(3);
-    bms_data.cell_11_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_11 = new esphome::sensor::Sensor();
+    bms_data.cell_11->set_name((prefix + "cell_11").c_str());
+    bms_data.cell_11->set_unit_of_measurement("V");
+    bms_data.cell_11->set_accuracy_decimals(3);
+    bms_data.cell_11->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_12_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_12_voltage->set_name((prefix + "cell_12_voltage").c_str());
-    bms_data.cell_12_voltage->set_unit_of_measurement("V");
-    bms_data.cell_12_voltage->set_accuracy_decimals(3);
-    bms_data.cell_12_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_12 = new esphome::sensor::Sensor();
+    bms_data.cell_12->set_name((prefix + "cell_12").c_str());
+    bms_data.cell_12->set_unit_of_measurement("V");
+    bms_data.cell_12->set_accuracy_decimals(3);
+    bms_data.cell_12->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_13_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_13_voltage->set_name((prefix + "cell_13_voltage").c_str());
-    bms_data.cell_13_voltage->set_unit_of_measurement("V");
-    bms_data.cell_13_voltage->set_accuracy_decimals(3);
-    bms_data.cell_13_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_13 = new esphome::sensor::Sensor();
+    bms_data.cell_13->set_name((prefix + "cell_13").c_str());
+    bms_data.cell_13->set_unit_of_measurement("V");
+    bms_data.cell_13->set_accuracy_decimals(3);
+    bms_data.cell_13->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_14_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_14_voltage->set_name((prefix + "cell_14_voltage").c_str());
-    bms_data.cell_14_voltage->set_unit_of_measurement("V");
-    bms_data.cell_14_voltage->set_accuracy_decimals(3);
-    bms_data.cell_14_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_14 = new esphome::sensor::Sensor();
+    bms_data.cell_14->set_name((prefix + "cell_14").c_str());
+    bms_data.cell_14->set_unit_of_measurement("V");
+    bms_data.cell_14->set_accuracy_decimals(3);
+    bms_data.cell_14->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_15_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_15_voltage->set_name((prefix + "cell_15_voltage").c_str());
-    bms_data.cell_15_voltage->set_unit_of_measurement("V");
-    bms_data.cell_15_voltage->set_accuracy_decimals(3);
-    bms_data.cell_15_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_15 = new esphome::sensor::Sensor();
+    bms_data.cell_15->set_name((prefix + "cell_15").c_str());
+    bms_data.cell_15->set_unit_of_measurement("V");
+    bms_data.cell_15->set_accuracy_decimals(3);
+    bms_data.cell_15->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.cell_16_voltage = new esphome::sensor::Sensor();
-    bms_data.cell_16_voltage->set_name((prefix + "cell_16_voltage").c_str());
-    bms_data.cell_16_voltage->set_unit_of_measurement("V");
-    bms_data.cell_16_voltage->set_accuracy_decimals(3);
-    bms_data.cell_16_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    bms_data.cell_16 = new esphome::sensor::Sensor();
+    bms_data.cell_16->set_name((prefix + "cell_16").c_str());
+    bms_data.cell_16->set_unit_of_measurement("V");
+    bms_data.cell_16->set_accuracy_decimals(3);
+    bms_data.cell_16->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
     bms_data.cell_temp_1 = new esphome::sensor::Sensor();
     bms_data.cell_temp_1->set_name((prefix + "cell_temp_1").c_str());
