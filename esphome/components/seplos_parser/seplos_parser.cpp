@@ -46,7 +46,7 @@ void SeplosParser::setup() {
     bms_data.total_capacity->set_accuracy_decimals(2);
     bms_data.total_capacity->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    bms_data.total_discharge_capacity = new esphome::esphome::sensor::Sensor();
+    bms_data.total_discharge_capacity = new esphome::sensor::Sensor();
     bms_data.total_discharge_capacity->set_name((prefix + "total_discharge_capacity").c_str());
     bms_data.total_discharge_capacity->set_unit_of_measurement("Ah");
     bms_data.total_discharge_capacity->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
