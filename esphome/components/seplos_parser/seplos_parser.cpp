@@ -1,4 +1,4 @@
-#include "esphome/core/application.h"
+  #include "esphome/core/application.h"
 #include "seplos_parser.h"
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
@@ -9,7 +9,7 @@ namespace seplos_parser {
 SeplosParser::SeplosParser(UARTComponent *uart, int bms_count, int throttle_interval)
     : UARTDevice(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval) {
   this->bms.resize(max_bms_count);
-}
+
   for (int i = 0; i < max_bms_count; i++) {
     bms.emplace_back(BMSData());
   }
@@ -270,11 +270,13 @@ void SeplosParser::loop() {
         if (this->validate_crc(expected_length)) {
           this->process_packet(expected_length);
           buffer.erase(buffer.begin(), buffer.begin() + expected_length);
-        } else {
+        } 
+        else {
           ESP_LOGW("seplos_parser", "Invalid CRC, dropping packet.");
           buffer.erase(buffer.begin());
         }
-      } else {
+      } 
+      else {
         buffer.erase(buffer.begin());
       }
     }
@@ -339,7 +341,8 @@ void SeplosParser::process_packet(size_t length) {
     this->bms[bms_index].maxdiscurt->publish_state(maxdiscurt / 100);
     this->bms[bms_index].maxchgcurt->publish_state(maxchgcurt / 100);
 
-  } else if (buffer[2] == 0x34) {
+  } 
+  else if (buffer[2] == 0x34) {
     // Verarbeite das 52-Byte-Paket und publiziere die Daten
     uint16_t cell_1 = (this->buffer[4] << 8) | this->buffer[3];
     uint16_t cell_2 = (this->buffer[6] << 8) | this->buffer[5];
