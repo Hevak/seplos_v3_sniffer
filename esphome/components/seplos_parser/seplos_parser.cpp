@@ -1,4 +1,4 @@
-  #include "esphome/core/application.h"
+#include "esphome/core/application.h"
 #include "seplos_parser.h"
 #include "esphome/core/log.h"
 #include "esphome/core/helpers.h"
