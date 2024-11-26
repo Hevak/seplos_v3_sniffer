@@ -54,7 +54,7 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
     esphome::sensor::Sensor *power_temp;
   };
 
-  SeplosParser(esphome::uart::UARTDevice *uart, int bms_count, int throttle_interval);
+  SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval);
   void setup() override;
   void loop() override;
 
