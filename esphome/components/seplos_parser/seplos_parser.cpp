@@ -6,7 +6,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval)
+SeplosParser::SeplosParser(esphome::uart::UARTDevice *uart, int bms_count, int throttle_interval)
     : UARTDevice(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval) {
   this->bms.resize(max_bms_count);
 
