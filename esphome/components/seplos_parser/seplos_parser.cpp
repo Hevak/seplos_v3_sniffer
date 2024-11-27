@@ -6,50 +6,46 @@
 namespace esphome {
 namespace seplos_parser {
 
+// Konstruktor
 SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval)
     : UARTDevice(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval) {
-  this->bms.resize(max_bms_count);
-
-  for (int i = 0; i < max_bms_count; i++) {
-    bms.emplace_back(BMSData());
-  }
-}
-
-void SeplosParser::setup() {
-  ESP_LOGI("seplos_parser", "Setting up SeplosParser...");
-  for (int i = 0; i < max_bms_count; i++) {
+  // Initialisierung der Sensoren für jede BMS-Instanz
+  for (int i = 0; i < bms_count; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
 
-    BMSData bms_data;
+    auto pack_voltage_sensor = new esphome::sensor::Sensor();
+    pack_voltage_sensor->set_name((prefix + "pack_voltage").c_str());
+    pack_voltage_sensor->set_unit_of_measurement("V");
+    pack_voltage_sensor->set_accuracy_decimals(2);
+    pack_voltage_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval));
+    this->sensors_.push_back(pack_voltage_sensor);
 
-    bms_data.pack_voltage = new esphome::sensor::Sensor();
-    bms_data.pack_voltage->set_name((prefix + "pack_voltage").c_str());
-    bms_data.pack_voltage->set_unit_of_measurement("V");
-    bms_data.pack_voltage->set_accuracy_decimals(2);
-    bms_data.pack_voltage->add_filter(new sensor::ThrottleFilter(throttle_interval_));
+    auto current_sensor = new esphome::sensor::Sensor();
+    current_sensor->set_name((prefix + "current").c_str());
+    current_sensor->set_unit_of_measurement("A");
+    current_sensor->set_accuracy_decimals(2);
+    current_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval));
+    this->sensors_.push_back(current_sensor);
 
-    bms_data.current = new esphome::sensor::Sensor();
-    bms_data.current->set_name((prefix + "current").c_str());
-    bms_data.current->set_unit_of_measurement("A");
-    bms_data.current->set_accuracy_decimals(2);
-    bms_data.current->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    auto remaining_capacity_sensor = new esphome::sensor::Sensor();
+    remaining_capacity_sensor->set_name((prefix + "remaining_capacity").c_str());
+    remaining_capacity_sensor->set_unit_of_measurement("Ah");
+    remaining_capacity_sensor->set_accuracy_decimals(2);
+    remaining_capacity_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval));
+    this->sensors_.push_back(remaining_capacity_sensor);
 
-    bms_data.remaining_capacity = new esphome::sensor::Sensor();
-    bms_data.remaining_capacity->set_name((prefix + "remaining_capacity").c_str());
-    bms_data.remaining_capacity->set_unit_of_measurement("Ah");
-    bms_data.remaining_capacity->set_accuracy_decimals(2);
-    bms_data.remaining_capacity->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    auto total_capacity_sensor = new esphome::sensor::Sensor();
+    total_capacity_sensor->set_name((prefix + "total_capacity").c_str());
+    total_capacity_sensor->set_unit_of_measurement("Ah");
+    total_capacity_sensor->set_accuracy_decimals(2);
+    total_capacity_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval));
+    this->sensors_.push_back(total_capacity_sensor);
 
-    bms_data.total_capacity = new esphome::sensor::Sensor();
-    bms_data.total_capacity->set_name((prefix + "total_capacity").c_str());
-    bms_data.total_capacity->set_unit_of_measurement("Ah");
-    bms_data.total_capacity->set_accuracy_decimals(2);
-    bms_data.total_capacity->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
-
-    bms_data.total_discharge_capacity = new esphome::sensor::Sensor();
-    bms_data.total_discharge_capacity->set_name((prefix + "total_discharge_capacity").c_str());
-    bms_data.total_discharge_capacity->set_unit_of_measurement("Ah");
-    bms_data.total_discharge_capacity->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    auto total_discharge_capacity_sensor = new esphome::sensor::Sensor();
+    total_discharge_capacity_sensor->set_name((prefix + "total_discharge_capacity").c_str());
+    total_discharge_capacity_sensor->set_unit_of_measurement("Ah");
+    total_discharge_capacity_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval));
+    this->sensors_.push_back(total_discharge_capacity_sensor);
 
     bms_data.soc = new esphome::sensor::Sensor();
     bms_data.soc->set_name((prefix + "soc").c_str());
@@ -248,9 +244,12 @@ void SeplosParser::setup() {
     bms_data.power_temp->set_accuracy_decimals(1);
     bms_data.power_temp->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
 
-    this->bms.push_back(bms_data);
   }
-  ESP_LOGI("seplos_parser", "Setup completed for %d BMS devices", this->max_bms_count);
+}
+
+// Setup-Methode
+void SeplosParser::setup() {
+  ESP_LOGI("seplos_parser", "Setting up SeplosParser...");
 }
 
 void SeplosParser::loop() {
