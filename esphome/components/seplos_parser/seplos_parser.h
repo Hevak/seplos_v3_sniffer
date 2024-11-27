@@ -59,6 +59,7 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
   void loop() override;
 
  private:
+  std::vector<esphome::sensor::Sensor *> sensors_;
   std::vector<uint8_t> buffer;
   std::vector<BMSData> bms;
   int max_bms_count;
