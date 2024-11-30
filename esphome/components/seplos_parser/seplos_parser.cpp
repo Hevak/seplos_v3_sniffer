@@ -8,7 +8,9 @@ namespace seplos_parser {
 
 // Konstruktor
 SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval)
-    : UARTDevice(uart), bms_count_(bms_count), throttle_interval_(throttle_interval) {}
+    : UARTDevice(uart), bms_count_(bms_count), throttle_interval_(throttle_interval) {
+        ESP_LOGI("seplos_parser", "SeplosParser constructor called");
+    }
 
 // Setup-Methode
 void SeplosParser::setup() {
