@@ -12,7 +12,7 @@ CONF_THROTTLE_INTERVAL = 'throttle_interval'
 DEPENDENCIES = ['uart']
 
 seplos_parser_ns = cg.esphome_ns.namespace('seplos_parser')
-SeplosParser = seplos_parser_ns.class_('SeplosParser', cg.Component, uart.UARTDevice)
+SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component, uart.UARTDevice)
 
 CONFIG_SCHEMA = sensor.sensor_schema(SeplosParser).extend(
     {
