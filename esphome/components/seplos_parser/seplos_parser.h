@@ -62,7 +62,7 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
   std::vector<esphome::sensor::Sensor *> sensors_;
   std::vector<uint8_t> buffer;
   std::vector<BMSData> bms;
-  int max_bms_count;
+  int bms_count_;
   int throttle_interval_;
 
   bool is_valid_header();
