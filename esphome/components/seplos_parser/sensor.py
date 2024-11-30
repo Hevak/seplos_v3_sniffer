@@ -6,13 +6,13 @@ import logging
 _LOGGER = logging.getLogger("seplos_parser")
 
 # Benutzerdefinierte Konfigurationsoptionen
-CONF_BMS_COUNT = 'bms_count'
-CONF_UART_ID = 'uart_id'
-CONF_THROTTLE_INTERVAL = 'throttle_interval'
+CONF_BMS_COUNT = "bms_count"
+CONF_UART_ID = "uart_id"
+CONF_THROTTLE_INTERVAL = "throttle_interval"
 
-DEPENDENCIES = ['uart']
+DEPENDENCIES = ["uart"]
 
-seplos_parser_ns = cg.esphome_ns.namespace('seplos_parser')
+seplos_parser_ns = cg.esphome_ns.namespace("seplos_parser")
 SeplosParser = seplos_parser_ns.class_(
     "SeplosParser", cg.Component, uart.UARTDevice
 )
@@ -35,6 +35,7 @@ async def to_code(config):
             config[CONF_BMS_COUNT],
             config[CONF_THROTTLE_INTERVAL]
         )
+        cg.add(var)
         _LOGGER.info("SeplosParser instance created")
         await cg.register_component(var, config)
         _LOGGER.info("SeplosParser registered as component")
