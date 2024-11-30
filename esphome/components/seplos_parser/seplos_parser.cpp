@@ -8,7 +8,12 @@ namespace seplos_parser {
 
 // Konstruktor
 SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval)
-    : UARTDevice(uart), bms_count_(bms_count), throttle_interval_(throttle_interval) {
+    : UARTDevice(uart), bms_count_(bms_count), throttle_interval_(throttle_interval) {}
+
+// Setup-Methode
+void SeplosParser::setup() {
+  ESP_LOGI("seplos_parser", "Setup executed");
+
   // Initialisierung der Sensoren für jede BMS-Instanz
   for (int i = 0; i < bms_count; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
@@ -279,16 +284,13 @@ SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, in
   }
 }
 
-// Setup-Methode
-void SeplosParser::setup() {
-  ESP_LOGI("seplos_parser", "Setup executed");
-}
-
 void SeplosParser::loop() {
+  static uint32_t last_time = millis();
   while (this->available()) {
     uint8_t byte = this->read();
     ESP_LOGI("seplos_parser", "Received UART byte: 0x%02X", byte);
     this->buffer.push_back(byte);
+    last_time = millis();  // Reset timeout
 
     if (this->buffer.size() > 100) {
       buffer.erase(buffer.begin(), buffer.end() - 100);
@@ -314,6 +316,9 @@ void SeplosParser::loop() {
     }
   }
   ESP_LOGD("seplos_parser", "Loop running without UART data");
+  if (millis() - last_time > 5000) {  // 5 Sekunden Timeout
+    ESP_LOGW("seplos_parser", "No UART data for 5 seconds, skipping...");
+  }
 }
 
 bool SeplosParser::is_valid_header() {
