@@ -17,12 +17,12 @@ SeplosParser = seplos_parser_ns.class_(
     "SeplosParser", cg.Component, uart.UARTDevice
 )
 
-CONFIG_SCHEMA = sensor.sensor_schema(SeplosParser).extend({
+CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SeplosParser),
     cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
     cv.Required(CONF_BMS_COUNT): cv.int_range(min=1, max=16),
     cv.Required(CONF_THROTTLE_INTERVAL): cv.positive_int,
-})
+}).extend(cv.COMPONENT_SCHEMA)
 
 
 async def to_code(config):
