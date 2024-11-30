@@ -2,6 +2,8 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor, uart
 from esphome.const import CONF_ID
+import logging
+_LOGGER = logging.getLogger("seplos_parser")
 
 # Benutzerdefinierte Konfigurationsoptionen
 CONF_BMS_COUNT = 'bms_count'
@@ -24,6 +26,7 @@ CONFIG_SCHEMA = sensor.sensor_schema(SeplosParser).extend({
 
 
 async def to_code(config):
+    _LOGGER.info("Creating SeplosParser instance...")
     try:
         # Erstellt die Instanz des SeplosParser
         var = cg.new_Pvariable(
@@ -32,7 +35,10 @@ async def to_code(config):
             config[CONF_BMS_COUNT],
             config[CONF_THROTTLE_INTERVAL]
         )
+        _LOGGER.info("SeplosParser instance created")
         await cg.register_component(var, config)
+        _LOGGER.info("SeplosParser registered as component")
         await uart.register_uart_device(var, config[CONF_UART_ID])
+        _LOGGER.info("SeplosParser linked to UART")
     except Exception as e:
         cg.esphome_ns.logger.error(f"Error in SeplosParser registration: {e}")
