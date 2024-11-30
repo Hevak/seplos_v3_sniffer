@@ -287,6 +287,7 @@ void SeplosParser::setup() {
 void SeplosParser::loop() {
   while (this->available()) {
     uint8_t byte = this->read();
+    ESP_LOGI("seplos_parser", "Received UART byte: 0x%02X", byte);
     this->buffer.push_back(byte);
 
     if (this->buffer.size() > 100) {
@@ -312,6 +313,7 @@ void SeplosParser::loop() {
       }
     }
   }
+  ESP_LOGD("seplos_parser", "Loop running without UART data");
 }
 
 bool SeplosParser::is_valid_header() {
