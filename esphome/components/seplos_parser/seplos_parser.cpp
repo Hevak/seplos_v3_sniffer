@@ -331,7 +331,7 @@ bool SeplosParser::validate_crc(size_t length) {
 
 void SeplosParser::process_packet(size_t length) {
   int bms_index = this->buffer[0] - 0x01;
-  if (bms_index < 0 || bms_index >= this->max_bms_count) {
+  if (bms_index < 0 || bms_index >= this->bms_count_) {
     ESP_LOGW("seplos_parser", "Invalid BMS ID: %d", buffer[0]);
     return;
   }
