@@ -8,7 +8,7 @@ namespace seplos_parser {
 
 // Konstruktor
 SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval)
-    : UARTDevice(uart), max_bms_count(bms_count), throttle_interval_(throttle_interval) {
+    : UARTDevice(uart), bms_count_(bms_count), throttle_interval_(throttle_interval) {
   // Initialisierung der Sensoren für jede BMS-Instanz
   for (int i = 0; i < bms_count; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
