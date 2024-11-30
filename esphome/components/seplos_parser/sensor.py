@@ -26,7 +26,7 @@ async def to_code(config):
     # Erstelle die SeplosParser-Instanz
     var = cg.new_Pvariable(
         config[CONF_ID],
-        config[CONF_UART_ID],
+        await cg.get_variable(config[CONF_UART_ID]),  # Hole die UART-Instanz
         config[CONF_BMS_COUNT],
         config[CONF_THROTTLE_INTERVAL]
     )
