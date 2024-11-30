@@ -281,7 +281,7 @@ SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, in
 
 // Setup-Methode
 void SeplosParser::setup() {
-  ESP_LOGI("seplos_parser", "Setting up SeplosParser...");
+  ESP_LOGI("seplos_parser", "Setup executed");
 }
 
 void SeplosParser::loop() {
