@@ -12,10 +12,11 @@ SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, in
 
 // Setup-Methode
 void SeplosParser::setup() {
-  ESP_LOGI("seplos_parser", "Setup executed");
+  ESP_LOGI("seplos_parser", "Setting up SeplosParser...");
      
   auto test_sensor = new esphome::sensor::Sensor();
   test_sensor->set_name("Test Sensor");
+  App.register_sensor(test_sensor);
   ESP_LOGI("seplos_parser", "Test sensor registered");
     
   // Initialisierung der Sensoren für jede BMS-Instanz
@@ -28,6 +29,7 @@ void SeplosParser::setup() {
     pack_voltage->set_accuracy_decimals(2);
     pack_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
     this->sensors_.push_back(pack_voltage);
+    App.register_sensor(pack_voltage);
     ESP_LOGI("seplos_parser", "Sensor for %s registered", (prefix + "Pack Voltage").c_str());
 
     auto current_sensor = new esphome::sensor::Sensor();
