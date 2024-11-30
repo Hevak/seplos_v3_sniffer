@@ -55,8 +55,15 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
   };
 
   SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, int throttle_interval);
-  void setup() override;
-  void loop() override;
+  void setup() override {
+    ESP_LOGI("seplos_parser", "Setup executed");
+  }
+
+  void loop() override {
+    ESP_LOGI("seplos_parser", "Loop running");
+  }
+//  void setup() override;
+//  void loop() override;
 
  private:
   std::vector<esphome::sensor::Sensor *> sensors_;
