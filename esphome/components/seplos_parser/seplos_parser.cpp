@@ -18,12 +18,12 @@ void SeplosParser::setup() {
   for (int i = 0; i < bms_count_; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
 
-    auto pack_voltage_sensor = new esphome::sensor::Sensor();
-    pack_voltage_sensor->set_name((prefix + "pack_voltage").c_str());
-    pack_voltage_sensor->set_unit_of_measurement("V");
-    pack_voltage_sensor->set_accuracy_decimals(2);
-    pack_voltage_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
-    this->sensors_.push_back(pack_voltage_sensor);
+    auto pack_voltage = new esphome::sensor::Sensor();
+    pack_voltage->set_name((prefix + "pack_voltage").c_str());
+    pack_voltage->set_unit_of_measurement("V");
+    pack_voltage->set_accuracy_decimals(2);
+    pack_voltage->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
+    this->sensors_.push_back(pack_voltage);
 
     auto current_sensor = new esphome::sensor::Sensor();
     current_sensor->set_name((prefix + "current").c_str());
