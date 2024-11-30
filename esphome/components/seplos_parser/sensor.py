@@ -30,11 +30,14 @@ async def to_code(config):
         config[CONF_THROTTLE_INTERVAL]
     )
     # Registriere die SeplosParser-Komponente
-    try:
-        await cg.register_component(var, config)
-    except Exception as e:
+try:
+    await cg.register_component(var, config)
+except Exception as e:
+    cg.esphome_ns.logger.error(f"Error while registering component: {e}")
     
     # Registriere die UART-Instanz für die SeplosParser-Komponente
-    try:
-        await uart.register_uart_device(var, config[CONF_UART_ID])
-    except Exception as e:
+try:
+    await uart.register_uart_device(var, config[CONF_UART_ID])
+except Exception as e:
+    cg.esphome_ns.logger.error(f"Error while registering UART device: {e}")
+
