@@ -13,7 +13,11 @@ SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart, int bms_count, in
 // Setup-Methode
 void SeplosParser::setup() {
   ESP_LOGI("seplos_parser", "Setup executed");
-
+     
+  auto test_sensor = new esphome::sensor::Sensor();
+  test_sensor->set_name("Test Sensor");
+  ESP_LOGI("seplos_parser", "Test sensor registered");
+    
   // Initialisierung der Sensoren für jede BMS-Instanz
   for (int i = 0; i < bms_count_; i++) {
     std::string prefix = "BMS " + std::to_string(i + 1) + " ";
