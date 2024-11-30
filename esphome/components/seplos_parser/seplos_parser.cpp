@@ -31,6 +31,7 @@ void SeplosParser::setup() {
     current_sensor->set_accuracy_decimals(2);
     current_sensor->add_filter(new esphome::sensor::ThrottleFilter(throttle_interval_));
     this->sensors_.push_back(current_sensor);
+    ESP_LOGI("seplos_parser", "Sensor for %s registered", (prefix + "Pack Voltage").c_str());
 
     auto remaining_capacity_sensor = new esphome::sensor::Sensor();
     remaining_capacity_sensor->set_name((prefix + "remaining_capacity").c_str());
