@@ -5,13 +5,13 @@ from esphome.const import CONF_ID, CONF_UART_ID
 
 DEPENDENCIES = ["uart"]
 
-seplos_ns = cg.esphome_ns.namespace("seplos_component")
-SeplosComponent = seplos_ns.class_("SeplosComponent", cg.PollingComponent, uart.UARTDevice)
+seplos_ns = cg.esphome_ns.namespace("seplos_parser")
+SeplosParser = seplos_ns.class_("SeplosParser", cg.PollingComponent, uart.UARTDevice)
 
 CONF_BMS_COUNT = "bms_count"
 
 CONFIG_SCHEMA = cv.Schema({
-    cv.GenerateID(): cv.declare_id(SeplosComponent),
+    cv.GenerateID(): cv.declare_id(SeplosParser),
     cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
     cv.Required(CONF_BMS_COUNT): cv.int_range(min=1, max=16),
 }).extend(cv.polling_component_schema("1s"))
