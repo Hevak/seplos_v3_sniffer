@@ -13,6 +13,7 @@ class SeplosParser : public Component {
   void setup() override;
   void loop() override;
   void dump_config() override;
+  void set_uart_parent(esphome::uart::UARTComponent *uart_parent);
 
  private:
   uart::UARTComponent *uart_parent_;
