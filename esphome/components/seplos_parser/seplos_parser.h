@@ -18,6 +18,7 @@ class SeplosParser : public Component {
   void dump_config() override;
 
  private:
+  uart::UARTComponent *uart_parent_;
   int bms_count_;  // Anzahl der BMS-Geräte
 };
 
