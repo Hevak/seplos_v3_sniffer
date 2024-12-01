@@ -11,9 +11,9 @@ SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_co
   this->bms_count_ = bms_count;
 }
 
-//void SeplosParser::setup() {
-//    ESP_LOGI("seplos", "Setup for %d BMS devices completed.", this->bms_count_);
-//}
+void SeplosParser::setup() {
+    ESP_LOGI("seplos", "Setup for %d BMS devices completed.", this->bms_count_);
+}
 
 void SeplosParser::loop() {
     ESP_LOGI("seplos", "Polling BMS data...");
