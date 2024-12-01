@@ -59,6 +59,9 @@ class SeplosParser : public esphome::Component, public esphome::uart::UARTDevice
   void setup() override;
   void loop() override;
 
+  void add_pack_voltage_sensor(sensor::Sensor *sensor, int bms_index);
+
+
  private:
   std::vector<esphome::sensor::Sensor *> sensors_;
   std::vector<uint8_t> buffer;
