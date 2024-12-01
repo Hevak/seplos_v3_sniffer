@@ -15,10 +15,9 @@ uart:
   baud_rate: 19200
   rx_buffer_size: 2048
 
-sensor:
-  - platform: seplos_parser  # Alle Sensoren werden automatisch angelt!
-    bms_count: 2  # Anzahl der Akku's (max. 16)
-    uart_id: seplos  # SeplosParser verwendet die UART ID
-    throttle_interval: 5  # Standardintervall in Millisekunden (5 Sekunden)
-
+seplos_parser:
+  id: seplos_V3
+  bms_count: 2  # Anzahl der Akku's (max. 16)
+  uart_id: seplos  # SeplosParser verwendet die UART ID
+  Sensor:
 
