@@ -43,3 +43,13 @@ async def to_code(config):
         _LOGGER.info("SeplosParser linked to UART")
     except Exception as e:
         cg.esphome_ns.logger.error(f"Error in SeplosParser registration: {e}")
+
+    for i in range(config[CONF_BMS_COUNT]):
+        name_prefix = f"BMS {i + 1} "
+
+        # Beispiel: Pack Voltage für jedes BMS
+        if "pack_voltage" in config:
+            sens = await sensor.new_sensor({
+                "name": name_prefix + config["pack_voltage"]["name"]
+            })
+            cg.add(var.add_pack_voltage_sensor(sens, i))
