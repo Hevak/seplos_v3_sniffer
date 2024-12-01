@@ -6,6 +6,11 @@ namespace seplos_parser {
 
 static const char *TAG = "seplos_parser.component";
 
+SeplosParser::SeplosParser(uart::UARTComponent *uart_parent, int bms_count) {
+  this->uart_parent_ = uart_parent;
+  this->bms_count_ = bms_count;
+}
+
 void SeplosParser::setup() {
     ESP_LOGI("seplos", "Setup for %d BMS devices completed.", this->bms_count_);
 }
