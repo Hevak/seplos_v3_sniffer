@@ -26,7 +26,9 @@ void SeplosParser::loop() {
 void SeplosParser::dump_config(){
     ESP_LOGCONFIG(TAG, "Seplos Parser");
 }
-
+void SeplosParser::set_uart_parent(esphome::uart::UARTComponent *uart_parent) {
+  this->uart_parent_ = uart_parent;
+}
 
 }  // namespace seplos_parser
 }  // namespace esphome
