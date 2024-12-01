@@ -1,9 +1,9 @@
 #pragma once
 #include "esphome.h"
 
-class SeplosComponent : public PollingComponent, public UARTDevice {
+class SeplosParser : public PollingComponent, public UARTDevice {
  public:
-  SeplosComponent(UARTComponent *parent, int bms_count, uint32_t update_interval = 1000)
+  SeplosParser(UARTComponent *parent, int bms_count, uint32_t update_interval = 1000)
       : PollingComponent(update_interval), UARTDevice(parent) {
     this->bms_count_ = bms_count;
     this->sensors_.resize(bms_count);
