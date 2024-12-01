@@ -10,6 +10,9 @@ class SeplosParser : public Component {
   void setup() override;
   void loop() override;
   void dump_config() override;
+
+ private:
+  int bms_count_;  // Anzahl der BMS-Geräte
 };
 
 
