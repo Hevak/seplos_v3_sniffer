@@ -7,6 +7,10 @@ namespace seplos_parser {
 
 class SeplosParser : public Component {
  public:
+  SeplosParser(uart::UARTComponent *uart_parent, int bms_count) {
+    this->uart_parent_ = uart_parent;
+    this->bms_count_ = bms_count;
+  }
   void setup() override;
   void loop() override;
   void dump_config() override;
