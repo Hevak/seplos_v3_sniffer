@@ -19,5 +19,5 @@ CONFIG_SCHEMA = cv.Schema({
 async def to_code(config):
     uart_component = yield cg.get_variable(config[CONF_UART_ID])
     var = cg.new_Pvariable(config[CONF_ID], uart_component, config[CONF_BMS_COUNT])
-    yield cg.register_component(var, config)
-    yield uart.register_uart_device(var, config)
+    await cg.register_component(var, config)
+    await uart.register_uart_device(var, config)
