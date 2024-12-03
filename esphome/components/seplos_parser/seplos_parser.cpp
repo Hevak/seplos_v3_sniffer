@@ -6,6 +6,21 @@ namespace seplos_parser {
 
 static const char *TAG = "seplos_parser.component";
 
+void SeplosParser::set_bms_sensors(int index, sensor::Sensor *pack_voltage, sensor::Sensor *current,
+                                   sensor::Sensor *soc, sensor::Sensor *soh, sensor::Sensor *cycle_count) {
+  if (index < this->bms_count_) {
+    this->pack_voltages[index] = pack_voltage;
+    this->currents[index] = current;
+    this->socs[index] = soc;
+    this->sohs[index] = soh;
+    this->cycle_counts[index] = cycle_count;
+    ESP_LOGI("seplos", "Sensors for BMS%d set.", index);
+  } 
+  else {
+    ESP_LOGW("seplos", "Index %d out of range (max: %d).", index, this->bms_count_ - 1);
+  }
+}
+
 SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_count) {
   this->uart_parent_ = uart_parent;
   this->bms_count_ = bms_count;
