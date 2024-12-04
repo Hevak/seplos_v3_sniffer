@@ -12,6 +12,10 @@ namespace seplos_parser {
 
 class SeplosParser : public Component {
  public:
+  // Standardkonstruktor
+  SeplosParser();
+
+  // Konstruktor mit Parametern
   SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_count);
   void setup() override;
   void loop() override;
