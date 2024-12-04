@@ -6,7 +6,7 @@ namespace seplos_parser {
 
 static const char *TAG = "seplos_parser.component";
 
-SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_count) {
+SeplosParser::SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_count) : uart_parent_(uart_parent), bms_count_(bms_count) {
   this->uart_parent_ = uart_parent;
   this->bms_count_ = bms_count;
 
