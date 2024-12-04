@@ -18,9 +18,8 @@ class SeplosParser : public Component {
   void dump_config() override;
   void set_uart_parent(esphome::uart::UARTComponent *uart_parent);
 
-  // Setter für Sensoren eines spezifischen BMS
-  void set_bms_sensors(int index, sensor::Sensor *pack_voltage, sensor::Sensor *current,
-                       sensor::Sensor *soc, sensor::Sensor *soh, sensor::Sensor *cycle_count);
+  // Konfiguration der Sensoren über die YAML-Datei
+  void add_sensor(sensor::Sensor *sensor);
 
   // Sensoren für jedes BMS
   std::vector<sensor::Sensor *> pack_voltages;
