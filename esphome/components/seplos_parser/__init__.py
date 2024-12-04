@@ -6,7 +6,7 @@ from esphome.const import CONF_ID, CONF_UART_ID
 DEPENDENCIES = ["uart"]
 
 seplos_parser_ns = cg.esphome_ns.namespace("seplos_parser")
-SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Comonent) #cg.PollingComponent, uart.UARTDevice)
+SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component) #cg.PollingComponent, uart.UARTDevice)
 
 CONF_BMS_COUNT = "bms_count"
 CONF_UART_ID = "uart_id" #neu
