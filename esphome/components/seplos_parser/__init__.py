@@ -17,7 +17,7 @@ CONFIG_SCHEMA = cv.Schema({
     cv.Required(CONF_UART_ID): cv.use_id(uart.UARTComponent),
     cv.Required(CONF_BMS_COUNT): cv.int_range(min=1, max=16),
     cv.Optional(CONF_SENSORS, default=[]): cv.ensure_list(sensor.SENSOR_SCHEMA),
-}).extend(uart.UART_Device_SCHEMA) #cv.COMPONENT_SCHEMA)
+}).extend(uart.UART_DEVICE_SCHEMA) #cv.COMPONENT_SCHEMA)
 
 async def to_code(config):
     # Erstelle eine Instanz der SeplosParser-Komponente
