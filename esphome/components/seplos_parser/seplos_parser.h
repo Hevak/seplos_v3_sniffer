@@ -18,6 +18,9 @@ class SeplosParser : public Component {
   void dump_config() override;
   void set_uart_parent(esphome::uart::UARTComponent *uart_parent);
 
+  // Setter für bms_count
+  void set_bms_count(int bms_count);
+
   // Konfiguration der Sensoren über die YAML-Datei
   void add_sensor(sensor::Sensor *sensor);
 
