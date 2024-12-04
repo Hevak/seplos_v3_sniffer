@@ -10,6 +10,7 @@ SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component) #cg.Polling
 
 CONF_BMS_COUNT = "bms_count"
 CONF_UART_ID = "uart_id" #neu
+CONF_SENSORS = "sensors"
 
 CONFIG_SCHEMA = cv.Schema({
     cv.GenerateID(): cv.declare_id(SeplosParser),
