@@ -19,9 +19,7 @@ class SeplosParser : public Component {
   void set_uart_parent(esphome::uart::UARTComponent *uart_parent);
 
   // Konfiguration der Sensoren über die YAML-Datei
-  void add_sensor(sensor::Sensor *sensor) {
-    this->sensors_.push_back(sensor);
-  }
+  void add_sensor(sensor::Sensor *sensor);
 
   // Hier fügen wir eine Liste von Sensoren hinzu
   std::vector<sensor::Sensor *> sensors_;
