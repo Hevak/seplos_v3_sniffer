@@ -35,8 +35,8 @@ class SeplosParser : public Component {
   std::vector<sensor::Sensor *> cycle_counts;
 
  private:
-  uart::UARTComponent *uart_parent_;
-  int bms_count_;  // Anzahl der BMS-Geräte
+  uart::UARTComponent *uart_parent_{nullptr};  // Standardmäßig auf nullptr
+  int bms_count_{1};  // Anzahl der BMS-Geräte, Standardmäßig ein BMS
 };
 
 
