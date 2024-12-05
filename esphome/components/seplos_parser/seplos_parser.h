@@ -1,48 +1,46 @@
 #pragma once
 
 #include "esphome/core/component.h"
-#include "esphome/components/uart/uart.h"
+#include "esphome/core/defines.h"
+
+#ifdef USE_SENSOR
 #include "esphome/components/sensor/sensor.h"
-#include <vector>
-
-
+#endif
+//#ifdef USE_BINARY_SENSOR
+//#include "esphome/components/binary_sensor/binary_sensor.h"
+//#endif
+//#ifdef USE_TEXT_SENSOR
+//#include "esphome/components/text_sensor/text_sensor.h"
+//#endif
 
 namespace esphome {
 namespace seplos_parser {
 
 class SeplosParser : public Component {
- public:
-  // Standardkonstruktor
-  SeplosParser();
-
-  // Konstruktor mit Parametern
-  SeplosParser(esphome::uart::UARTComponent *uart_parent, int bms_count);
-  void setup() override;
-  void loop() override;
-  void dump_config() override;
-  void set_uart_parent(esphome::uart::UARTComponent *uart_parent);
-
-  // Setter für bms_count
-  void set_bms_count(int bms_count);
-
-  // Konfiguration der Sensoren über die YAML-Datei
-  void add_sensor(sensor::Sensor *sensor);
-
-  // Hier fügen wir eine Liste von Sensoren hinzu
+#ifdef USE_SENSOR
+ protected:
   std::vector<sensor::Sensor *> sensors_;
 
-  // Sensoren für jedes BMS
-  std::vector<sensor::Sensor *> pack_voltages;
-  std::vector<sensor::Sensor *> currents;
-  std::vector<sensor::Sensor *> socs;
-  std::vector<sensor::Sensor *> sohs;
-  std::vector<sensor::Sensor *> cycle_counts;
-
- private:
-  uart::UARTComponent *uart_parent_{nullptr};  // Standardmäßig auf nullptr
-  int bms_count_{1};  // Anzahl der BMS-Geräte, Standardmäßig ein BMS
+ public:
+  void register_sensor(sensor::Sensor *obj) { this->sensors_.push_back(obj); }
+#endif
+//#ifdef USE_BINARY_SENSOR
+// protected:
+//  std::vector<binary_sensor::BinarySensor *> binary_sensors_;
+//
+// public:
+//  void register_binary_sensor(binary_sensor::BinarySensor *obj) { this->binary_sensors_.push_back(obj); }
+//#endif
+//#ifdef USE_TEXT_SENSOR
+// protected:
+//  std::vector<text_sensor::TextSensor *> text_sensors_;
+//
+// public:
+//  void register_text_sensor(text_sensor::TextSensor *obj) { this->text_sensors_.push_back(obj); }
+//#endif
+  void setup() override;
+  void dump_config() override;
 };
-
 
 }  // namespace seplos_parser
 }  // namespace esphome
