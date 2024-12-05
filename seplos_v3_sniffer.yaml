@@ -15,9 +15,82 @@ uart:
   baud_rate: 19200
   rx_buffer_size: 2048
 
-seplos_parser:
-  id: seplos_V3
-  bms_count: 2  # Anzahl der Akku's (max. 16)
-  uart_id: seplos  # SeplosParser verwendet die UART ID
-  Sensor:
 
+seplos_parser:
+  id: seplos_v3
+  bms_count: 2  # Anzahl der Akku's (max. 16)
+  uart_id: seplos  # SeplosParser verwendet diese UART ID
+  
+sensors:
+ # bms0
+  - platform: seplos_parser
+    name: bms0 pack_voltage
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms0 current
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "A"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms0 soc
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms0 soh
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms0 cycle_count
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "cycles"
+    accuracy_decimals: 0
+    filters:
+      - throttle: 5s
+ # bms1
+  - platform: seplos_parser
+    name: bms1 pack_voltage
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms1 current
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "A"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms1 soc
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms1 soh
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms1 cycle_count
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "cycles"
+    accuracy_decimals: 0
+    filters:
+      - throttle: 5s
