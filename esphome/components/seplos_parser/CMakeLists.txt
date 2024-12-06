@@ -1,1 +1,0 @@
-esphome.register_component(seplos_parser)
