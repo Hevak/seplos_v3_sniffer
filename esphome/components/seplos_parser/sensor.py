@@ -1,14 +1,14 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-#from esphome.const import UNIT_VOLT, UNIT_AMPERE, ICON_EMPTY
+from esphome.const import UNIT_VOLT, UNIT_AMPERE, ICON_EMPTY
 from . import HUB_CHILD_SCHEMA, CONF_SEPLOS_PARSER_ID
 
 DEPENDENCIES = ["seplos_parser"]
 
 CONFIG_SCHEMA = (
     sensor.sensor_schema(
-#      unit_of_measurement=UNIT_Volt, icon=ICON_EMPTY, accuracy_decimals=2
+      unit_of_measurement=UNIT_Volt, icon=ICON_EMPTY, accuracy_decimals=2
     )
     .extend(HUB_CHILD_SCHEMA)
     .extend(cv.COMPONENT_SCHEMA)
