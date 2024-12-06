@@ -2,6 +2,7 @@
 
 #include "esphome/core/component.h"
 #include "esphome/core/defines.h"
+#include "esphome/components/uart/uart.h"
 
 #ifdef USE_SENSOR
 #include "esphome/components/sensor/sensor.h"
