@@ -17,7 +17,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-class SeplosParser : public Component {
+class SeplosParser : public uart::UARTDevice, public Component {
 #ifdef USE_SENSOR
  protected:
   std::vector<sensor::Sensor *> sensors_;
