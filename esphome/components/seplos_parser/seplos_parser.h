@@ -39,6 +39,7 @@ class SeplosParser : public Component {
 //  void register_text_sensor(text_sensor::TextSensor *obj) { this->text_sensors_.push_back(obj); }
 //#endif
   void setup() override;
+  void loop() override;
   void dump_config() override;
 };
 
