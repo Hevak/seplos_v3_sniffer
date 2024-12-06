@@ -27,7 +27,10 @@ void SeplosParser::dump_config(){
 //        LOG_BINARY_SENSOR("  ", "Binary sensor", binary_sensor);
 //    }
 }
-
+void SeplosParser::set_bms_count(int bms_count) {
+  this->bms_count_ = bms_count;  // Wert speichern
+  ESP_LOGI("SeplosParser", "BMS Count gesetzt auf: %d", bms_count);
+}
 
 }  // namespace seplos_parser
 }  // namespace esphome
