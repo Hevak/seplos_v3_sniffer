@@ -15,7 +15,7 @@ SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component, uart.UARTDe
 
 HUB_CHILD_SCHEMA = cv.Schema(
     {
-        cv.GenerateID(CONF_SEPLOS_PARSER): cv.use_id(SeplosParser),
+        cv.GenerateID(CONF_SEPLOS_PARSER_ID): cv.use_id(SeplosParser),
     }
 )
 
