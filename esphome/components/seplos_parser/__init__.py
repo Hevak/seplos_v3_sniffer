@@ -28,7 +28,7 @@ CONFIG_SCHEMA = (
         cv.Optional(CONF_BMS_COUNT, default=1): cv.int_,
     })
         .extend(cv.COMPONENT_SCHEMA)
-        .extend(uart.UART_COMPONENT_SCHEMA)
+        .extend(uart.UART_DEVICE_SCHEMA)
 )
 
 async def to_code(config):
