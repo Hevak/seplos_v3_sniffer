@@ -36,5 +36,5 @@ async def to_code(config):
     await cg.register_component(var, config)
 #    await uart.register_uart_device(var, config)
     uart_device = await cg.get_variable(config[CONF_UART_ID])
-    cg.add(var.set_uart(uart_component))
+    cg.add(var.set_uart(uart_device))
     cg.add(var.set_bms_count(config[CONF_BMS_COUNT]))
