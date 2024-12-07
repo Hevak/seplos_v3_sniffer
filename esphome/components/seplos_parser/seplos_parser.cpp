@@ -1,5 +1,6 @@
 #include "seplos_parser.h"
 #include "esphome/core/log.h"
+#include "esphome/components/uart/uart.h"
 
 namespace esphome {
 namespace seplos_parser {
@@ -30,9 +31,6 @@ void SeplosParser::dump_config(){
 void SeplosParser::set_bms_count(int bms_count) {
   this->bms_count_ = bms_count;  // Wert speichern
   ESP_LOGI("SeplosParser", "BMS Count gesetzt auf: %d", bms_count);
-}
-void SeplosParser::set_uart(UARTDevice *uart) {
-  this->uart_ = uart;  // UART-Objekt speichern
 }
 
 }  // namespace seplos_parser
