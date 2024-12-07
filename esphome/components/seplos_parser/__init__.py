@@ -13,7 +13,7 @@ CONF_SEPLOS_PARSER_ID = "seplos_parser_id"
 
 seplos_parser_ns = cg.esphome_ns.namespace("seplos_parser")
 
-SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component, uart.UARTComponent)
+SeplosParser = seplos_parser_ns.class_("SeplosParser", cg.Component, uart.UARTDevice)
 
 HUB_CHILD_SCHEMA = cv.Schema(
     {
@@ -35,6 +35,6 @@ async def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
 #    await uart.register_uart_device(var, config)
-    uart_component = await cg.get_variable(config[CONF_UART_ID])
-    cg.add(var.set_uart(uart_component))
+    uart_device = await cg.get_variable(config[CONF_UART_ID])
+    cg.add(var.set_uart(uart_device))
     cg.add(var.set_bms_count(config[CONF_BMS_COUNT]))
