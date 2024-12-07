@@ -17,7 +17,7 @@
 namespace esphome {
 namespace seplos_parser {
 
-class SeplosParser : public uart::UARTDevice, public Component {
+class SeplosParser : public uart::UARTComponent, public Component {
 #ifdef USE_SENSOR
  protected:
   std::vector<sensor::Sensor *> sensors_;
@@ -43,12 +43,12 @@ class SeplosParser : public uart::UARTDevice, public Component {
   void loop() override;
   void dump_config() override;
  public:
-  void set_uart(UARTDevice *uart);  // Methode deklarieren
+  void set_uart(UARTComponent *uart);  // Methode deklarieren
   void set_bms_count(int bms_count);  // Methode deklarieren
   // Andere bestehende Methoden und Variablen...
 
  private:
-  UARTDevice *uart_;  // Variable zum Speichern des UART-Objekts
+  UARTComponent *uart_;  // Variable zum Speichern des UART-Objekts
   int bms_count_;  // Variable zur Speicherung von bms_count
 };
 
