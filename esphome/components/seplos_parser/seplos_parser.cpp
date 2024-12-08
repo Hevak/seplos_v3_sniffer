@@ -12,7 +12,7 @@ void SeplosParser::setup() {
   for (int i = 0; i < this->bms_count_; i++) {
       ESP_LOGI("seplos", "Simulating data for BMS %d", i);
       // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
-
+  }
 }
 
 void SeplosParser::loop() {
