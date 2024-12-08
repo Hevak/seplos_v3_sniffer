@@ -8,7 +8,11 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-    
+  ESP_LOGI("seplos", "Polling BMS data...");
+  for (int i = 0; i < this->bms_count_; i++) {
+      ESP_LOGI("seplos", "Simulating data for BMS %d", i);
+      // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
+
 }
 
 void SeplosParser::loop() {
