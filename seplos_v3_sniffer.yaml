@@ -18,7 +18,7 @@ uart:
 
 seplos_parser:
   id: seplos_v3
-  bms_count: 2  # Anzahl der Akku's (max. 16)
+  bms_count: 4  # Anzahl der Akku's (max. 16)
   uart_id: seplos  # SeplosParser verwendet diese UART ID
   
 sensors:
@@ -94,3 +94,76 @@ sensors:
     accuracy_decimals: 0
     filters:
       - throttle: 5s
+ # bms2
+  - platform: seplos_parser
+    name: bms2 pack_voltage
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms2 current
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "A"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms2 soc
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms2 soh
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms2 cycle_count
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "cycles"
+    accuracy_decimals: 0
+    filters:
+      - throttle: 5s
+ # bms3
+  - platform: seplos_parser
+    name: bms3 pack_voltage
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms3 current
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "A"
+    accuracy_decimals: 2
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms3 soc
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms3 soh
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    filters:
+      - throttle: 5s
+  - platform: seplos_parser
+    name: bms3 cycle_count
+    seplos_parser_id: seplos_v3
+    unit_of_measurement: "cycles"
+    accuracy_decimals: 0
+    filters:
+      - throttle: 5s
+
