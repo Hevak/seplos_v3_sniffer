@@ -13,7 +13,8 @@ void SeplosParser::setup() {
 
 void SeplosParser::loop() {
   ESP_LOGI("seplos", "Polling BMS data...");
-  this->sensors_ "bms0 pack_voltage"->publish_state(5);
+  id(bms0_pack_voltage).publish_state(5.0);
+  //this->sensors_ "bms0 pack_voltage"->publish_state(5);
   for (int i = 0; i < this->bms_count_; i++) {
       ESP_LOGI("seplos", "Simulating data for BMS %d", i);
       // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
