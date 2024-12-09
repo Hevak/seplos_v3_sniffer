@@ -25,7 +25,7 @@ void SeplosParser::loop() {
 //      ESP_LOGI("seplos", "Simulating data for BMS %d", i);
  //     // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
  // }
-//}
+}
 
 void SeplosParser::dump_config(){
     for (auto *sensor : this->sensors_) {
