@@ -11,7 +11,7 @@ void SeplosParser::setup() {
    for (auto *sensor : this->sensors_) {
        if (sensor->get_name() == "bms0 pack_voltage") {
             bms0_pack_voltage = sensor;
-          //  break;
+            break;
        }
    }
 }
