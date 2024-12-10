@@ -1,6 +1,7 @@
 #include "seplos_parser.h"
 #include "esphome/core/log.h"
 #include "esphome/components/uart/uart.h"
+#include "esphome/core/application.h"
 
 namespace esphome {
 namespace seplos_parser {
