@@ -8,19 +8,20 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-
+  bms0_pack_voltage = App.get_sensor("bms0 pack_voltage");
 }
 
 void SeplosParser::loop() {
+  bms0_pack_voltage->publish_state(5.0);
   //ESP_LOGI("seplos", "Polling BMS data...");
  // id(bms0_pack_voltage).publish_state(5.0);
   //this->sensors_ "bms0 pack_voltage"->publish_state(5);
-  for (auto *sensor : this->sensors_) {
-    if (sensor->get_name() == "bms0 pack_voltage") { // Vergleiche den Namen
-        sensor->publish_state(5.0);                 // Setze den Wert
-        break;                                      // Beende die Schleife
-    }
-  }
+  //for (auto *sensor : this->sensors_) {
+  //  if (sensor->get_name() == "bms0 pack_voltage") { // Vergleiche den Namen
+  //      sensor->publish_state(5.0);                 // Setze den Wert
+  //      break;                                      // Beende die Schleife
+  //  }
+//  }
 //  for (int i = 0; i < this->bms_count_; i++) {
 //      ESP_LOGI("seplos", "Simulating data for BMS %d", i);
  //     // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
