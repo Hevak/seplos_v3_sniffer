@@ -9,15 +9,16 @@ static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
    for (auto *sensor : this->sensors_) {
-       if (sensor->get_name() == "bms0 pack_voltage") {
-            bms0_pack_voltage = sensor;
-            break;
-       }
+      if (sensor->get_name() == "bms0 pack_voltage") {
+            bms0_pack_voltage = sensor;}
+      if (sensor->get_name() == "bms0 current") {
+            bms0_current = sensor;}
    }
 }
 
 void SeplosParser::loop() {
   bms0_pack_voltage->publish_state(5.0);
+  bms0_current->publish_state(5.0);
   //ESP_LOGI("seplos", "Polling BMS data...");
   //id(bms0_pack_voltage).publish_state(5.0);
   //this->sensors_ "bms0 pack_voltage"->publish_state(5);
