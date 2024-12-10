@@ -8,12 +8,6 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-    for (auto *sensor : this->sensors_) {
-        if (sensor->get_name() == "bms0 pack_voltage") {
-            bms0_pack_voltage = sensor;
-            break;
-        }
-    }
 }
 
 void SeplosParser::loop() {
@@ -37,7 +31,12 @@ void SeplosParser::dump_config(){
     for (auto *sensor : this->sensors_) {
         LOG_SENSOR("  ", "Sensor", sensor);
     }
-
+    for (auto *sensor : this->sensors_) {
+        if (sensor->get_name() == "bms0 pack_voltage") {
+            bms0_pack_voltage = sensor;
+            break;
+        }
+    }
 //    for(auto *text_sensor : this->text_sensors_){
 //        LOG_TEXT_SENSOR("  ", "Text sensor", text_sensor);
 //    }
