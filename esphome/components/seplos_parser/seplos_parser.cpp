@@ -18,9 +18,9 @@ void SeplosParser::setup() {
       std::string current_name = "bms" + std::to_string(i) + " current";
 
       if (sensor->get_name() == pack_voltage_name) {
-        bms[i]_pack_voltage = sensor;}
+        pack_voltage_[i] = sensor;}
       if (sensor->get_name() == current_name) {
-        bms[i]_current = sensor;}
+        current_[i] = sensor;}
     }
    //for (auto *sensor : this->sensors_) {
    //   if (sensor->get_name() == "bms0 pack_voltage") {
@@ -31,10 +31,10 @@ void SeplosParser::setup() {
 }
 
 void SeplosParser::loop() {
-  bms0_pack_voltage->publish_state(5.0);
-  bms0_current->publish_state(5.0);
-  bms1_pack_voltage->publish_state(5.0);
-  bms1_current->publish_state(5.0);
+  pack_voltage_0->publish_state(5.0);
+  current_0->publish_state(5.0);
+  pack_voltage_1->publish_state(5.0);
+  current_1->publish_state(5.0);
   //ESP_LOGI("seplos", "Polling BMS data...");
   //id(bms0_pack_voltage).publish_state(5.0);
   //this->sensors_ "bms0 pack_voltage"->publish_state(5);
