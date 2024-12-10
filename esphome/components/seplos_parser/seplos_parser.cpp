@@ -14,7 +14,7 @@ void SeplosParser::setup() {
 }
 
 void SeplosParser::loop() {
-  bms0_pack_voltage->publish_state(5.0);
+  //bms0_pack_voltage->publish_state(5.0);
   //ESP_LOGI("seplos", "Polling BMS data...");
   id(bms0_pack_voltage).publish_state(5.0);
   //this->sensors_ "bms0 pack_voltage"->publish_state(5);
