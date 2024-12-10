@@ -50,6 +50,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
   int bms_count_;  // Variable zur Speicherung von bms_count
  protected:
   sensor::Sensor *bms0_pack_voltage = nullptr;
+  sensor::Sensor *bms0_current = nullptr;
 };
 
 }  // namespace seplos_parser
