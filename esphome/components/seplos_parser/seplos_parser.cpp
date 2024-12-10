@@ -32,6 +32,8 @@ void SeplosParser::setup() {
 }
 
 void SeplosParser::loop() {
+  //float voltage = pack_voltage_[0]->state;
+  //float voltage = pack_voltage_[1]->state;
   pack_voltage_[0]->publish_state(5.0);
   current_[0]->publish_state(5.0);
   pack_voltage_[1]->publish_state(5.0);
