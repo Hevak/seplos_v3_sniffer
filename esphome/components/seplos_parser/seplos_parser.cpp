@@ -2,6 +2,7 @@
 #include "esphome/core/log.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/application.h"
+#include "esphome/components/sensor/sensor.h"
 
 namespace esphome {
 namespace seplos_parser {
