@@ -23,12 +23,6 @@ void SeplosParser::setup() {
         current_[i] = sensor;}
     }
   }
-   //for (auto *sensor : this->sensors_) {
-   //   if (sensor->get_name() == "bms0 pack_voltage") {
-   //         bms0_pack_voltage = sensor;}
-   //   if (sensor->get_name() == "bms0 current") {
-   //         bms0_current = sensor;}
-   //}
 }
 
 void SeplosParser::loop() {
@@ -38,19 +32,7 @@ void SeplosParser::loop() {
   current_[0]->publish_state(5.0);
   pack_voltage_[1]->publish_state(5.0);
   current_[1]->publish_state(5.0);
-  //ESP_LOGI("seplos", "Polling BMS data...");
-  //id(bms0_pack_voltage).publish_state(5.0);
-  //this->sensors_ "bms0 pack_voltage"->publish_state(5);
-  //for (auto *sensor : this->sensors_) {
-  //  if (sensor->get_name() == "bms0 pack_voltage") { // Vergleiche den Namen
-  //      sensor->publish_state(5.0);                 // Setze den Wert
-  //      break;                                      // Beende die Schleife
-  //  }
-//  }
-//  for (int i = 0; i < this->bms_count_; i++) {
-//      ESP_LOGI("seplos", "Simulating data for BMS %d", i);
- //     // Hier kann die echte Lese- und Verarbeitungslogik implementiert werden.
- // }
+   
 }
 
 void SeplosParser::dump_config(){
