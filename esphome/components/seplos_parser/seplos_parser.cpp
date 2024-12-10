@@ -10,7 +10,7 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-  bms0_pack_voltage = App.get_sensor("bms0 pack_voltage");
+  bms0_pack_voltage = App.get_sensors("bms0 pack_voltage");
 }
 
 void SeplosParser::loop() {
