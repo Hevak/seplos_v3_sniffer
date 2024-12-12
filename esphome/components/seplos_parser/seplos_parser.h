@@ -44,6 +44,12 @@ class SeplosParser : public uart::UARTDevice, public Component {
   void setup() override;
   void loop() override;
   void dump_config() override;
+  //test
+  bool is_valid_header();
+  size_t get_expected_length();
+  bool validate_crc(size_t length);
+  void process_packet(size_t length);
+
 // public:
 //  void set_bms_count(int bms_count);  // Methode deklarieren
   // Andere bestehende Methoden und Variablen...
