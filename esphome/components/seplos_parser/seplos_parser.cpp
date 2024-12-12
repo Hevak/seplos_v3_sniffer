@@ -66,9 +66,9 @@ void SeplosParser::loop() {
 }
 
 bool is_valid_header() {
-  return (this->buffer[0] >= 0x01 && this->buffer[0] <= 0x10) &&
-          this->buffer[1] == 0x04 &&
-         (this->buffer[2] == 0x24 || this->buffer[2] == 0x34);
+  return (buffer[0] >= 0x01 && buffer[0] <= 0x10) &&
+          buffer[1] == 0x04 &&
+         (buffer[2] == 0x24 || buffer[2] == 0x34);
 }
 size_t get_expected_length() {
   return (this->buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
