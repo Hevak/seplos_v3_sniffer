@@ -71,22 +71,22 @@ bool is_valid_header() {
          (buffer[2] == 0x24 || buffer[2] == 0x34);
 }
 size_t get_expected_length() {
-  return (this->buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
+  return (buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
 }
 bool validate_crc(size_t length) {
-  uint16_t received_crc = (this->buffer[length - 1] << 8) | this->buffer[length - 2];
-  uint16_t calculated_crc = calculate_modbus_crc(this->buffer, length - 2);
+  uint16_t received_crc = (buffer[length - 1] << 8) | buffer[length - 2];
+  uint16_t calculated_crc = calculate_modbus_crc(buffer, length - 2);
   return received_crc == calculated_crc;
 }
 void process_packet(size_t length) {
   int bms_index = this->buffer[0] - 0x01;
   if (bms_index < 0 || bms_index >= bms_count_) {
-    ESP_LOGW("seplos", "Ungültige BMS-ID: %d", buffer[0]);
+    ESP_LOGW("seplos", "Ungültige BMS-ID: %d", this->buffer[0]);
     return;
   }
 
-  if (this->buffer[2] == 0x24) {  // 36-Byte-Paket
-    uint16_t pack_voltage = (buffer[4] << 8) | buffer[3];
+  if (buffer[2] == 0x24) {  // 36-Byte-Paket
+    uint16_t pack_voltage = (this->buffer[4] << 8) | this->buffer[3];
     int16_t current = (buffer[6] << 8) | buffer[5];
     //uint16_t remaining_capacity = (buffer[8] << 8) | buffer[7];
     //uint16_t total_capacity = (buffer[10] << 8) | buffer[9];
