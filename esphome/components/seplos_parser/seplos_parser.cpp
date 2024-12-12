@@ -34,58 +34,58 @@ void SeplosParser::loop() {
   //current_[1]->publish_state(5.0);
   while (available()) {
       uint8_t byte = read();
-      buffer.push_back(byte);
+      this->buffer.push_back(byte);
 
       // Nur die letzten ca. 100 Bytes behalten
-      if (buffer.size() > 100) {
-        buffer.erase(buffer.begin(), buffer.end() - 100);
+      if (this->buffer.size() > 100) {
+        this->buffer.erase(this->buffer.begin(), this->buffer.end() - 100);
       }
 
       // Prüfen, ob ein gültiges Paket im Datenstrom erkannt wird
-      while (buffer.size() >= 5) {
+      while (this->buffer.size() >= 5) {
         if (is_valid_header()) {
           size_t expected_length = get_expected_length();
-          if (buffer.size() < expected_length) {
+          if (this->buffer.size() < expected_length) {
             // Nicht genügend Daten für das komplette Paket
             break;
           }
 
           if (validate_crc(expected_length)) {
             process_packet(expected_length);
-            buffer.erase(buffer.begin(), buffer.begin() + expected_length);
+            this->buffer.erase(this->buffer.begin(), this->buffer.begin() + expected_length);
           } else {
             ESP_LOGW("seplos", "Ungültige CRC, Paket verworfen.");
-            buffer.erase(buffer.begin());  // Nur das erste Byte verwerfen
+            this->buffer.erase(this->buffer.begin());  // Nur das erste Byte verwerfen
           }
         } else {
           // Kein gültiger Header, das erste Byte entfernen
-          buffer.erase(buffer.begin());
+          this->buffer.erase(this->buffer.begin());
         }
       }
     }
 }
 
 bool is_valid_header() {
-  return (buffer[0] >= 0x01 && buffer[0] <= 0x10) &&
-          buffer[1] == 0x04 &&
-         (buffer[2] == 0x24 || buffer[2] == 0x34);
+  return (this->buffer[0] >= 0x01 && this->buffer[0] <= 0x10) &&
+          this->buffer[1] == 0x04 &&
+         (this->buffer[2] == 0x24 || this->buffer[2] == 0x34);
 }
 size_t get_expected_length() {
-  return (buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
+  return (this->buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
 }
 bool validate_crc(size_t length) {
-  uint16_t received_crc = (buffer[length - 1] << 8) | buffer[length - 2];
-  uint16_t calculated_crc = calculate_modbus_crc(buffer, length - 2);
+  uint16_t received_crc = (this->buffer[length - 1] << 8) | this->buffer[length - 2];
+  uint16_t calculated_crc = calculate_modbus_crc(this->buffer, length - 2);
   return received_crc == calculated_crc;
 }
 void process_packet(size_t length) {
-  int bms_index = buffer[0] - 0x01;
+  int bms_index = this->buffer[0] - 0x01;
   if (bms_index < 0 || bms_index >= bms_count_) {
     ESP_LOGW("seplos", "Ungültige BMS-ID: %d", buffer[0]);
     return;
   }
 
-  if (buffer[2] == 0x24) {  // 36-Byte-Paket
+  if (this->buffer[2] == 0x24) {  // 36-Byte-Paket
     uint16_t pack_voltage = (buffer[4] << 8) | buffer[3];
     int16_t current = (buffer[6] << 8) | buffer[5];
     //uint16_t remaining_capacity = (buffer[8] << 8) | buffer[7];
@@ -121,7 +121,7 @@ void process_packet(size_t length) {
     //bms[bms_index].maxchgcurt->publish_state(maxchgcurt / 100);
   }
 
-  if (buffer[2] == 0x34) {
+  if (this->buffer[2] == 0x34) {
     //uint16_t cell_1 = (buffer[4] << 8) | buffer[3];
     //  uint16_t cell_2 = (buffer[6] << 8) | buffer[5];
     //  uint16_t cell_3 = (buffer[8] << 8) | buffer[7];
