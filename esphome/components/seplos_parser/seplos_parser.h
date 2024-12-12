@@ -50,6 +50,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
 
  private:
   int bms_count_;  // Variable zur Speicherung von bms_count
+  std::vector<uint8_t> buffer;
  protected:
   //sensor::Sensor *bms0_pack_voltage = nullptr;
   //sensor::Sensor *bms0_current = nullptr;
