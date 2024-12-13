@@ -16,11 +16,29 @@ void SeplosParser::setup() {
       // Erstelle die erwarteten Namen für Spannung und Strom
       std::string pack_voltage_name = "bms" + std::to_string(i) + " pack_voltage";
       std::string current_name = "bms" + std::to_string(i) + " current";
-
+      std::string remaining_capacity_name = "bms" + std::to_string(i) + " remaining_capacity";
+      std::string total_capacity_name = "bms" + std::to_string(i) + " total_capacity";
+      std::string total_discharge_capacity_name = "bms" + std::to_string(i) + " total_discharge_capacity";
+      std::string soc_name = "bms" + std::to_string(i) + " soc";
+      std::string soh_name = "bms" + std::to_string(i) + " soh";
+      std::string cycle_count_name = "bms" + std::to_string(i) + " cycle_count";
+       
       if (sensor->get_name() == pack_voltage_name) {
         pack_voltage_[i] = sensor;}
       if (sensor->get_name() == current_name) {
         current_[i] = sensor;}
+      if (sensor->get_name() == remaining_capacity_name) {
+        remaining_capacity_[i] = sensor;}
+      if (sensor->get_name() == total_capacity_name) {
+        total_capacity_[i] = sensor;}
+      if (sensor->get_name() == total_discharge_capacity_name) {
+        total_discharge_capacity_[i] = sensor;}
+      if (sensor->get_name() == soc_name) {
+        soc_[i] = sensor;}
+      if (sensor->get_name() == soh_name) {
+        soh_[i] = sensor;}
+      if (sensor->get_name() == cycle_count_name) {
+        cycle_count_[i] = sensor;}
     }
   }
 }
@@ -54,7 +72,7 @@ void SeplosParser::loop() {
             process_packet(expected_length);
             buffer.erase(buffer.begin(), buffer.begin() + expected_length);
           } else {
-            ESP_LOGW("seplos", "Ungültige CRC, Paket verworfen.");
+            //ESP_LOGW("seplos", "Ungültige CRC, Paket verworfen.");
             buffer.erase(buffer.begin());  // Nur das erste Byte verwerfen
           }
         } else {
@@ -86,15 +104,15 @@ void SeplosParser::process_packet(size_t length) {
   }
 
   if (buffer[2] == 0x24) {  // 36-Byte-Paket
+    //ESP_LOGI("DEBUG", "buffer[3]: 0x%02X, buffer[4]: 0x%02X", buffer[3], buffer[4]);
     uint16_t pack_voltage = (buffer[3] << 8) | buffer[4];
-    ESP_LOGI("DEBUG", "buffer[3]: 0x%02X, buffer[4]: 0x%02X", buffer[3], buffer[4]);
     int16_t current = (buffer[5] << 8) | buffer[6];
-    //uint16_t remaining_capacity = (buffer[8] << 8) | buffer[7];
-    //uint16_t total_capacity = (buffer[10] << 8) | buffer[9];
-    //uint16_t total_discharge_capacity = (buffer[12] << 8) | buffer[11];
-    //uint16_t soc = (buffer[14] << 8) | buffer[13];
-    //uint16_t soh = (buffer[16] << 8) | buffer[15];
-    //uint16_t cycle = (buffer[18] << 8) | buffer[17];
+    uint16_t remaining_capacity = (buffer[7] << 8) | buffer[8];
+    uint16_t total_capacity = (buffer[9] << 8) | buffer[10];
+    uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
+    uint16_t soc = (buffer[13] << 8) | buffer[14];
+    uint16_t soh = (buffer[15] << 8) | buffer[16];
+    uint16_t cycle = (buffer[17] << 8) | buffer[18];
     //uint16_t average_cell_voltage = (buffer[20] << 8) | buffer[19];
     //uint16_t average_cell_temp = (buffer[22] << 8) | buffer[21];
     //uint16_t max_cell_voltage = (buffer[24] << 8) | buffer[23];
@@ -104,15 +122,15 @@ void SeplosParser::process_packet(size_t length) {
     //uint16_t maxdiscurt = (buffer[34] << 8) | buffer[33];
     //uint16_t maxchgcurt = (buffer[36] << 8) | buffer[35];
 
-    pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
     ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
-    current_[bms_index]->publish_state(current / 100);
-    //bms[bms_index].remaining_capacity->publish_state(remaining_capacity / 1000);
-    //bms[bms_index].total_capacity->publish_state(total_capacity / 100);
-    //bms[bms_index].total_discharge_capacity->publish_state(total_discharge_capacity / 0.1);
-    //bms[bms_index].soc->publish_state(soc / 10.0);
-    //bms[bms_index].soh->publish_state(soh / 10.0);
-    //bms[bms_index].cycle->publish_state(cycle);
+    pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
+    current_[bms_index]->publish_state(current / 100.0f);
+    remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
+    total_capacity_[bms_index]->publish_state(total_capacity / 100.0f);
+    total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
+    soc_[bms_index]->publish_state(soc / 10.0f);
+    soh_[bms_index]->publish_state(soh / 10.0f);
+    cycle_[bms_index]->publish_state(cycle);
     //bms[bms_index].average_cell_voltage->publish_state(average_cell_voltage / 1000);
     //bms[bms_index].average_cell_temp->publish_state(average_cell_temp / 10 - 273.15);
     //bms[bms_index].max_cell_voltage->publish_state(max_cell_voltage / 1000);
