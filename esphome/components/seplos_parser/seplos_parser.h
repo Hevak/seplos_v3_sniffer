@@ -49,6 +49,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
   size_t get_expected_length();
   bool validate_crc(size_t length);
   void process_packet(size_t length);
+  uint16_t calculate_modbus_crc(const std::vector<uint8_t> &data, size_t length);
 
 // public:
 //  void set_bms_count(int bms_count);  // Methode deklarieren
