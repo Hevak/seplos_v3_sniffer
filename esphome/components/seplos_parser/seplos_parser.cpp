@@ -38,28 +38,28 @@ void SeplosParser::loop() {
 
       // Nur die letzten ca. 100 Bytes behalten
       if (buffer.size() > 100) {
-        this->buffer.erase(this->buffer.begin(), this->buffer.end() - 100);
+        buffer.erase(buffer.begin(), buffer.end() - 100);
       }
 
       // Prüfen, ob ein gültiges Paket im Datenstrom erkannt wird
-      while (this->buffer.size() >= 5) {
+      while (buffer.size() >= 5) {
         if (is_valid_header()) {
           size_t expected_length = get_expected_length();
-          if (this->buffer.size() < expected_length) {
+          if (buffer.size() < expected_length) {
             // Nicht genügend Daten für das komplette Paket
             break;
           }
 
           if (validate_crc(expected_length)) {
             process_packet(expected_length);
-            this->buffer.erase(this->buffer.begin(), this->buffer.begin() + expected_length);
+            buffer.erase(buffer.begin(), buffer.begin() + expected_length);
           } else {
             ESP_LOGW("seplos", "Ungültige CRC, Paket verworfen.");
-            this->buffer.erase(this->buffer.begin());  // Nur das erste Byte verwerfen
+            buffer.erase(buffer.begin());  // Nur das erste Byte verwerfen
           }
         } else {
           // Kein gültiger Header, das erste Byte entfernen
-          this->buffer.erase(this->buffer.begin());
+          buffer.erase(buffer.begin());
         }
       }
     }
@@ -79,9 +79,9 @@ bool SeplosParser::validate_crc(size_t length) {
   return received_crc == calculated_crc;
 }
 void SeplosParser::process_packet(size_t length) {
-  int bms_index = this->buffer[0] - 0x01;
+  int bms_index = buffer[0] - 0x01;
   if (bms_index < 0 || bms_index >= bms_count_) {
-    ESP_LOGW("seplos", "Ungültige BMS-ID: %d", this->buffer[0]);
+    ESP_LOGW("seplos", "Ungültige BMS-ID: %d", buffer[0]);
     return;
   }
 
