@@ -87,6 +87,7 @@ void SeplosParser::process_packet(size_t length) {
 
   if (buffer[2] == 0x24) {  // 36-Byte-Paket
     uint16_t pack_voltage = (buffer[4] << 8) | buffer[3];
+    ESP_LOGI("DEBUG", "buffer[3]: %d, buffer[4]: %d", buffer[3], buffer[4]);
     int16_t current = (buffer[6] << 8) | buffer[5];
     //uint16_t remaining_capacity = (buffer[8] << 8) | buffer[7];
     //uint16_t total_capacity = (buffer[10] << 8) | buffer[9];
@@ -104,6 +105,7 @@ void SeplosParser::process_packet(size_t length) {
     //uint16_t maxchgcurt = (buffer[36] << 8) | buffer[35];
 
     pack_voltage_[bms_index]->publish_state(pack_voltage);
+    ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
     current_[bms_index]->publish_state(current / 100);
     //bms[bms_index].remaining_capacity->publish_state(remaining_capacity / 1000);
     //bms[bms_index].total_capacity->publish_state(total_capacity / 100);
