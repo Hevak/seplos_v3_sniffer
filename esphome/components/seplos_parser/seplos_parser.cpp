@@ -112,7 +112,7 @@ void SeplosParser::process_packet(size_t length) {
     uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
     uint16_t soc = (buffer[13] << 8) | buffer[14];
     uint16_t soh = (buffer[15] << 8) | buffer[16];
-    uint16_t cycle = (buffer[17] << 8) | buffer[18];
+    uint16_t cycle_count = (buffer[17] << 8) | buffer[18];
     //uint16_t average_cell_voltage = (buffer[20] << 8) | buffer[19];
     //uint16_t average_cell_temp = (buffer[22] << 8) | buffer[21];
     //uint16_t max_cell_voltage = (buffer[24] << 8) | buffer[23];
@@ -130,7 +130,7 @@ void SeplosParser::process_packet(size_t length) {
     total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
     soc_[bms_index]->publish_state(soc / 10.0f);
     soh_[bms_index]->publish_state(soh / 10.0f);
-    cycle_[bms_index]->publish_state(cycle);
+    cycle_count_[bms_index]->publish_state(cycle_count);
     //bms[bms_index].average_cell_voltage->publish_state(average_cell_voltage / 1000);
     //bms[bms_index].average_cell_temp->publish_state(average_cell_temp / 10 - 273.15);
     //bms[bms_index].max_cell_voltage->publish_state(max_cell_voltage / 1000);
