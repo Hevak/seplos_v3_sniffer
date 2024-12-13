@@ -104,7 +104,7 @@ void SeplosParser::process_packet(size_t length) {
     //uint16_t maxdiscurt = (buffer[34] << 8) | buffer[33];
     //uint16_t maxchgcurt = (buffer[36] << 8) | buffer[35];
 
-    pack_voltage_[bms_index]->publish_state(pack_voltage / 100);
+    pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
     ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
     current_[bms_index]->publish_state(current / 100);
     //bms[bms_index].remaining_capacity->publish_state(remaining_capacity / 1000);
@@ -117,7 +117,7 @@ void SeplosParser::process_packet(size_t length) {
     //bms[bms_index].average_cell_temp->publish_state(average_cell_temp / 10 - 273.15);
     //bms[bms_index].max_cell_voltage->publish_state(max_cell_voltage / 1000);
     //bms[bms_index].min_cell_voltage->publish_state(min_cell_voltage / 1000);
-    //bms[bms_index].max_cell_temp->publish_state(max_cell_temp / 10 - 273.15);
+    //bms[bms_index].max_cell_temp->publish_state(max_cell_temp / 10.0f - 273.15f);
     //bms[bms_index].min_cell_temp->publish_state(min_cell_temp / 10 - 273.15);
     //bms[bms_index].maxdiscurt->publish_state(maxdiscurt / 100);
     //bms[bms_index].maxchgcurt->publish_state(maxchgcurt / 100);
