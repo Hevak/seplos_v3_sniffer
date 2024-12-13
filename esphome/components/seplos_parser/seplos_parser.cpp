@@ -122,7 +122,7 @@ void SeplosParser::process_packet(size_t length) {
     //uint16_t maxdiscurt = (buffer[34] << 8) | buffer[33];
     //uint16_t maxchgcurt = (buffer[36] << 8) | buffer[35];
 
-    ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
+    //ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
     pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
     current_[bms_index]->publish_state(current / 100.0f);
     remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
