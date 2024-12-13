@@ -65,20 +65,20 @@ void SeplosParser::loop() {
     }
 }
 
-bool is_valid_header() {
+bool SeplosParser::is_valid_header() {
   return (buffer[0] >= 0x01 && buffer[0] <= 0x10) &&
           buffer[1] == 0x04 &&
          (buffer[2] == 0x24 || buffer[2] == 0x34);
 }
-size_t get_expected_length() {
+size_t SeplosParser::get_expected_length() {
   return (buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
 }
-bool validate_crc(size_t length) {
+bool SeplosParser::validate_crc(size_t length) {
   uint16_t received_crc = (buffer[length - 1] << 8) | buffer[length - 2];
   uint16_t calculated_crc = calculate_modbus_crc(buffer, length - 2);
   return received_crc == calculated_crc;
 }
-void process_packet(size_t length) {
+void SeplosParser::process_packet(size_t length) {
   int bms_index = this->buffer[0] - 0x01;
   if (bms_index < 0 || bms_index >= bms_count_) {
     ESP_LOGW("seplos", "Ungültige BMS-ID: %d", this->buffer[0]);
@@ -169,7 +169,7 @@ void process_packet(size_t length) {
     //  bms[bms_index].power_temp->publish_state(power_temp / 10 - 273.15);
   }
 }
-uint16_t calculate_modbus_crc(const std::vector<uint8_t>& data, size_t length) {
+uint16_t SeplosParser::calculate_modbus_crc(const std::vector<uint8_t>& data, size_t length) {
   uint16_t crc = 0xFFFF;
   for (size_t pos = 0; pos < length; pos++) {
     crc ^= static_cast<uint16_t>(data[pos]);
