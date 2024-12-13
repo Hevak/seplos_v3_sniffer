@@ -1,7 +1,7 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import sensor
-from esphome.const import UNIT_VOLT, UNIT_AMPERE, UNIT_PERCENT,UNIT_OF_MEASUREMENT: "Ah", ICON_EMPTY
+from esphome.const import UNIT_VOLT, UNIT_AMPERE, UNIT_PERCENT, UNIT_OF_MEASUREMENT: "Ah", ICON_EMPTY
 from . import HUB_CHILD_SCHEMA, CONF_SEPLOS_PARSER_ID
 
 DEPENDENCIES = ["seplos_parser"]
