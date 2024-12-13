@@ -86,7 +86,7 @@ void process_packet(size_t length) {
   }
 
   if (buffer[2] == 0x24) {  // 36-Byte-Paket
-    uint16_t pack_voltage = (this->buffer[4] << 8) | this->buffer[3];
+    uint16_t pack_voltage = (buffer[4] << 8) | buffer[3];
     int16_t current = (buffer[6] << 8) | buffer[5];
     //uint16_t remaining_capacity = (buffer[8] << 8) | buffer[7];
     //uint16_t total_capacity = (buffer[10] << 8) | buffer[9];
@@ -121,7 +121,7 @@ void process_packet(size_t length) {
     //bms[bms_index].maxchgcurt->publish_state(maxchgcurt / 100);
   }
 
-  if (this->buffer[2] == 0x34) {
+  if (buffer[2] == 0x34) {
     //uint16_t cell_1 = (buffer[4] << 8) | buffer[3];
     //  uint16_t cell_2 = (buffer[6] << 8) | buffer[5];
     //  uint16_t cell_3 = (buffer[8] << 8) | buffer[7];
