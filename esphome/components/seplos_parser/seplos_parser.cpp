@@ -34,10 +34,10 @@ void SeplosParser::loop() {
   //current_[1]->publish_state(5.0);
   while (available()) {
       uint8_t byte = read();
-      this->buffer.push_back(byte);
+      buffer.push_back(byte);
 
       // Nur die letzten ca. 100 Bytes behalten
-      if (this->buffer.size() > 100) {
+      if (buffer.size() > 100) {
         this->buffer.erase(this->buffer.begin(), this->buffer.end() - 100);
       }
 
