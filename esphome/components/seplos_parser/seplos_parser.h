@@ -64,11 +64,11 @@ class SeplosParser : public uart::UARTDevice, public Component {
   std::vector<sensor::Sensor *> pack_voltage_;
   std::vector<sensor::Sensor *> current_;
   std::vector<sensor::Sensor *> remaining_capacity_;
-  std::vector<sensor::Sensor *> total_capacity_;
-  std::vector<sensor::Sensor *> total_discharge_capacity_;
-  std::vector<sensor::Sensor *> soc_;
-  std::vector<sensor::Sensor *> soh_;
-  std::vector<sensor::Sensor *> cycle_count_;
+  //std::vector<sensor::Sensor *> total_capacity_;
+  //std::vector<sensor::Sensor *> total_discharge_capacity_;
+  //std::vector<sensor::Sensor *> soc_;
+  //std::vector<sensor::Sensor *> soh_;
+  //std::vector<sensor::Sensor *> cycle_count_;
 };
 
 }  // namespace seplos_parser
