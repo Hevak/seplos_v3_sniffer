@@ -40,35 +40,30 @@ class SeplosParser : public uart::UARTDevice, public Component {
 // public:
 //  void register_text_sensor(text_sensor::TextSensor *obj) { this->text_sensors_.push_back(obj); }
 //#endif
+
   void set_bms_count(int bms_count);
   void setup() override;
   void loop() override;
   void dump_config() override;
-  //test
   bool is_valid_header();
   size_t get_expected_length();
   bool validate_crc(size_t length);
   void process_packet(size_t length);
   uint16_t calculate_modbus_crc(const std::vector<uint8_t> &data, size_t length);
 
-// public:
-//  void set_bms_count(int bms_count);  // Methode deklarieren
-  // Andere bestehende Methoden und Variablen...
-
- private:
+private:
   int bms_count_;  // Variable zur Speicherung von bms_count
   std::vector<uint8_t> buffer;
- protected:
-  //sensor::Sensor *bms0_pack_voltage = nullptr;
-  //sensor::Sensor *bms0_current = nullptr;
+
+protected:
   std::vector<sensor::Sensor *> pack_voltage_;
   std::vector<sensor::Sensor *> current_;
   std::vector<sensor::Sensor *> remaining_capacity_;
-  //std::vector<sensor::Sensor *> total_capacity_;
-  //std::vector<sensor::Sensor *> total_discharge_capacity_;
-  //std::vector<sensor::Sensor *> soc_;
-  //std::vector<sensor::Sensor *> soh_;
-  //std::vector<sensor::Sensor *> cycle_count_;
+  std::vector<sensor::Sensor *> total_capacity_;
+  std::vector<sensor::Sensor *> total_discharge_capacity_;
+  std::vector<sensor::Sensor *> soc_;
+  std::vector<sensor::Sensor *> soh_;
+  std::vector<sensor::Sensor *> cycle_count_;
 };
 
 }  // namespace seplos_parser
