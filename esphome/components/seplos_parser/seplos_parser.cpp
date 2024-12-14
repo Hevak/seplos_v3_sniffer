@@ -11,23 +11,22 @@ void SeplosParser::setup() {
    pack_voltage_.resize(bms_count_, nullptr);
    current_.resize(bms_count_, nullptr);
    remaining_capacity_.resize(bms_count_, nullptr);
-   //total_capacity_.resize(bms_count_, nullptr);
-   //total_discharge_capacity_.resize(bms_count_, nullptr);
-   //soc_.resize(bms_count_, nullptr);
-   //soh_.resize(bms_count_, nullptr);
-   //cycle_count_.resize(bms_count_, nullptr);
+   total_capacity_.resize(bms_count_, nullptr);
+   total_discharge_capacity_.resize(bms_count_, nullptr);
+   soc_.resize(bms_count_, nullptr);
+   soh_.resize(bms_count_, nullptr);
+   cycle_count_.resize(bms_count_, nullptr);
 
    for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
-      // Erstelle die erwarteten Namen für Spannung und Strom
       std::string pack_voltage_name = "bms" + std::to_string(i) + " pack_voltage";
       std::string current_name = "bms" + std::to_string(i) + " current";
       std::string remaining_capacity_name = "bms" + std::to_string(i) + " remaining_capacity";
-      //std::string total_capacity_name = "bms" + std::to_string(i) + " total_capacity";
-      //std::string total_discharge_capacity_name = "bms" + std::to_string(i) + " total_discharge_capacity";
-      //std::string soc_name = "bms" + std::to_string(i) + " soc";
-      //std::string soh_name = "bms" + std::to_string(i) + " soh";
-      //std::string cycle_count_name = "bms" + std::to_string(i) + " cycle_count";
+      std::string total_capacity_name = "bms" + std::to_string(i) + " total_capacity";
+      std::string total_discharge_capacity_name = "bms" + std::to_string(i) + " total_discharge_capacity";
+      std::string soc_name = "bms" + std::to_string(i) + " soc";
+      std::string soh_name = "bms" + std::to_string(i) + " soh";
+      std::string cycle_count_name = "bms" + std::to_string(i) + " cycle_count";
        
       if (sensor->get_name() == pack_voltage_name) {
         pack_voltage_[i] = sensor;}
@@ -35,27 +34,21 @@ void SeplosParser::setup() {
         current_[i] = sensor;}
       if (sensor->get_name() == remaining_capacity_name) {
         remaining_capacity_[i] = sensor;}
-      //if (sensor->get_name() == total_capacity_name) {
-      //  total_capacity_[i] = sensor;}
-      //if (sensor->get_name() == total_discharge_capacity_name) {
-      //  total_discharge_capacity_[i] = sensor;}
-      //if (sensor->get_name() == soc_name) {
-      //  soc_[i] = sensor;}
-      //if (sensor->get_name() == soh_name) {
-      //  soh_[i] = sensor;}
-      //if (sensor->get_name() == cycle_count_name) {
-      //  cycle_count_[i] = sensor;}
+      if (sensor->get_name() == total_capacity_name) {
+        total_capacity_[i] = sensor;}
+      if (sensor->get_name() == total_discharge_capacity_name) {
+        total_discharge_capacity_[i] = sensor;}
+      if (sensor->get_name() == soc_name) {
+        soc_[i] = sensor;}
+      if (sensor->get_name() == soh_name) {
+        soh_[i] = sensor;}
+      if (sensor->get_name() == cycle_count_name) {
+        cycle_count_[i] = sensor;}
     }
   }
 }
 
 void SeplosParser::loop() {
-  //float voltage = pack_voltage_[0]->state;
-  //float voltage = pack_voltage_[1]->state;
-  //pack_voltage_[0]->publish_state(5.0);
-  //current_[0]->publish_state(5.0);
-  //pack_voltage_[1]->publish_state(5.0);
-  //current_[1]->publish_state(5.0);
   while (available()) {
       uint8_t byte = read();
       buffer.push_back(byte);
@@ -114,11 +107,11 @@ void SeplosParser::process_packet(size_t length) {
     uint16_t pack_voltage = (buffer[3] << 8) | buffer[4];
     int16_t current = (buffer[5] << 8) | buffer[6];
     uint16_t remaining_capacity = (buffer[7] << 8) | buffer[8];
-    //uint16_t total_capacity = (buffer[9] << 8) | buffer[10];
-    //uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
-    //uint16_t soc = (buffer[13] << 8) | buffer[14];
-    //uint16_t soh = (buffer[15] << 8) | buffer[16];
-    //uint16_t cycle_count = (buffer[17] << 8) | buffer[18];
+    uint16_t total_capacity = (buffer[9] << 8) | buffer[10];
+    uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
+    uint16_t soc = (buffer[13] << 8) | buffer[14];
+    uint16_t soh = (buffer[15] << 8) | buffer[16];
+    uint16_t cycle_count = (buffer[17] << 8) | buffer[18];
     //uint16_t average_cell_voltage = (buffer[20] << 8) | buffer[19];
     //uint16_t average_cell_temp = (buffer[22] << 8) | buffer[21];
     //uint16_t max_cell_voltage = (buffer[24] << 8) | buffer[23];
@@ -132,11 +125,11 @@ void SeplosParser::process_packet(size_t length) {
     pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
     current_[bms_index]->publish_state(current / 100.0f);
     remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
-    //total_capacity_[bms_index]->publish_state(total_capacity / 100.0f);
-    //total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
-    //soc_[bms_index]->publish_state(soc / 10.0f);
-    //soh_[bms_index]->publish_state(soh / 10.0f);
-    //cycle_count_[bms_index]->publish_state(cycle_count);
+    total_capacity_[bms_index]->publish_state(total_capacity / 100.0f);
+    total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
+    soc_[bms_index]->publish_state(soc / 10.0f);
+    soh_[bms_index]->publish_state(soh / 10.0f);
+    cycle_count_[bms_index]->publish_state(cycle_count);
     //bms[bms_index].average_cell_voltage->publish_state(average_cell_voltage / 1000);
     //bms[bms_index].average_cell_temp->publish_state(average_cell_temp / 10 - 273.15);
     //bms[bms_index].max_cell_voltage->publish_state(max_cell_voltage / 1000);
