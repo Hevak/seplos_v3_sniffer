@@ -16,6 +16,14 @@ void SeplosParser::setup() {
    soc_.resize(bms_count_, nullptr);
    soh_.resize(bms_count_, nullptr);
    cycle_count_.resize(bms_count_, nullptr);
+   average_cell_voltage_.resize(bms_count_, nullptr);
+   average_cell_temp_.resize(bms_count_, nullptr);
+   max_cell_voltage_.resize(bms_count_, nullptr);
+   min_cell_voltage_.resize(bms_count_, nullptr);
+   max_cell_temp_.resize(bms_count_, nullptr);
+   min_cell_temp_.resize(bms_count_, nullptr);
+   maxdiscurt_.resize(bms_count_, nullptr);
+   maxchgcurt_.resize(bms_count_, nullptr);
 
    for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
@@ -27,6 +35,14 @@ void SeplosParser::setup() {
       std::string soc_name = "bms" + std::to_string(i) + " soc";
       std::string soh_name = "bms" + std::to_string(i) + " soh";
       std::string cycle_count_name = "bms" + std::to_string(i) + " cycle_count";
+      std::string average_cell_voltage_name = "bms" + std::to_string(i) + " average_cell_voltage";
+      std::string average_cell_temp_name = "bms" + std::to_string(i) + " average_cell_temp";
+      std::string max_cell_voltage_name = "bms" + std::to_string(i) + " max_cell_voltage";
+      std::string min_cell_voltage_name = "bms" + std::to_string(i) + " min_cell_voltage";
+      std::string max_cell_temp_name = "bms" + std::to_string(i) + " max_cell_temp";
+      std::string min_cell_temp_name = "bms" + std::to_string(i) + " min_cell_temp";
+      std::string maxdiscurt_name = "bms" + std::to_string(i) + " maxdiscurt";
+      std::string maxchgcurt_name = "bms" + std::to_string(i) + " maxchgcurt";
        
       if (sensor->get_name() == pack_voltage_name) {
         pack_voltage_[i] = sensor;}
@@ -44,6 +60,22 @@ void SeplosParser::setup() {
         soh_[i] = sensor;}
       if (sensor->get_name() == cycle_count_name) {
         cycle_count_[i] = sensor;}
+      if (sensor->get_name() == average_cell_voltage_name) {
+        average_cell_voltage_[i] = sensor;}
+      if (sensor->get_name() == average_cell_temp_name) {
+        average_cell_temp_[i] = sensor;}
+      if (sensor->get_name() == max_cell_voltage_name) {
+        max_cell_voltage_[i] = sensor;}
+      if (sensor->get_name() == min_cell_voltage_name) {
+        min_cell_voltage_[i] = sensor;}
+      if (sensor->get_name() == max_cell_temp_name) {
+        max_cell_temp_[i] = sensor;}
+      if (sensor->get_name() == min_cell_temp_name) {
+        min_cell_temp_[i] = sensor;}
+      if (sensor->get_name() == maxdiscurt_name) {
+        maxdiscurt_[i] = sensor;}
+      if (sensor->get_name() == maxchgcurt_name) {
+        maxchgcurt_[i] = sensor;}
     }
   }
 }
@@ -112,14 +144,14 @@ void SeplosParser::process_packet(size_t length) {
     uint16_t soc = (buffer[13] << 8) | buffer[14];
     uint16_t soh = (buffer[15] << 8) | buffer[16];
     uint16_t cycle_count = (buffer[17] << 8) | buffer[18];
-    //uint16_t average_cell_voltage = (buffer[20] << 8) | buffer[19];
-    //uint16_t average_cell_temp = (buffer[22] << 8) | buffer[21];
-    //uint16_t max_cell_voltage = (buffer[24] << 8) | buffer[23];
-    //uint16_t min_cell_voltage = (buffer[26] << 8) | buffer[25];
-    //uint16_t max_cell_temp = (buffer[28] << 8) | buffer[27];
-    //uint16_t min_cell_temp = (buffer[30] << 8) | buffer[29];
-    //uint16_t maxdiscurt = (buffer[34] << 8) | buffer[33];
-    //uint16_t maxchgcurt = (buffer[36] << 8) | buffer[35];
+    uint16_t average_cell_voltage = (buffer[19] << 8) | buffer[20];
+    uint16_t average_cell_temp = (buffer[21] << 8) | buffer[22];
+    uint16_t max_cell_voltage = (buffer[23] << 8) | buffer[24];
+    uint16_t min_cell_voltage = (buffer[25] << 8) | buffer[26];
+    uint16_t max_cell_temp = (buffer[27] << 8) | buffer[28];
+    uint16_t min_cell_temp = (buffer[29] << 8) | buffer[30];
+    uint16_t maxdiscurt = (buffer[33] << 8) | buffer[34];
+    uint16_t maxchgcurt = (buffer[35] << 8) | buffer[36];
 
     //ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
     pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
@@ -130,14 +162,14 @@ void SeplosParser::process_packet(size_t length) {
     soc_[bms_index]->publish_state(soc / 10.0f);
     soh_[bms_index]->publish_state(soh / 10.0f);
     cycle_count_[bms_index]->publish_state(cycle_count);
-    //bms[bms_index].average_cell_voltage->publish_state(average_cell_voltage / 1000);
-    //bms[bms_index].average_cell_temp->publish_state(average_cell_temp / 10 - 273.15);
-    //bms[bms_index].max_cell_voltage->publish_state(max_cell_voltage / 1000);
-    //bms[bms_index].min_cell_voltage->publish_state(min_cell_voltage / 1000);
-    //bms[bms_index].max_cell_temp->publish_state(max_cell_temp / 10.0f - 273.15f);
-    //bms[bms_index].min_cell_temp->publish_state(min_cell_temp / 10 - 273.15);
-    //bms[bms_index].maxdiscurt->publish_state(maxdiscurt / 100);
-    //bms[bms_index].maxchgcurt->publish_state(maxchgcurt / 100);
+    average_cell_voltage_[bms_index]->publish_state(average_cell_voltage / 1000.0f);
+    average_cell_temp_[bms_index]->publish_state(average_cell_temp / 10.0f - 273.15f);
+    max_cell_voltage_[bms_index]->publish_state(max_cell_voltage / 1000.0f);
+    min_cell_voltage_[bms_index]->publish_state(min_cell_voltage / 1000.0f);
+    max_cell_temp_[bms_index]->publish_state(max_cell_temp / 10.0f - 273.15f);
+    min_cell_temp_[bms_index]->publish_state(min_cell_temp / 10.0f - 273.15f);
+    maxdiscurt_[bms_index]->publish_state(maxdiscurt / 100.0f);
+    maxchgcurt_[bms_index]->publish_state(maxchgcurt / 100.0f);
   }
 
   if (buffer[2] == 0x34) {
