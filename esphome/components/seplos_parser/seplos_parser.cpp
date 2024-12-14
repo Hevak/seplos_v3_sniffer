@@ -10,6 +10,12 @@ static const char *TAG = "seplos_parser.component";
 void SeplosParser::setup() {
    pack_voltage_.resize(bms_count_, nullptr);
    current_.resize(bms_count_, nullptr);
+   remaining_capacity_.resize(bms_count_, nullptr);
+   total_capacity_.resize(bms_count_, nullptr);
+   total_discharge_capacity_.resize(bms_count_, nullptr);
+   soc_.resize(bms_count_, nullptr);
+   soh_.resize(bms_count_, nullptr);
+   cycle_count_.resize(bms_count_, nullptr);
 
    for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
