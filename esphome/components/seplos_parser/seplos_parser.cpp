@@ -34,7 +34,7 @@ void SeplosParser::setup() {
       if (sensor->get_name() == current_name) {
         current_[i] = sensor;}
       if (sensor->get_name() == remaining_capacity_name) {
-      //  remaining_capacity_[i] = sensor;}
+        remaining_capacity_[i] = sensor;}
       //if (sensor->get_name() == total_capacity_name) {
       //  total_capacity_[i] = sensor;}
       //if (sensor->get_name() == total_discharge_capacity_name) {
