@@ -64,6 +64,14 @@ protected:
   std::vector<sensor::Sensor *> soc_;
   std::vector<sensor::Sensor *> soh_;
   std::vector<sensor::Sensor *> cycle_count_;
+  std::vector<sensor::Sensor *> average_cell_voltage_;
+  std::vector<sensor::Sensor *> average_cell_temp_;
+  std::vector<sensor::Sensor *> max_cell_voltage_;
+  std::vector<sensor::Sensor *> min_cell_voltage_;
+  std::vector<sensor::Sensor *> max_cell_temp_;
+  std::vector<sensor::Sensor *> min_cell_temp_;
+  std::vector<sensor::Sensor *> maxdiscurt_;
+  std::vector<sensor::Sensor *> maxchgcurt_;
 };
 
 }  // namespace seplos_parser
