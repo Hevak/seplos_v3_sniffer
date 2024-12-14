@@ -11,18 +11,18 @@ void SeplosParser::setup() {
    pack_voltage_.resize(bms_count_, nullptr);
    current_.resize(bms_count_, nullptr);
    remaining_capacity_.resize(bms_count_, nullptr);
-   total_capacity_.resize(bms_count_, nullptr);
-   total_discharge_capacity_.resize(bms_count_, nullptr);
-   soc_.resize(bms_count_, nullptr);
-   soh_.resize(bms_count_, nullptr);
-   cycle_count_.resize(bms_count_, nullptr);
+   //total_capacity_.resize(bms_count_, nullptr);
+   //total_discharge_capacity_.resize(bms_count_, nullptr);
+   //soc_.resize(bms_count_, nullptr);
+   //soh_.resize(bms_count_, nullptr);
+   //cycle_count_.resize(bms_count_, nullptr);
 
    for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
       // Erstelle die erwarteten Namen für Spannung und Strom
       std::string pack_voltage_name = "bms" + std::to_string(i) + " pack_voltage";
       std::string current_name = "bms" + std::to_string(i) + " current";
-      //std::string remaining_capacity_name = "bms" + std::to_string(i) + " remaining_capacity";
+      std::string remaining_capacity_name = "bms" + std::to_string(i) + " remaining_capacity";
       //std::string total_capacity_name = "bms" + std::to_string(i) + " total_capacity";
       //std::string total_discharge_capacity_name = "bms" + std::to_string(i) + " total_discharge_capacity";
       //std::string soc_name = "bms" + std::to_string(i) + " soc";
@@ -33,7 +33,7 @@ void SeplosParser::setup() {
         pack_voltage_[i] = sensor;}
       if (sensor->get_name() == current_name) {
         current_[i] = sensor;}
-      //if (sensor->get_name() == remaining_capacity_name) {
+      if (sensor->get_name() == remaining_capacity_name) {
       //  remaining_capacity_[i] = sensor;}
       //if (sensor->get_name() == total_capacity_name) {
       //  total_capacity_[i] = sensor;}
@@ -113,7 +113,7 @@ void SeplosParser::process_packet(size_t length) {
     //ESP_LOGI("DEBUG", "buffer[3]: 0x%02X, buffer[4]: 0x%02X", buffer[3], buffer[4]);
     uint16_t pack_voltage = (buffer[3] << 8) | buffer[4];
     int16_t current = (buffer[5] << 8) | buffer[6];
-    //uint16_t remaining_capacity = (buffer[7] << 8) | buffer[8];
+    uint16_t remaining_capacity = (buffer[7] << 8) | buffer[8];
     //uint16_t total_capacity = (buffer[9] << 8) | buffer[10];
     //uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
     //uint16_t soc = (buffer[13] << 8) | buffer[14];
@@ -131,7 +131,7 @@ void SeplosParser::process_packet(size_t length) {
     //ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
     pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
     current_[bms_index]->publish_state(current / 100.0f);
-    //remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
+    remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
     //total_capacity_[bms_index]->publish_state(total_capacity / 100.0f);
     //total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
     //soc_[bms_index]->publish_state(soc / 10.0f);
