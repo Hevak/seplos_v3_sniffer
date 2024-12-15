@@ -72,6 +72,28 @@ protected:
   std::vector<sensor::Sensor *> min_cell_temp_;
   std::vector<sensor::Sensor *> maxdiscurt_;
   std::vector<sensor::Sensor *> maxchgcurt_;
+  std::vector<sensor::Sensor *> cell_1_;
+  std::vector<sensor::Sensor *> cell_2_;
+  std::vector<sensor::Sensor *> cell_3_;
+  std::vector<sensor::Sensor *> cell_4_;
+  std::vector<sensor::Sensor *> cell_5_;
+  std::vector<sensor::Sensor *> cell_6_;
+  std::vector<sensor::Sensor *> cell_7_;
+  std::vector<sensor::Sensor *> cell_8_;
+  std::vector<sensor::Sensor *> cell_9_;
+  std::vector<sensor::Sensor *> cell_10_;
+  std::vector<sensor::Sensor *> cell_11_;
+  std::vector<sensor::Sensor *> cell_12_;
+  std::vector<sensor::Sensor *> cell_13_;
+  std::vector<sensor::Sensor *> cell_14_;
+  std::vector<sensor::Sensor *> cell_15_;
+  std::vector<sensor::Sensor *> cell_16_;
+  std::vector<sensor::Sensor *> cell_temp_1_;
+  std::vector<sensor::Sensor *> cell_temp_2_;
+  std::vector<sensor::Sensor *> cell_temp_3_;
+  std::vector<sensor::Sensor *> cell_temp_4_;
+  std::vector<sensor::Sensor *> case_temp_;
+  std::vector<sensor::Sensor *> power_temp_;
 };
 
 }  // namespace seplos_parser
