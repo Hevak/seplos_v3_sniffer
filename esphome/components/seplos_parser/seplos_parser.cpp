@@ -102,12 +102,14 @@ void SeplosParser::setup() {
     const std::string &name = it->first;
     std::vector<sensor::Sensor *> *sensor_vector = it->second;
 
-    for (int i = 0; i < bms_count_; i++) {
-      if (sensor->get_name() == "bms" + std::to_string(i) + " " + name) {
+    for (auto *sensor : this->sensors_) {
+      for (int i = 0; i < bms_count_; i++) {
+        if (sensor->get_name() == "bms" + std::to_string(i) + " " + name) {
         (*sensor_vector)[i] = sensor;
+        }
       }
-    }
-  } 
+    } 
+  }
 }
 
 void SeplosParser::loop() {
