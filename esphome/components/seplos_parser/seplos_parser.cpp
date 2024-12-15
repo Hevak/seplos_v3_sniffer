@@ -248,7 +248,7 @@ void SeplosParser::process_packet(size_t length) {
       power_temp_[bms_index]->publish_state(power_temp / 10.0f - 273.15f);
   }
 }
-uint16_t SeplosParser::calculate_modbus_crc(const std::vector<uint8_t>& data, size_t length) {
+uint16_t SeplosParser::calculate_modbus_crc(const std::deque<uint8_t>& data, size_t length) {
   uint16_t crc = 0xFFFF;
   for (size_t pos = 0; pos < length; pos++) {
     crc ^= static_cast<uint16_t>(data[pos]);
