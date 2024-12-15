@@ -114,36 +114,32 @@ void SeplosParser::setup() {
 
 void SeplosParser::loop() {
   while (available()) {
-      uint8_t byte = read();
-      buffer.push_back(byte);
+    uint8_t byte = read();
+    buffer.push_back(byte);
 
-      // Nur die letzten ca. 100 Bytes behalten
-      if (buffer.size() > 100) {
-        buffer.erase(buffer.begin(), buffer.end() - 100);
+    if (buffer.size() > 100) {
+      buffer.pop_front();
+    }
+
+    while (buffer.size() >= 5) {
+      if (!is_valid_header()) {
+        buffer.pop_front();
+        continue;
       }
 
-      // Prüfen, ob ein gültiges Paket im Datenstrom erkannt wird
-      while (buffer.size() >= 5) {
-        if (is_valid_header()) {
-          size_t expected_length = get_expected_length();
-          if (buffer.size() < expected_length) {
-            // Nicht genügend Daten für das komplette Paket
-            break;
-          }
+      size_t expected_length = get_expected_length();
+      if (buffer.size() < expected_length) {
+        break;
+      }
 
-          if (validate_crc(expected_length)) {
-            process_packet(expected_length);
-            buffer.erase(buffer.begin(), buffer.begin() + expected_length);
-          } else {
-            //ESP_LOGW("seplos", "Ungültige CRC, Paket verworfen.");
-            buffer.erase(buffer.begin());  // Nur das erste Byte verwerfen
-          }
-        } else {
-          // Kein gültiger Header, das erste Byte entfernen
-          buffer.erase(buffer.begin());
-        }
+      if (validate_crc(expected_length)) {
+        process_packet(expected_length);
+        buffer.erase(buffer.begin(), buffer.begin() + expected_length);
+      } else {
+        buffer.pop_front();
       }
     }
+  }
 }
 
 bool SeplosParser::is_valid_header() {
