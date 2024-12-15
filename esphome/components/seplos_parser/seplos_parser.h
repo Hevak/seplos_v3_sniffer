@@ -4,6 +4,7 @@
 #include "esphome/core/defines.h"
 #include "esphome/components/uart/uart.h"
 #include <vector>
+#include <deque>
 
 #ifdef USE_SENSOR
 #include "esphome/components/sensor/sensor.h"
@@ -53,7 +54,8 @@ class SeplosParser : public uart::UARTDevice, public Component {
 
 private:
   int bms_count_;  // Variable zur Speicherung von bms_count
-  std::vector<uint8_t> buffer;
+  //std::vector<uint8_t> buffer;
+  std::deque<uint8_t> buffer;
 
 protected:
   std::vector<sensor::Sensor *> pack_voltage_;
