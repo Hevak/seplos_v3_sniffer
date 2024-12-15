@@ -48,127 +48,56 @@ void SeplosParser::setup() {
    case_temp_.resize(bms_count_, nullptr);
    power_temp_.resize(bms_count_, nullptr);
    
-   
-   for (auto *sensor : this->sensors_) {
+  std::unordered_map<std::string, std::vector<sensor::Sensor *> *> sensor_map = {
+    {"pack_voltage", &pack_voltage_},
+    {"current", &current_},
+    {"remaining_capacity", &remaining_capacity_},
+    {"total_capacity", &total_capacity_},
+    {"total_discharge_capacity", &total_discharge_capacity_},
+    {"soc", &soc_},
+    {"soh", &soh_},
+    {"cycle_count", &cycle_count_},
+    {"average_cell_voltage", &average_cell_voltage_},
+    {"average_cell_temp", &average_cell_temp_},
+    {"max_cell_voltage", &max_cell_voltage_},
+    {"min_cell_voltage", &min_cell_voltage_},
+    {"max_cell_temp", &max_cell_temp_},
+    {"min_cell_temp", &min_cell_temp_},
+    {"maxdiscurt", &maxdiscurt_},
+    {"maxchgcurt", &maxchgcurt_},
+    {"cell_1", &cell_1_},
+    {"cell_2", &cell_2_},
+    {"cell_3", &cell_3_},
+    {"cell_4", &cell_4_},
+    {"cell_5", &cell_5_},
+    {"cell_6", &cell_6_},
+    {"cell_7", &cell_7_},
+    {"cell_8", &cell_8_},
+    {"cell_9", &cell_9_},
+    {"cell_10", &cell_10_},
+    {"cell_11", &cell_11_},
+    {"cell_12", &cell_12_},
+    {"cell_13", &cell_13_},
+    {"cell_14", &cell_14_},
+    {"cell_15", &cell_15_},
+    {"cell_16", &cell_16_},
+    {"cell_temp_1", &cell_temp_1_},
+    {"cell_temp_2", &cell_temp_2_},
+    {"cell_temp_3", &cell_temp_3_},
+    {"cell_temp_4", &cell_temp_4_},
+    {"case_temp", &case_temp_},
+    {"power_temp", &power_temp_},
+  };
+
+  for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
-      std::string pack_voltage_name = "bms" + std::to_string(i) + " pack_voltage";
-      std::string current_name = "bms" + std::to_string(i) + " current";
-      std::string remaining_capacity_name = "bms" + std::to_string(i) + " remaining_capacity";
-      std::string total_capacity_name = "bms" + std::to_string(i) + " total_capacity";
-      std::string total_discharge_capacity_name = "bms" + std::to_string(i) + " total_discharge_capacity";
-      std::string soc_name = "bms" + std::to_string(i) + " soc";
-      std::string soh_name = "bms" + std::to_string(i) + " soh";
-      std::string cycle_count_name = "bms" + std::to_string(i) + " cycle_count";
-      std::string average_cell_voltage_name = "bms" + std::to_string(i) + " average_cell_voltage";
-      std::string average_cell_temp_name = "bms" + std::to_string(i) + " average_cell_temp";
-      std::string max_cell_voltage_name = "bms" + std::to_string(i) + " max_cell_voltage";
-      std::string min_cell_voltage_name = "bms" + std::to_string(i) + " min_cell_voltage";
-      std::string max_cell_temp_name = "bms" + std::to_string(i) + " max_cell_temp";
-      std::string min_cell_temp_name = "bms" + std::to_string(i) + " min_cell_temp";
-      std::string maxdiscurt_name = "bms" + std::to_string(i) + " maxdiscurt";
-      std::string maxchgcurt_name = "bms" + std::to_string(i) + " maxchgcurt";
-      std::string cell_1_name = "bms" + std::to_string(i) + " cell_1";
-      std::string cell_2_name = "bms" + std::to_string(i) + " cell_2";
-      std::string cell_3_name = "bms" + std::to_string(i) + " cell_3";
-      std::string cell_4_name = "bms" + std::to_string(i) + " cell_4";
-      std::string cell_5_name = "bms" + std::to_string(i) + " cell_5";
-      std::string cell_6_name = "bms" + std::to_string(i) + " cell_6";
-      std::string cell_7_name = "bms" + std::to_string(i) + " cell_7";
-      std::string cell_8_name = "bms" + std::to_string(i) + " cell_8";
-      std::string cell_9_name = "bms" + std::to_string(i) + " cell_9";
-      std::string cell_10_name = "bms" + std::to_string(i) + " cell_10";
-      std::string cell_11_name = "bms" + std::to_string(i) + " cell_11";
-      std::string cell_12_name = "bms" + std::to_string(i) + " cell_12";
-      std::string cell_13_name = "bms" + std::to_string(i) + " cell_13";
-      std::string cell_14_name = "bms" + std::to_string(i) + " cell_14";
-      std::string cell_15_name = "bms" + std::to_string(i) + " cell_15";
-      std::string cell_16_name = "bms" + std::to_string(i) + " cell_16";
-      std::string cell_temp_1_name = "bms" + std::to_string(i) + " cell_temp_1";
-      std::string cell_temp_2_name = "bms" + std::to_string(i) + " cell_temp_2";
-      std::string cell_temp_3_name = "bms" + std::to_string(i) + " cell_temp_3";
-      std::string cell_temp_4_name = "bms" + std::to_string(i) + " cell_temp_4";
-      std::string case_temp_name = "bms" + std::to_string(i) + " case_temp";
-      std::string power_temp_name = "bms" + std::to_string(i) + " power_temp";
-      
-       
-      if (sensor->get_name() == pack_voltage_name) {
-        pack_voltage_[i] = sensor;}
-      if (sensor->get_name() == current_name) {
-        current_[i] = sensor;}
-      if (sensor->get_name() == remaining_capacity_name) {
-        remaining_capacity_[i] = sensor;}
-      if (sensor->get_name() == total_capacity_name) {
-        total_capacity_[i] = sensor;}
-      if (sensor->get_name() == total_discharge_capacity_name) {
-        total_discharge_capacity_[i] = sensor;}
-      if (sensor->get_name() == soc_name) {
-        soc_[i] = sensor;}
-      if (sensor->get_name() == soh_name) {
-        soh_[i] = sensor;}
-      if (sensor->get_name() == cycle_count_name) {
-        cycle_count_[i] = sensor;}
-      if (sensor->get_name() == average_cell_voltage_name) {
-        average_cell_voltage_[i] = sensor;}
-      if (sensor->get_name() == average_cell_temp_name) {
-        average_cell_temp_[i] = sensor;}
-      if (sensor->get_name() == max_cell_voltage_name) {
-        max_cell_voltage_[i] = sensor;}
-      if (sensor->get_name() == min_cell_voltage_name) {
-        min_cell_voltage_[i] = sensor;}
-      if (sensor->get_name() == max_cell_temp_name) {
-        max_cell_temp_[i] = sensor;}
-      if (sensor->get_name() == min_cell_temp_name) {
-        min_cell_temp_[i] = sensor;}
-      if (sensor->get_name() == maxdiscurt_name) {
-        maxdiscurt_[i] = sensor;}
-      if (sensor->get_name() == maxchgcurt_name) {
-        maxchgcurt_[i] = sensor;}
-      if (sensor->get_name() == cell_1_name) {
-        cell_1_[i] = sensor;}
-      if (sensor->get_name() == cell_2_name) {
-        cell_2_[i] = sensor;}
-      if (sensor->get_name() == cell_3_name) {
-        cell_3_[i] = sensor;}
-      if (sensor->get_name() == cell_4_name) {
-        cell_4_[i] = sensor;}
-      if (sensor->get_name() == cell_5_name) {
-        cell_5_[i] = sensor;}
-      if (sensor->get_name() == cell_6_name) {
-        cell_6_[i] = sensor;}
-      if (sensor->get_name() == cell_7_name) {
-        cell_7_[i] = sensor;}
-      if (sensor->get_name() == cell_8_name) {
-        cell_8_[i] = sensor;}
-      if (sensor->get_name() == cell_9_name) {
-        cell_9_[i] = sensor;}
-      if (sensor->get_name() == cell_10_name) {
-        cell_10_[i] = sensor;}
-      if (sensor->get_name() == cell_11_name) {
-        cell_11_[i] = sensor;}
-      if (sensor->get_name() == cell_12_name) {
-        cell_12_[i] = sensor;}
-      if (sensor->get_name() == cell_13_name) {
-        cell_13_[i] = sensor;}
-      if (sensor->get_name() == cell_14_name) {
-        cell_14_[i] = sensor;}
-      if (sensor->get_name() == cell_15_name) {
-        cell_15_[i] = sensor;}
-      if (sensor->get_name() == cell_16_name) {
-        cell_16_[i] = sensor;}
-      if (sensor->get_name() == cell_temp_1_name) {
-        cell_temp_1_[i] = sensor;}
-      if (sensor->get_name() == cell_temp_2_name) {
-        cell_temp_2_[i] = sensor;}
-      if (sensor->get_name() == cell_temp_3_name) {
-        cell_temp_3_[i] = sensor;}
-      if (sensor->get_name() == cell_temp_4_name) {
-        cell_temp_4_[i] = sensor;}
-      if (sensor->get_name() == case_temp_name) {
-        case_temp_[i] = sensor;}
-      if (sensor->get_name() == power_temp_name) {
-        power_temp_[i] = sensor;}
+      for (const auto &[name, sensor_vector] : sensor_map) {
+        if (sensor->get_name() == "bms" + std::to_string(i) + " " + name) {
+          (*sensor_vector)[i] = sensor;
+        }
+      }
     }
-  }
+  } 
 }
 
 void SeplosParser::loop() {
