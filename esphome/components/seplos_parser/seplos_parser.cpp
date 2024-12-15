@@ -24,7 +24,30 @@ void SeplosParser::setup() {
    min_cell_temp_.resize(bms_count_, nullptr);
    maxdiscurt_.resize(bms_count_, nullptr);
    maxchgcurt_.resize(bms_count_, nullptr);
-
+   cell_1_.resize(bms_count_, nullptr);
+   cell_2_.resize(bms_count_, nullptr);
+   cell_3_.resize(bms_count_, nullptr);
+   cell_4_.resize(bms_count_, nullptr);
+   cell_5_.resize(bms_count_, nullptr);
+   cell_6_.resize(bms_count_, nullptr);
+   cell_7_.resize(bms_count_, nullptr);
+   cell_8_.resize(bms_count_, nullptr);
+   cell_9_.resize(bms_count_, nullptr);
+   cell_10_.resize(bms_count_, nullptr);
+   cell_11_.resize(bms_count_, nullptr);
+   cell_12_.resize(bms_count_, nullptr);
+   cell_13_.resize(bms_count_, nullptr);
+   cell_14_.resize(bms_count_, nullptr);
+   cell_15_.resize(bms_count_, nullptr);
+   cell_16_.resize(bms_count_, nullptr);
+   cell_temp_1_.resize(bms_count_, nullptr);
+   cell_temp_2_.resize(bms_count_, nullptr);
+   cell_temp_3_.resize(bms_count_, nullptr);
+   cell_temp_4_.resize(bms_count_, nullptr);
+   case_temp_.resize(bms_count_, nullptr);
+   power_temp_.resize(bms_count_, nullptr);
+   
+   
    for (auto *sensor : this->sensors_) {
     for (int i = 0; i < bms_count_; i++) {
       std::string pack_voltage_name = "bms" + std::to_string(i) + " pack_voltage";
@@ -43,6 +66,29 @@ void SeplosParser::setup() {
       std::string min_cell_temp_name = "bms" + std::to_string(i) + " min_cell_temp";
       std::string maxdiscurt_name = "bms" + std::to_string(i) + " maxdiscurt";
       std::string maxchgcurt_name = "bms" + std::to_string(i) + " maxchgcurt";
+      std::string cell_1_name = "bms" + std::to_string(i) + " cell_1";
+      std::string cell_2_name = "bms" + std::to_string(i) + " cell_2";
+      std::string cell_3_name = "bms" + std::to_string(i) + " cell_3";
+      std::string cell_4_name = "bms" + std::to_string(i) + " cell_4";
+      std::string cell_5_name = "bms" + std::to_string(i) + " cell_5";
+      std::string cell_6_name = "bms" + std::to_string(i) + " cell_6";
+      std::string cell_7_name = "bms" + std::to_string(i) + " cell_7";
+      std::string cell_8_name = "bms" + std::to_string(i) + " cell_8";
+      std::string cell_9_name = "bms" + std::to_string(i) + " cell_9";
+      std::string cell_10_name = "bms" + std::to_string(i) + " cell_10";
+      std::string cell_11_name = "bms" + std::to_string(i) + " cell_11";
+      std::string cell_12_name = "bms" + std::to_string(i) + " cell_12";
+      std::string cell_13_name = "bms" + std::to_string(i) + " cell_13";
+      std::string cell_14_name = "bms" + std::to_string(i) + " cell_14";
+      std::string cell_15_name = "bms" + std::to_string(i) + " cell_15";
+      std::string cell_16_name = "bms" + std::to_string(i) + " cell_16";
+      std::string cell_temp_1_name = "bms" + std::to_string(i) + " cell_temp_1";
+      std::string cell_temp_2_name = "bms" + std::to_string(i) + " cell_temp_2";
+      std::string cell_temp_3_name = "bms" + std::to_string(i) + " cell_temp_3";
+      std::string cell_temp_4_name = "bms" + std::to_string(i) + " cell_temp_4";
+      std::string case_temp_name = "bms" + std::to_string(i) + " case_temp";
+      std::string power_temp_name = "bms" + std::to_string(i) + " power_temp";
+      
        
       if (sensor->get_name() == pack_voltage_name) {
         pack_voltage_[i] = sensor;}
@@ -76,6 +122,50 @@ void SeplosParser::setup() {
         maxdiscurt_[i] = sensor;}
       if (sensor->get_name() == maxchgcurt_name) {
         maxchgcurt_[i] = sensor;}
+      if (sensor->get_name() == cell_1_name) {
+        cell_1_[i] = sensor;}
+      if (sensor->get_name() == cell_2_name) {
+        cell_2_[i] = sensor;}
+      if (sensor->get_name() == cell_3_name) {
+        cell_3_[i] = sensor;}
+      if (sensor->get_name() == cell_4_name) {
+        cell_4_[i] = sensor;}
+      if (sensor->get_name() == cell_5_name) {
+        cell_5_[i] = sensor;}
+      if (sensor->get_name() == cell_6_name) {
+        cell_6_[i] = sensor;}
+      if (sensor->get_name() == cell_7_name) {
+        cell_7_[i] = sensor;}
+      if (sensor->get_name() == cell_8_name) {
+        cell_8_[i] = sensor;}
+      if (sensor->get_name() == cell_9_name) {
+        cell_9_[i] = sensor;}
+      if (sensor->get_name() == cell_10_name) {
+        cell_10_[i] = sensor;}
+      if (sensor->get_name() == cell_11_name) {
+        cell_11_[i] = sensor;}
+      if (sensor->get_name() == cell_12_name) {
+        cell_12_[i] = sensor;}
+      if (sensor->get_name() == cell_13_name) {
+        cell_13_[i] = sensor;}
+      if (sensor->get_name() == cell_14_name) {
+        cell_14_[i] = sensor;}
+      if (sensor->get_name() == cell_15_name) {
+        cell_15_[i] = sensor;}
+      if (sensor->get_name() == cell_16_name) {
+        cell_16_[i] = sensor;}
+      if (sensor->get_name() == cell_temp_1_name) {
+        cell_temp_1_[i] = sensor;}
+      if (sensor->get_name() == cell_temp_2_name) {
+        cell_temp_2_[i] = sensor;}
+      if (sensor->get_name() == cell_temp_3_name) {
+        cell_temp_3_[i] = sensor;}
+      if (sensor->get_name() == cell_temp_4_name) {
+        cell_temp_4_[i] = sensor;}
+      if (sensor->get_name() == case_temp_name) {
+        case_temp_[i] = sensor;}
+      if (sensor->get_name() == power_temp_name) {
+        power_temp_[i] = sensor;}
     }
   }
 }
@@ -173,51 +263,51 @@ void SeplosParser::process_packet(size_t length) {
   }
 
   if (buffer[2] == 0x34) {
-    //uint16_t cell_1 = (buffer[4] << 8) | buffer[3];
-    //  uint16_t cell_2 = (buffer[6] << 8) | buffer[5];
-    //  uint16_t cell_3 = (buffer[8] << 8) | buffer[7];
-    //  uint16_t cell_4 = (buffer[10] << 8) | buffer[9];
-    //  uint16_t cell_5 = (buffer[12] << 8) | buffer[11];
-    //  uint16_t cell_6 = (buffer[14] << 8) | buffer[13];
-    //  uint16_t cell_7 = (buffer[16] << 8) | buffer[15];
-    //  uint16_t cell_8 = (buffer[18] << 8) | buffer[17];
-    //  uint16_t cell_9 = (buffer[20] << 8) | buffer[19];
-    //  uint16_t cell_10 = (buffer[22] << 8) | buffer[21];
-    //  uint16_t cell_11 = (buffer[24] << 8) | buffer[23];
-    //  uint16_t cell_12 = (buffer[26] << 8) | buffer[25];
-    //  uint16_t cell_13 = (buffer[28] << 8) | buffer[27];
-    //  uint16_t cell_14 = (buffer[30] << 8) | buffer[29];
-    //  uint16_t cell_15 = (buffer[32] << 8) | buffer[31];
-    //  uint16_t cell_16 = (buffer[34] << 8) | buffer[33];
-    //  uint16_t cell_temp_1 = (buffer[36] << 8) | buffer[35];
-    //  uint16_t cell_temp_2 = (buffer[38] << 8) | buffer[37];
-    //  uint16_t cell_temp_3 = (buffer[40] << 8) | buffer[39];
-    //  uint16_t cell_temp_4 = (buffer[42] << 8) | buffer[41];
-    //  uint16_t case_temp = (buffer[52] << 8) | buffer[51];
-    //  uint16_t power_temp = (buffer[54] << 8) | buffer[53];
+      uint16_t cell_1 = (buffer[3] << 8) | buffer[4];
+      uint16_t cell_2 = (buffer[5] << 8) | buffer[6];
+      uint16_t cell_3 = (buffer[7] << 8) | buffer[8];
+      uint16_t cell_4 = (buffer[9] << 8) | buffer[10];
+      uint16_t cell_5 = (buffer[11] << 8) | buffer[12];
+      uint16_t cell_6 = (buffer[13] << 8) | buffer[14];
+      uint16_t cell_7 = (buffer[15] << 8) | buffer[16];
+      uint16_t cell_8 = (buffer[17] << 8) | buffer[18];
+      uint16_t cell_9 = (buffer[19] << 8) | buffer[20];
+      uint16_t cell_10 = (buffer[21] << 8) | buffer[22];
+      uint16_t cell_11 = (buffer[23] << 8) | buffer[24];
+      uint16_t cell_12 = (buffer[25] << 8) | buffer[26];
+      uint16_t cell_13 = (buffer[27] << 8) | buffer[28];
+      uint16_t cell_14 = (buffer[29] << 8) | buffer[30];
+      uint16_t cell_15 = (buffer[31] << 8) | buffer[32];
+      uint16_t cell_16 = (buffer[33] << 8) | buffer[34];
+      uint16_t cell_temp_1 = (buffer[35] << 8) | buffer[36];
+      uint16_t cell_temp_2 = (buffer[37] << 8) | buffer[38];
+      uint16_t cell_temp_3 = (buffer[39] << 8) | buffer[40];
+      uint16_t cell_temp_4 = (buffer[41] << 8) | buffer[42];
+      uint16_t case_temp = (buffer[51] << 8) | buffer[52];
+      uint16_t power_temp = (buffer[53] << 8) | buffer[54];
 
-    //  bms[bms_index].cell_1->publish_state(cell_1 / 1000);
-    //  bms[bms_index].cell_2->publish_state(cell_2 / 1000);
-    //  bms[bms_index].cell_3->publish_state(cell_3 / 1000);
-    //  bms[bms_index].cell_4->publish_state(cell_4 / 1000);
-    //  bms[bms_index].cell_5->publish_state(cell_5 / 1000);
-    //  bms[bms_index].cell_6->publish_state(cell_6 / 1000);
-    //  bms[bms_index].cell_7->publish_state(cell_7 / 1000);
-    //  bms[bms_index].cell_8->publish_state(cell_8 / 1000);
-    //  bms[bms_index].cell_9->publish_state(cell_9 / 1000);
-    //  bms[bms_index].cell_10->publish_state(cell_10 / 1000);
-    //  bms[bms_index].cell_11->publish_state(cell_11 / 1000);
-    //  bms[bms_index].cell_12->publish_state(cell_12 / 1000);
-    //  bms[bms_index].cell_13->publish_state(cell_13 / 1000);
-    //  bms[bms_index].cell_14->publish_state(cell_14 / 1000);
-    //  bms[bms_index].cell_15->publish_state(cell_15 / 1000);
-    //  bms[bms_index].cell_16->publish_state(cell_16 / 1000);
-    //  bms[bms_index].cell_temp_1->publish_state(cell_temp_1 / 10 - 273.15);
-    //  bms[bms_index].cell_temp_2->publish_state(cell_temp_2 / 10 - 273.15);
-    //  bms[bms_index].cell_temp_3->publish_state(cell_temp_3 / 10 - 273.15);
-    //  bms[bms_index].cell_temp_4->publish_state(cell_temp_4 / 10 - 273.15);
-    //  bms[bms_index].case_temp->publish_state(case_temp / 10 - 273.15);
-    //  bms[bms_index].power_temp->publish_state(power_temp / 10 - 273.15);
+      cell_1_[bms_index]->publish_state(cell_1 / 1000.0f);
+      cell_2_[bms_index]->publish_state(cell_2 / 1000.0f);
+      cell_3_[bms_index]->publish_state(cell_3 / 1000.0f);
+      cell_4_[bms_index]->publish_state(cell_4 / 1000.0f);
+      cell_5_[bms_index]->publish_state(cell_5 / 1000.0f);
+      cell_6_[bms_index]->publish_state(cell_6 / 1000.0f);
+      cell_7_[bms_index]->publish_state(cell_7 / 1000.0f);
+      cell_8_[bms_index]->publish_state(cell_8 / 1000.0f);
+      cell_9_[bms_index]->publish_state(cell_9 / 1000.0f);
+      cell_10_[bms_index]->publish_state(cell_10 / 1000.0f);
+      cell_11_[bms_index]->publish_state(cell_11 / 1000.0f);
+      cell_12_[bms_index]->publish_state(cell_12 / 1000.0f);
+      cell_13_[bms_index]->publish_state(cell_13 / 1000.0f);
+      cell_14_[bms_index]->publish_state(cell_14 / 1000.0f);
+      cell_15_[bms_index]->publish_state(cell_15 / 1000.0f);
+      cell_16_[bms_index]->publish_state(cell_16 / 1000.0f);
+      cell_temp_1_[bms_index]->publish_state(cell_temp_1 / 10.0f - 273.15f);
+      cell_temp_2_[bms_index]->publish_state(cell_temp_2 / 10.0f - 273.15f);
+      cell_temp_3_[bms_index]->publish_state(cell_temp_3 / 10.0f - 273.15f);
+      cell_temp_4_[bms_index]->publish_state(cell_temp_4 / 10.0f - 273.15f);
+      case_temp_[bms_index]->publish_state(case_temp / 10.0f - 273.15f);
+      power_temp_[bms_index]->publish_state(power_temp / 10.0f - 273.15f);
   }
 }
 uint16_t SeplosParser::calculate_modbus_crc(const std::vector<uint8_t>& data, size_t length) {
