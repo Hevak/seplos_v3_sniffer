@@ -284,7 +284,7 @@ const uint16_t crc_table[256] = {
   0x8201, 0x42C0, 0x4380, 0x8341, 0x4100, 0x81C1, 0x8081, 0x4040
 };
 
-uint16_t SeplosParser::calculate_modbus_crc(const std::vector<uint8_t> &data, size_t length) {
+uint16_t SeplosParser::calculate_modbus_crc(const std::deque<uint8_t> &data, size_t length) {
   uint16_t crc = 0xFFFF;
   for (size_t i = 0; i < length; i++) {
     uint8_t index = crc ^ data[i];
