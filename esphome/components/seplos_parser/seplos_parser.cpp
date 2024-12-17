@@ -165,40 +165,31 @@ void SeplosParser::process_packet(size_t length) {
 
   if (buffer[2] == 0x24) {  // 36-Byte-Paket
     //ESP_LOGI("DEBUG", "buffer[3]: 0x%02X, buffer[4]: 0x%02X", buffer[3], buffer[4]);
-    uint16_t pack_voltage = (buffer[3] << 8) | buffer[4];
-    int16_t current = (buffer[5] << 8) | buffer[6];
-    uint16_t remaining_capacity = (buffer[7] << 8) | buffer[8];
-    uint16_t total_capacity = (buffer[9] << 8) | buffer[10];
-    uint16_t total_discharge_capacity = (buffer[11] << 8) | buffer[12];
-    uint16_t soc = (buffer[13] << 8) | buffer[14];
-    uint16_t soh = (buffer[15] << 8) | buffer[16];
-    uint16_t cycle_count = (buffer[17] << 8) | buffer[18];
-    uint16_t average_cell_voltage = (buffer[19] << 8) | buffer[20];
-    uint16_t average_cell_temp = (buffer[21] << 8) | buffer[22];
-    uint16_t max_cell_voltage = (buffer[23] << 8) | buffer[24];
-    uint16_t min_cell_voltage = (buffer[25] << 8) | buffer[26];
-    uint16_t max_cell_temp = (buffer[27] << 8) | buffer[28];
-    uint16_t min_cell_temp = (buffer[29] << 8) | buffer[30];
-    uint16_t maxdiscurt = (buffer[33] << 8) | buffer[34];
-    uint16_t maxchgcurt = (buffer[35] << 8) | buffer[36];
+    std::vector<std::pair<sensor::Sensor*, float>> updates;
 
-    //ESP_LOGI("DEBUG", "pack_voltage: %d", pack_voltage);
-    pack_voltage_[bms_index]->publish_state(pack_voltage / 100.0f);
-    current_[bms_index]->publish_state(current / 100.0f);
-    remaining_capacity_[bms_index]->publish_state(remaining_capacity / 1000.0f);
-    total_capacity_[bms_index]->publish_state(total_capacity / 100.0f);
-    total_discharge_capacity_[bms_index]->publish_state(total_discharge_capacity / 0.1f);
-    soc_[bms_index]->publish_state(soc / 10.0f);
-    soh_[bms_index]->publish_state(soh / 10.0f);
-    cycle_count_[bms_index]->publish_state(cycle_count);
-    average_cell_voltage_[bms_index]->publish_state(average_cell_voltage / 1000.0f);
-    average_cell_temp_[bms_index]->publish_state(average_cell_temp / 10.0f - 273.15f);
-    max_cell_voltage_[bms_index]->publish_state(max_cell_voltage / 1000.0f);
-    min_cell_voltage_[bms_index]->publish_state(min_cell_voltage / 1000.0f);
-    max_cell_temp_[bms_index]->publish_state(max_cell_temp / 10.0f - 273.15f);
-    min_cell_temp_[bms_index]->publish_state(min_cell_temp / 10.0f - 273.15f);
-    maxdiscurt_[bms_index]->publish_state(maxdiscurt / 100.0f);
-    maxchgcurt_[bms_index]->publish_state(maxchgcurt / 100.0f);
+    updates.emplace_back(pack_voltage_[bms_index], (buffer[3] << 8 | buffer[4]) / 100.0f);
+    updates.emplace_back(current_[bms_index], (int16_t(buffer[5] << 8 | buffer[6])) / 100.0f);
+    updates.emplace_back(remaining_capacity_[bms_index], (buffer[7] << 8 | buffer[8]) / 1000.0f);
+    updates.emplace_back(total_capacity_[bms_index], (buffer[9] << 8 | buffer[10]) / 100.0f);
+    updates.emplace_back(total_discharge_capacity_[bms_index], (buffer[11] << 8 | buffer[12]) / 0.1f);
+    updates.emplace_back(soc_[bms_index], (buffer[13] << 8 | buffer[14]) / 10.0f);
+    updates.emplace_back(soh_[bms_index], (buffer[15] << 8 | buffer[16]) / 10.0f);
+    updates.emplace_back(cycle_count_[bms_index], (buffer[17] << 8 | buffer[18]));
+    updates.emplace_back(average_cell_voltage_[bms_index], (buffer[19] << 8 | buffer[20]) / 1000.0f);
+    updates.emplace_back(average_cell_temp_[bms_index], (buffer[21] << 8 | buffer[22]) / 10.0f - 273.15f);
+    updates.emplace_back(max_cell_voltage_[bms_index], (buffer[23] << 8 | buffer[24]) / 1000.0f);
+    updates.emplace_back(min_cell_voltage_[bms_index], (buffer[25] << 8 | buffer[26]) / 1000.0f);
+    updates.emplace_back(max_cell_temp_[bms_index], (buffer[27] << 8 | buffer[28]) / 10.0f - 273.15f);
+    updates.emplace_back(min_cell_temp_[bms_index], (buffer[29] << 8 | buffer[30]) / 10.0f - 273.15f);
+    updates.emplace_back(maxdiscurt_[bms_index], (buffer[33] << 8 | buffer[34]) / 100.0f);
+    updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[66]) / 100.0f);
+
+    // Batch-Updates durchführen
+    for (auto &[sensor, value] : updates) {
+      if (sensor != nullptr) {
+        sensor->publish_state(value);
+      }
+    }
   }
 
   if (buffer[2] == 0x34) {
