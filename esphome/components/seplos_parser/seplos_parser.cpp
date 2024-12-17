@@ -89,15 +89,6 @@ void SeplosParser::setup() {
     {"power_temp", &power_temp_},
   };
 
-  //for (auto *sensor : this->sensors_) {
-  //  for (int i = 0; i < bms_count_; i++) {
-  //    for (const auto &[name, sensor_vector] : sensor_map) {
-  //      if (sensor->get_name() == "bms" + std::to_string(i) + " " + name) {
-  //        (*sensor_vector)[i] = sensor;
-  //      }
-  //    }
-  //  }
-  //} 
   for (auto it = sensor_map.begin(); it != sensor_map.end(); ++it) {
     const std::string &name = it->first;
     std::vector<sensor::Sensor *> *sensor_vector = it->second;
