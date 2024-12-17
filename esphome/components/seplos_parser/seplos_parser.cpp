@@ -135,6 +135,7 @@ void SeplosParser::loop() {
       if (validate_crc(expected_length)) {
         process_packet(expected_length);
         buffer.erase(buffer.begin(), buffer.begin() + expected_length);
+        return;  // Nach dem Verarbeiten eines Pakets direkt aus der loop() aussteigen
       } else {
         buffer.pop_front();
       }
