@@ -184,8 +184,9 @@ void SeplosParser::process_packet(size_t length) {
     updates.emplace_back(maxdiscurt_[bms_index], (buffer[33] << 8 | buffer[34]) / 100.0f);
     updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[66]) / 100.0f);
 
-    // Batch-Updates durchführen
-    for (auto &[sensor, value] : updates) {
+    for (auto &pair : updates) {
+      auto *sensor = pair.first;
+      auto value = pair.second;
       if (sensor != nullptr) {
         sensor->publish_state(value);
       }
