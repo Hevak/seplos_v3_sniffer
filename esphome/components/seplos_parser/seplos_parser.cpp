@@ -182,7 +182,7 @@ void SeplosParser::process_packet(size_t length) {
     updates.emplace_back(max_cell_temp_[bms_index], (buffer[27] << 8 | buffer[28]) / 10.0f - 273.15f);
     updates.emplace_back(min_cell_temp_[bms_index], (buffer[29] << 8 | buffer[30]) / 10.0f - 273.15f);
     updates.emplace_back(maxdiscurt_[bms_index], (buffer[33] << 8 | buffer[34]) / 100.0f);
-    updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[66]) / 100.0f);
+    updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[36]) / 100.0f);
 
     for (auto &pair : updates) {
       auto *sensor = pair.first;
