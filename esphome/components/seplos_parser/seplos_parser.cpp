@@ -107,12 +107,8 @@ void SeplosParser::loop() {
   while (available()) {
     uint8_t byte = read();
     buffer.push_back(byte);
-
-    if (buffer.size() > 100) {
-      buffer.pop_front();
-    }
-
-    while (buffer.size() >= 5) {
+   
+    if (buffer.size() >= 5) {
       if (!is_valid_header()) {
         buffer.pop_front();
         continue;
@@ -120,15 +116,14 @@ void SeplosParser::loop() {
 
       size_t expected_length = get_expected_length();
       if (buffer.size() < expected_length) {
-        break;
-      }
-
-      if (validate_crc(expected_length)) {
-        process_packet(expected_length);
-        buffer.erase(buffer.begin(), buffer.begin() + expected_length);
-        return;  // Nach dem Verarbeiten eines Pakets direkt aus der loop() aussteigen
-      } else {
-        buffer.pop_front();
+        if (validate_crc(expected_length)) {
+          process_packet(expected_length);
+          buffer.clear();
+          return;  // Nach dem Verarbeiten eines Pakets direkt aus der loop() aussteigen
+        } 
+        else {
+          buffer.clear();
+        }
       }
     }
   }
