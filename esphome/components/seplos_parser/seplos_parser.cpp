@@ -160,7 +160,7 @@ void SeplosParser::process_packet(size_t length) {
 
     updates.emplace_back(pack_voltage_[bms_index], (buffer[3] << 8 | buffer[4]) / 100.0f);
     updates.emplace_back(current_[bms_index], (int16_t(buffer[5] << 8 | buffer[6])) / 100.0f);
-    updates.emplace_back(remaining_capacity_[bms_index], (buffer[7] << 8 | buffer[8]) / 1000.0f);
+    updates.emplace_back(remaining_capacity_[bms_index], (buffer[7] << 8 | buffer[8]) / 100.0f);
     updates.emplace_back(total_capacity_[bms_index], (buffer[9] << 8 | buffer[10]) / 100.0f);
     updates.emplace_back(total_discharge_capacity_[bms_index], (buffer[11] << 8 | buffer[12]) / 0.1f);
     updates.emplace_back(soc_[bms_index], (buffer[13] << 8 | buffer[14]) / 10.0f);
@@ -172,8 +172,8 @@ void SeplosParser::process_packet(size_t length) {
     updates.emplace_back(min_cell_voltage_[bms_index], (buffer[25] << 8 | buffer[26]) / 1000.0f);
     updates.emplace_back(max_cell_temp_[bms_index], (buffer[27] << 8 | buffer[28]) / 10.0f - 273.15f);
     updates.emplace_back(min_cell_temp_[bms_index], (buffer[29] << 8 | buffer[30]) / 10.0f - 273.15f);
-    updates.emplace_back(maxdiscurt_[bms_index], (buffer[33] << 8 | buffer[34]) / 100.0f);
-    updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[36]) / 100.0f);
+    updates.emplace_back(maxdiscurt_[bms_index], (buffer[33] << 8 | buffer[34]) / 1.0f);
+    updates.emplace_back(maxchgcurt_[bms_index], (buffer[35] << 8 | buffer[36]) / 1.0f);
 
     for (auto &pair : updates) {
       auto *sensor = pair.first;
