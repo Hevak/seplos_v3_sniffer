@@ -115,7 +115,7 @@ void SeplosParser::loop() {
       }
 
       size_t expected_length = get_expected_length();
-      if (buffer.size() < expected_length) {
+      if (buffer.size() >= expected_length) {
         if (validate_crc(expected_length)) {
           process_packet(expected_length);
           buffer.clear();
