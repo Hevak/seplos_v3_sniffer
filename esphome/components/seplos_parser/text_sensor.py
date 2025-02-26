@@ -1,9 +1,9 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.components import text_sensor
-from . import HUB_CHILD_SCHEMA, CONF_EMPTY_SENSOR_HUB_ID
+from . import HUB_CHILD_SCHEMA, CONF_SEPLOS_PARSER_ID
 
-DEPENDENCIES = ["empty_sensor_hub"]
+DEPENDENCIES = ["seplos_parser"]
 
 CONFIG_SCHEMA = (
     text_sensor.text_sensor_schema()
@@ -13,7 +13,7 @@ CONFIG_SCHEMA = (
 
 
 async def to_code(config):
-    paren = await cg.get_variable(config[CONF_EMPTY_SENSOR_HUB_ID])
+    paren = await cg.get_variable(confif[CONF_SEPLOS_PARSER_ID])
     var = await text_sensor.new_text_sensor(config)
 
     cg.add(paren.register_text_sensor(var))
