@@ -130,12 +130,15 @@ void SeplosParser::loop() {
 }
 
 bool SeplosParser::is_valid_header() {
-  return (buffer[0] >= 0x01 && buffer[0] <= 0x10) &&
-          buffer[1] == 0x04 &&
-         (buffer[2] == 0x24 || buffer[2] == 0x34);
+  return ((buffer[0] >= 0x01 && buffer[0] <= 0x10 && buffer[1] === 0x04 && (buffer[2] === 0x24 || buffer[2] === 0x34)) ||
+         (buffer[0] >= 0x01 && buffer[0] <= 0x10 && buffer[1] === 0x01 && buffer[2] === 0x12));
 }
 size_t SeplosParser::get_expected_length() {
-  return (buffer[2] == 0x24) ? 36 + 2 + 3 : 52 + 2 + 3;
+  // +3 Header, +2 CRC, =+5
+  if (buffer[2] === 0x24) {return 41;} // (0x24) 36+5=41
+  if (buffer[2] === 0x34) {return 57;} // (0x34) 52+5=57
+  if (buffer[1] === 0x01 && buffer[2] === 0x12) {return 23;} // (0x12) 18+5=23
+  return 0; // If an invalid packet arrives
 }
 bool SeplosParser::validate_crc(size_t length) {
   uint16_t received_crc = (buffer[length - 1] << 8) | buffer[length - 2];
