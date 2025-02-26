@@ -12,9 +12,9 @@
 //#ifdef USE_BINARY_SENSOR
 //#include "esphome/components/binary_sensor/binary_sensor.h"
 //#endif
-//#ifdef USE_TEXT_SENSOR
-//#include "esphome/components/text_sensor/text_sensor.h"
-//#endif
+#ifdef USE_TEXT_SENSOR
+#include "esphome/components/text_sensor/text_sensor.h"
+#endif
 
 namespace esphome {
 namespace seplos_parser {
@@ -34,13 +34,13 @@ class SeplosParser : public uart::UARTDevice, public Component {
 // public:
 //  void register_binary_sensor(binary_sensor::BinarySensor *obj) { this->binary_sensors_.push_back(obj); }
 //#endif
-//#ifdef USE_TEXT_SENSOR
-// protected:
-//  std::vector<text_sensor::TextSensor *> text_sensors_;
-//
-// public:
-//  void register_text_sensor(text_sensor::TextSensor *obj) { this->text_sensors_.push_back(obj); }
-//#endif
+#ifdef USE_TEXT_SENSOR
+ protected:
+  std::vector<text_sensor::TextSensor *> text_sensors_;
+
+ public:
+  void register_text_sensor(text_sensor::TextSensor *obj) { this->text_sensors_.push_back(obj); }
+#endif
 
   void set_bms_count(int bms_count);
   void setup() override;
@@ -96,6 +96,13 @@ protected:
   std::vector<sensor::Sensor *> cell_temp_4_;
   std::vector<sensor::Sensor *> case_temp_;
   std::vector<sensor::Sensor *> power_temp_;
+  std::vector<text_sensor::TextSensor *> system_status_;
+  std::vector<text_sensor::TextSensor *> active_balancing_cells_;
+  std::vector<text_sensor::TextSensor *> cell_temperature_alarms_;
+  std::vector<text_sensor::TextSensor *> cell_voltage_alarms_;
+  std::vector<text_sensor::TextSensor *> FET_status_;
+  std::vector<text_sensor::TextSensor *> active_alarms_;
+  std::vector<text_sensor::TextSensor *> active_protections_;
 };
 
 }  // namespace seplos_parser
