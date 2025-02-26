@@ -47,6 +47,13 @@ void SeplosParser::setup() {
    cell_temp_4_.resize(bms_count_, nullptr);
    case_temp_.resize(bms_count_, nullptr);
    power_temp_.resize(bms_count_, nullptr);
+   system_status_.resize(bms_count_, nullptr);
+   active_balancing_cells_.resize(bms_count_, nullptr);
+   cell_temperature_alarms_.resize(bms_count_, nullptr);
+   cell_voltage_alarms_.resize(bms_count_, nullptr);
+   FET_status_.resize(bms_count_, nullptr);
+   active_alarms_.resize(bms_count_, nullptr);
+   active_protections_.resize(bms_count_, nullptr);
    
   std::unordered_map<std::string, std::vector<sensor::Sensor *> *> sensor_map = {
     {"pack_voltage", &pack_voltage_},
@@ -87,6 +94,15 @@ void SeplosParser::setup() {
     {"cell_temp_4", &cell_temp_4_},
     {"case_temp", &case_temp_},
     {"power_temp", &power_temp_},
+  };
+  std::unordered_map<std::string, std::vector<text_sensor::TextSensor *> *> sensor_map = {
+   {"system_status", &system_status_},
+   {"active_balancing_cells", &active_balancing_cells_},
+   {"cell_temperature_alarms", &cell_temperature_alarms_},
+   {"cell_voltage_alarms", &cell_voltage_alarms_},
+   {"FET_status", &FET_status_},
+   {"active_alarms", &active_alarms_},
+   {"active_protections", &active_protections_},
   };
 
   for (auto it = sensor_map.begin(); it != sensor_map.end(); ++it) {
