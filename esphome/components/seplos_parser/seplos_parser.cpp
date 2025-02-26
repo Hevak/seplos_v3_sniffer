@@ -9,115 +9,90 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-   pack_voltage_.resize(bms_count_, nullptr);
-   current_.resize(bms_count_, nullptr);
-   remaining_capacity_.resize(bms_count_, nullptr);
-   total_capacity_.resize(bms_count_, nullptr);
-   total_discharge_capacity_.resize(bms_count_, nullptr);
-   soc_.resize(bms_count_, nullptr);
-   soh_.resize(bms_count_, nullptr);
-   cycle_count_.resize(bms_count_, nullptr);
-   average_cell_voltage_.resize(bms_count_, nullptr);
-   average_cell_temp_.resize(bms_count_, nullptr);
-   max_cell_voltage_.resize(bms_count_, nullptr);
-   min_cell_voltage_.resize(bms_count_, nullptr);
-   max_cell_temp_.resize(bms_count_, nullptr);
-   min_cell_temp_.resize(bms_count_, nullptr);
-   maxdiscurt_.resize(bms_count_, nullptr);
-   maxchgcurt_.resize(bms_count_, nullptr);
-   cell_1_.resize(bms_count_, nullptr);
-   cell_2_.resize(bms_count_, nullptr);
-   cell_3_.resize(bms_count_, nullptr);
-   cell_4_.resize(bms_count_, nullptr);
-   cell_5_.resize(bms_count_, nullptr);
-   cell_6_.resize(bms_count_, nullptr);
-   cell_7_.resize(bms_count_, nullptr);
-   cell_8_.resize(bms_count_, nullptr);
-   cell_9_.resize(bms_count_, nullptr);
-   cell_10_.resize(bms_count_, nullptr);
-   cell_11_.resize(bms_count_, nullptr);
-   cell_12_.resize(bms_count_, nullptr);
-   cell_13_.resize(bms_count_, nullptr);
-   cell_14_.resize(bms_count_, nullptr);
-   cell_15_.resize(bms_count_, nullptr);
-   cell_16_.resize(bms_count_, nullptr);
-   cell_temp_1_.resize(bms_count_, nullptr);
-   cell_temp_2_.resize(bms_count_, nullptr);
-   cell_temp_3_.resize(bms_count_, nullptr);
-   cell_temp_4_.resize(bms_count_, nullptr);
-   case_temp_.resize(bms_count_, nullptr);
-   power_temp_.resize(bms_count_, nullptr);
-   system_status_.resize(bms_count_, nullptr);
-   active_balancing_cells_.resize(bms_count_, nullptr);
-   cell_temperature_alarms_.resize(bms_count_, nullptr);
-   cell_voltage_alarms_.resize(bms_count_, nullptr);
-   FET_status_.resize(bms_count_, nullptr);
-   active_alarms_.resize(bms_count_, nullptr);
-   active_protections_.resize(bms_count_, nullptr);
-   
-  std::unordered_map<std::string, std::vector<sensor::Sensor *> *> sensor_map = {
-    {"pack_voltage", &pack_voltage_},
-    {"current", &current_},
-    {"remaining_capacity", &remaining_capacity_},
-    {"total_capacity", &total_capacity_},
-    {"total_discharge_capacity", &total_discharge_capacity_},
-    {"soc", &soc_},
-    {"soh", &soh_},
-    {"cycle_count", &cycle_count_},
-    {"average_cell_voltage", &average_cell_voltage_},
-    {"average_cell_temp", &average_cell_temp_},
-    {"max_cell_voltage", &max_cell_voltage_},
-    {"min_cell_voltage", &min_cell_voltage_},
-    {"max_cell_temp", &max_cell_temp_},
-    {"min_cell_temp", &min_cell_temp_},
-    {"maxdiscurt", &maxdiscurt_},
-    {"maxchgcurt", &maxchgcurt_},
-    {"cell_1", &cell_1_},
-    {"cell_2", &cell_2_},
-    {"cell_3", &cell_3_},
-    {"cell_4", &cell_4_},
-    {"cell_5", &cell_5_},
-    {"cell_6", &cell_6_},
-    {"cell_7", &cell_7_},
-    {"cell_8", &cell_8_},
-    {"cell_9", &cell_9_},
-    {"cell_10", &cell_10_},
-    {"cell_11", &cell_11_},
-    {"cell_12", &cell_12_},
-    {"cell_13", &cell_13_},
-    {"cell_14", &cell_14_},
-    {"cell_15", &cell_15_},
-    {"cell_16", &cell_16_},
-    {"cell_temp_1", &cell_temp_1_},
-    {"cell_temp_2", &cell_temp_2_},
-    {"cell_temp_3", &cell_temp_3_},
-    {"cell_temp_4", &cell_temp_4_},
-    {"case_temp", &case_temp_},
-    {"power_temp", &power_temp_},
-  };
-  std::unordered_map<std::string, std::vector<text_sensor::TextSensor *> *> sensor_map = {
-   {"system_status", &system_status_},
-   {"active_balancing_cells", &active_balancing_cells_},
-   {"cell_temperature_alarms", &cell_temperature_alarms_},
-   {"cell_voltage_alarms", &cell_voltage_alarms_},
-   {"FET_status", &FET_status_},
-   {"active_alarms", &active_alarms_},
-   {"active_protections", &active_protections_},
-  };
+   // Initialisierung der Sensorvektoren
+   std::vector<std::vector<sensor::Sensor *> *> sensor_vectors = {
+       &pack_voltage_, &current_, &remaining_capacity_, &total_capacity_,
+       &total_discharge_capacity_, &soc_, &soh_, &cycle_count_,
+       &average_cell_voltage_, &average_cell_temp_, &max_cell_voltage_,
+       &min_cell_voltage_, &max_cell_temp_, &min_cell_temp_,
+       &maxdiscurt_, &maxchgcurt_, &cell_1_, &cell_2_, &cell_3_, &cell_4_,
+       &cell_5_, &cell_6_, &cell_7_, &cell_8_, &cell_9_, &cell_10_,
+       &cell_11_, &cell_12_, &cell_13_, &cell_14_, &cell_15_, &cell_16_,
+       &cell_temp_1_, &cell_temp_2_, &cell_temp_3_, &cell_temp_4_,
+       &case_temp_, &power_temp_
+   };
 
-  for (auto it = sensor_map.begin(); it != sensor_map.end(); ++it) {
-    const std::string &name = it->first;
-    std::vector<sensor::Sensor *> *sensor_vector = it->second;
+   for (auto *vec : sensor_vectors) {
+       vec->resize(bms_count_, nullptr);
+   }
 
-    for (auto *sensor : this->sensors_) {
-      for (int i = 0; i < bms_count_; i++) {
-        if (sensor->get_name() == "bms" + std::to_string(i) + " " + name) {
-        (*sensor_vector)[i] = sensor;
-        }
-      }
-    } 
-  }
+   std::vector<std::vector<text_sensor::TextSensor *> *> text_sensor_vectors = {
+       &system_status_, &active_balancing_cells_, &cell_temperature_alarms_,
+       &cell_voltage_alarms_, &FET_status_, &active_alarms_, &active_protections_
+   };
+
+   for (auto *vec : text_sensor_vectors) {
+       vec->resize(bms_count_, nullptr);
+   }
+
+   // Zuordnung der Sensornamen zu den jeweiligen Vektoren
+   std::unordered_map<std::string, std::vector<sensor::Sensor *> *> sensor_map = {
+       {"pack_voltage", &pack_voltage_}, {"current", &current_},
+       {"remaining_capacity", &remaining_capacity_}, {"total_capacity", &total_capacity_},
+       {"total_discharge_capacity", &total_discharge_capacity_}, {"soc", &soc_},
+       {"soh", &soh_}, {"cycle_count", &cycle_count_}, {"average_cell_voltage", &average_cell_voltage_},
+       {"average_cell_temp", &average_cell_temp_}, {"max_cell_voltage", &max_cell_voltage_},
+       {"min_cell_voltage", &min_cell_voltage_}, {"max_cell_temp", &max_cell_temp_},
+       {"min_cell_temp", &min_cell_temp_}, {"maxdiscurt", &maxdiscurt_},
+       {"maxchgcurt", &maxchgcurt_}, {"cell_1", &cell_1_}, {"cell_2", &cell_2_},
+       {"cell_3", &cell_3_}, {"cell_4", &cell_4_}, {"cell_5", &cell_5_},
+       {"cell_6", &cell_6_}, {"cell_7", &cell_7_}, {"cell_8", &cell_8_},
+       {"cell_9", &cell_9_}, {"cell_10", &cell_10_}, {"cell_11", &cell_11_},
+       {"cell_12", &cell_12_}, {"cell_13", &cell_13_}, {"cell_14", &cell_14_},
+       {"cell_15", &cell_15_}, {"cell_16", &cell_16_}, {"cell_temp_1", &cell_temp_1_},
+       {"cell_temp_2", &cell_temp_2_}, {"cell_temp_3", &cell_temp_3_},
+       {"cell_temp_4", &cell_temp_4_}, {"case_temp", &case_temp_},
+       {"power_temp", &power_temp_}
+   };
+
+   std::unordered_map<std::string, std::vector<text_sensor::TextSensor *> *> text_sensor_map = {
+       {"system_status", &system_status_}, {"active_balancing_cells", &active_balancing_cells_},
+       {"cell_temperature_alarms", &cell_temperature_alarms_}, {"cell_voltage_alarms", &cell_voltage_alarms_},
+       {"FET_status", &FET_status_}, {"active_alarms", &active_alarms_},
+       {"active_protections", &active_protections_}
+   };
+
+   // Zuordnung der Sensor-Objekte
+   for (auto &entry : sensor_map) {
+       const std::string &name = entry.first;
+       std::vector<sensor::Sensor *> *sensor_vector = entry.second;
+
+       for (int i = 0; i < bms_count_; i++) {
+           std::string expected_name = "bms" + std::to_string(i) + " " + name;
+           for (auto *sensor : this->sensors_) {
+               if (sensor->get_name() == expected_name) {
+                   (*sensor_vector)[i] = sensor;
+               }
+           }
+       }
+   }
+
+   // Zuordnung der Text-Sensor-Objekte
+   for (auto &entry : text_sensor_map) {
+       const std::string &name = entry.first;
+       std::vector<text_sensor::TextSensor *> *text_sensor_vector = entry.second;
+
+       for (int i = 0; i < bms_count_; i++) {
+           std::string expected_name = "bms" + std::to_string(i) + " " + name;
+           for (auto *sensor : this->text_sensors_) {
+               if (sensor->get_name() == expected_name) {
+                   (*text_sensor_vector)[i] = sensor;
+               }
+           }
+       }
+   }
 }
+
 
 void SeplosParser::loop() {
   while (available()) {
