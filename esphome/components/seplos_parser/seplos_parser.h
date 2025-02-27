@@ -5,6 +5,7 @@
 #include "esphome/components/uart/uart.h"
 #include <vector>
 #include <deque>
+#include <array>
 
 #ifdef USE_SENSOR
 #include "esphome/components/sensor/sensor.h"
@@ -57,7 +58,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
 private:
   int bms_count_;  // Variable zur Speicherung von bms_count
   uint32_t update_interval_;
-  std::vector<uint32_t, 16> last_updates_; // Timer für jedes BMS-Gerät
+  std::array<uint32_t, 16> last_updates_; // Timer für jedes BMS-Gerät
   //std::vector<uint8_t> buffer;
   std::deque<uint8_t> buffer;
 
