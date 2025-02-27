@@ -48,7 +48,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
   void loop() override;
   void dump_config() override;
   bool is_valid_header();
-  bool should_update();
+  bool should_update(int bms_index);
   size_t get_expected_length();
   bool validate_crc(size_t length);
   void process_packet(size_t length);
