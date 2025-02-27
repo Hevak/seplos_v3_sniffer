@@ -2,13 +2,12 @@
 #include "esphome/core/log.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/helpers.h"
-#include "esphome/core/strings.h"
 #include <unordered_map>
 
 namespace esphome {
 namespace seplos_parser {
 
-using esphome::string::join;
+using esphome::helpers::concat;
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
@@ -317,7 +316,7 @@ void SeplosParser::process_packet(size_t length) {
     if (buffer[20] & 0x80) active_protections.push_back("Aerosol Alarm");
 
     auto format_list = [](const std::vector<int>& list, const std::string& label) {
-      return list.empty() ? "" : label + ": " + join(list, ", ");
+      return list.empty() ? "" : concat(label, ": ", esphome::helpers::join(list, ", "));
     };
 
     std::string volt_str = format_list(low_voltage_cells, "Low") +
@@ -330,11 +329,11 @@ void SeplosParser::process_packet(size_t length) {
 
     if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
     if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
-    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(balancing_cells.empty() ? "" : join(balancing_cells, ", "));
-    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(join(system_status, ", "));
-    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join(fet_status, ", "));
-    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(active_alarms.empty() ? "" : join(active_alarms, ", "));
-    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(active_protections.empty() ? "" : join(active_protections, ", "));
+    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(balancing_cells.empty() ? "" : esphome::helpers::join(balancing_cells, ", "));
+    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(esphome::helpers::join(system_status, ", "));
+    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(esphome::helpers::join(fet_status, ", "));
+    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(active_alarms.empty() ? "" : esphome::helpers::join(active_alarms, ", "));
+    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(active_protections.empty() ? "" : esphome::helpers::join(active_protections, ", "));
   }
 }
 
