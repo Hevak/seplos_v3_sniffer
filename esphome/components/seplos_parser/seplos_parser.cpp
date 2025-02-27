@@ -314,25 +314,25 @@ void SeplosParser::process_packet(size_t length) {
     if (buffer[20] & 0x40) active_protections.push_back("Key Fault");
     if (buffer[20] & 0x80) active_protections.push_back("Aerosol Alarm");
 
-    auto format_list = [](const std::vector<int>& list, const std::string& label) {
-      return list.empty() ? "" : label + ": " + esphome::join(list, ", ");
+    auto format_list = [](const std::vector<int>& list, const std::string& label) -> std::string {
+      return list.empty() ? "" : label + ": " + esphome::str_util::join(list, ", ");
     };
 
     std::string volt_str = format_list(low_voltage_cells, "Low");
-    if (!volt_str.empty() && !high_voltage_cells.empty()) volt_str += " | ";
-    volt_str += format_list(high_voltage_cells, "High");
+    if (!volt_str.empty() && !high_voltage_cells.empty()) volt_str += " | " + format_list(high_voltage_cells, "High");
+    else volt_str += format_list(high_voltage_cells, "High");
 
     std::string temp_str = format_list(low_temp_cells, "Low");
-    if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | ";
-    temp_str += format_list(high_temp_cells, "High");
+    if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | " + format_list(high_temp_cells, "High");
+    else temp_str += format_list(high_temp_cells, "High");
 
     if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
     if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
-    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(balancing_cells.empty() ? "" : esphome::join(balancing_cells, ", "));
-    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(esphome::join(system_status, ", "));
-    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(esphome::join(fet_status, ", "));
-    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(active_alarms.empty() ? "" : esphome::join(active_alarms, ", "));
-    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(active_protections.empty() ? "" : esphome::join(active_protections, ", "));
+    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(balancing_cells.empty() ? "" : esphome::str_util::join(balancing_cells, ", "));
+    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(esphome::str_util::join(system_status, ", "));
+    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(esphome::str_util::join(fet_status, ", "));
+    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(active_alarms.empty() ? "" : esphome::str_util::join(active_alarms, ", "));
+    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(active_protections.empty() ? "" : esphome::str_util::join(active_protections, ", "));
   }
 }
 
