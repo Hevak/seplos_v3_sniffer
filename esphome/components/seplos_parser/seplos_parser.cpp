@@ -257,61 +257,61 @@ void SeplosParser::process_packet(size_t length) {
     if (buffer[12] & 0x40) active_alarms.push_back("Pack Low Voltage Alarm");
     if (buffer[12] & 0x80) active_protections.push_back("Pack Under Voltage Protection");
 
-    if (buffer[13] & 0x01) active_Alarms.push_back("Charge High Temperature Alarm");
-    if (buffer[13] & 0x02) active_Protections.push_back("Charge High Temperature Protection");
-    if (buffer[13] & 0x04) active_Alarms.push_back("Charge Low Temperature Alarm");
-    if (buffer[13] & 0x08) active_Protections.push_back("Charge Under Temperature Protection");
-    if (buffer[13] & 0x10) active_Alarms.push_back("Discharge High Temperature Alarm");
-    if (buffer[13] & 0x20) active_Protections.push_back("Discharge Over Temperature Protection");
-    if (buffer[13] & 0x40) active_Alarms.push_back("Discharge Low Temperature Alarm");
-    if (buffer[13] & 0x80) active_Protections.push_back("Discharge Under Temperature Protection");
+    if (buffer[13] & 0x01) active_alarms.push_back("Charge High Temperature Alarm");
+    if (buffer[13] & 0x02) active_protections.push_back("Charge High Temperature Protection");
+    if (buffer[13] & 0x04) active_alarms.push_back("Charge Low Temperature Alarm");
+    if (buffer[13] & 0x08) active_protections.push_back("Charge Under Temperature Protection");
+    if (buffer[13] & 0x10) active_alarms.push_back("Discharge High Temperature Alarm");
+    if (buffer[13] & 0x20) active_protections.push_back("Discharge Over Temperature Protection");
+    if (buffer[13] & 0x40) active_alarms.push_back("Discharge Low Temperature Alarm");
+    if (buffer[13] & 0x80) active_protections.push_back("Discharge Under Temperature Protection");
 
-    if (buffer[14] & 0x01) active_Alarms.push_back("High Environment Temperature Alarm");
-    if (buffer[14] & 0x02) active_Protections.push_back("Over Environment Temperature Protection");
-    if (buffer[14] & 0x04) active_Alarms.push_back("Low Environment Temperature Alarm");
-    if (buffer[14] & 0x08) active_Protections.push_back("Under Environment Temperature Protection");
-    if (buffer[14] & 0x10) active_Alarms.push_back("High Power Temperature Alarm");
-    if (buffer[14] & 0x20) active_Protections.push_back("Over Power Temperature Protection");
-    if (buffer[14] & 0x40) active_Alarms.push_back("Cell Temperature Low Heating");
+    if (buffer[14] & 0x01) active_alarms.push_back("High Environment Temperature Alarm");
+    if (buffer[14] & 0x02) active_protections.push_back("Over Environment Temperature Protection");
+    if (buffer[14] & 0x04) active_alarms.push_back("Low Environment Temperature Alarm");
+    if (buffer[14] & 0x08) active_protections.push_back("Under Environment Temperature Protection");
+    if (buffer[14] & 0x10) active_alarms.push_back("High Power Temperature Alarm");
+    if (buffer[14] & 0x20) active_protections.push_back("Over Power Temperature Protection");
+    if (buffer[14] & 0x40) active_alarms.push_back("Cell Temperature Low Heating");
 
-    if (buffer[15] & 0x01) active_Alarms.push_back("Charge Current Alarm");
-    if (buffer[15] & 0x02) active_Protections.push_back("Charge Over Current Protection");
-    if (buffer[15] & 0x04) active_Protections.push_back("Charge Second Level Current Protection");
-    if (buffer[15] & 0x08) active_Alarms.push_back("Discharge Current Alarm");
-    if (buffer[15] & 0x10) active_Protections.push_back("Discharge Over Current Protection");
-    if (buffer[15] & 0x20) active_Protections.push_back("Discharge Second Level Over Current Protection");
-    if (buffer[15] & 0x40) active_Protections.push_back("Output Short Circuit Protection");
+    if (buffer[15] & 0x01) active_alarms.push_back("Charge Current Alarm");
+    if (buffer[15] & 0x02) active_protections.push_back("Charge Over Current Protection");
+    if (buffer[15] & 0x04) active_protections.push_back("Charge Second Level Current Protection");
+    if (buffer[15] & 0x08) active_alarms.push_back("Discharge Current Alarm");
+    if (buffer[15] & 0x10) active_protections.push_back("Discharge Over Current Protection");
+    if (buffer[15] & 0x20) active_protections.push_back("Discharge Second Level Over Current Protection");
+    if (buffer[15] & 0x40) active_protections.push_back("Output Short Circuit Protection");
 
-    if (buffer[16] & 0x01) active_Alarms.push_back("Output Short Latch Up");
-    if (buffer[16] & 0x04) active_Alarms.push_back("Second Charge Latch Up");
-    if (buffer[16] & 0x08) active_Alarms.push_back("Second Discharge Latch Up");
+    if (buffer[16] & 0x01) active_alarms.push_back("Output Short Latch Up");
+    if (buffer[16] & 0x04) active_alarms.push_back("Second Charge Latch Up");
+    if (buffer[16] & 0x08) active_alarms.push_back("Second Discharge Latch Up");
 
-    if (buffer[17] & 0x04) active_Alarms.push_back("SOC Alarm");
-    if (buffer[17] & 0x08) active_Protections.push_back("SOC Protection");
-    if (buffer[17] & 0x10) active_Alarms.push_back("Cell Difference Alarm");
+    if (buffer[17] & 0x04) active_alarms.push_back("SOC Alarm");
+    if (buffer[17] & 0x08) active_protections.push_back("SOC Protection");
+    if (buffer[17] & 0x10) active_alarms.push_back("Cell Difference Alarm");
 
     if (buffer[18] & 0x01) fet_status.push_back("Discharge FET On");
     if (buffer[18] & 0x02) fet_status.push_back("Charge FET On");
     if (buffer[18] & 0x04) fet_status.push_back("Current Limiting FET On");
     if (buffer[18] & 0x08) fet_status.push_back("Heating On");
 
-    if (buffer[19] & 0x01) active_Alarms.push_back("Low SOC Alarm");
-    if (buffer[19] & 0x02) active_Alarms.push_back("Intermittent Charge");
-    if (buffer[19] & 0x04) active_Alarms.push_back("External Switch Conrol");
-    if (buffer[19] & 0x08) active_Alarms.push_back("Static Standy Sleep Mode");
-    if (buffer[19] & 0x10) active_Alarms.push_back("History Data Recording");
-    if (buffer[19] & 0x20) active_Protections.push_back("Under SOC Protections");
-    if (buffer[19] & 0x40) active_Alarms.push_back("Active Limited Current");
-    if (buffer[19] & 0x80) active_Alarms.push_back("Passive Limited Current");
+    if (buffer[19] & 0x01) active_alarms.push_back("Low SOC Alarm");
+    if (buffer[19] & 0x02) active_alarms.push_back("Intermittent Charge");
+    if (buffer[19] & 0x04) active_alarms.push_back("External Switch Conrol");
+    if (buffer[19] & 0x08) active_alarms.push_back("Static Standy Sleep Mode");
+    if (buffer[19] & 0x10) active_alarms.push_back("History Data Recording");
+    if (buffer[19] & 0x20) active_protections.push_back("Under SOC Protections");
+    if (buffer[19] & 0x40) active_alarms.push_back("Active Limited Current");
+    if (buffer[19] & 0x80) active_alarms.push_back("Passive Limited Current");
 
-    if (buffer[20] & 0x01) active_Protections.push_back("NTC Fault");
-    if (buffer[20] & 0x02) active_Protections.push_back("AFE Fault");
-    if (buffer[20] & 0x04) active_Protections.push_back("Charge Mosfet Fault");
-    if (buffer[20] & 0x08) active_Protections.push_back("Discharge Mosfet Fault");
-    if (buffer[20] & 0x10) active_Protections.push_back("Cell Fault");
-    if (buffer[20] & 0x20) active_Protections.push_back("Break Line Fault");
-    if (buffer[20] & 0x40) active_Protections.push_back("Key Fault");
-    if (buffer[20] & 0x80) active_Protections.push_back("Aerosol Alarm");
+    if (buffer[20] & 0x01) active_protections.push_back("NTC Fault");
+    if (buffer[20] & 0x02) active_protections.push_back("AFE Fault");
+    if (buffer[20] & 0x04) active_protections.push_back("Charge Mosfet Fault");
+    if (buffer[20] & 0x08) active_protections.push_back("Discharge Mosfet Fault");
+    if (buffer[20] & 0x10) active_protections.push_back("Cell Fault");
+    if (buffer[20] & 0x20) active_protections.push_back("Break Line Fault");
+    if (buffer[20] & 0x40) active_protections.push_back("Key Fault");
+    if (buffer[20] & 0x80) active_protections.push_back("Aerosol Alarm");
 
     auto format_list = [](const std::vector<int>& list, const std::string& label) {
       return list.empty() ? "" : label + ": " + esphome::str_join(list, ", ");
