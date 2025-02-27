@@ -351,6 +351,7 @@ void SeplosParser::process_packet(size_t length) {
     if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join_list(fet_status, ", "));
     if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(join_list(active_alarms, ", "));
     if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(join_list(active_protections, ", "));
+  }
 }
 
 const uint16_t crc_table[256] = {
