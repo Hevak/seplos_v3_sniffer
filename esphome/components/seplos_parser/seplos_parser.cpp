@@ -3,6 +3,7 @@
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/helpers.h"
 #include <unordered_map>
+#include <sstream>
 
 namespace esphome {
 namespace seplos_parser {
@@ -137,6 +138,27 @@ bool SeplosParser::validate_crc(size_t length) {
   uint16_t calculated_crc = calculate_modbus_crc(buffer, length - 2);
   return received_crc == calculated_crc;
 }
+
+std::string join_list(const std::vector<int>& list, const std::string& delimiter = ", ") {
+  if (list.empty()) return "";
+  std::ostringstream oss;
+  for (size_t i = 0; i < list.size(); i++) {
+    if (i > 0) oss << delimiter;
+    oss << list[i];
+  }
+  return oss.str();
+}
+
+std::string join_list(const std::vector<std::string>& list, const std::string& delimiter = ", ") {
+  if (list.empty()) return "";
+  std::ostringstream oss;
+  for (size_t i = 0; i < list.size(); i++) {
+    if (i > 0) oss << delimiter;
+    oss << list[i];
+  }
+  return oss.str();
+}
+
 void SeplosParser::process_packet(size_t length) {
   int bms_index = buffer[0] - 0x01;
   if (bms_index < 0 || bms_index >= bms_count_) {
@@ -314,26 +336,21 @@ void SeplosParser::process_packet(size_t length) {
     if (buffer[20] & 0x40) active_protections.push_back("Key Fault");
     if (buffer[20] & 0x80) active_protections.push_back("Aerosol Alarm");
 
-    auto format_list = [](const std::vector<int>& list, const std::string& label) -> std::string {
-      return list.empty() ? "" : label + ": " + esphome::join(list, ", ");
-    };
+    std::string volt_str = join_list(low_voltage_cells, ", ");
+    if (!volt_str.empty() && !high_voltage_cells.empty()) volt_str += " | " + join_list(high_voltage_cells, ", ");
+    else volt_str += join_list(high_voltage_cells, ", ");
 
-    std::string volt_str = format_list(low_voltage_cells, "Low");
-    if (!volt_str.empty() && !high_voltage_cells.empty()) volt_str += " | " + format_list(high_voltage_cells, "High");
-    else volt_str += format_list(high_voltage_cells, "High");
-
-    std::string temp_str = format_list(low_temp_cells, "Low");
-    if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | " + format_list(high_temp_cells, "High");
-    else temp_str += format_list(high_temp_cells, "High");
+    std::string temp_str = join_list(low_temp_cells, ", ");
+    if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | " + join_list(high_temp_cells, ", ");
+    else temp_str += join_list(high_temp_cells, ", ");
 
     if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
     if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
-    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(balancing_cells.empty() ? "" : esphome::join(balancing_cells, ", "));
-    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(esphome::join(system_status, ", "));
-    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(esphome::join(fet_status, ", "));
-    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(active_alarms.empty() ? "" : esphome::join(active_alarms, ", "));
-    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(active_protections.empty() ? "" : esphome::join(active_protections, ", "));
-  }
+    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(join_list(balancing_cells, ", "));
+    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(join_list(system_status, ", "));
+    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join_list(fet_status, ", "));
+    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(join_list(active_alarms, ", "));
+    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(join_list(active_protections, ", "));
 }
 
 const uint16_t crc_table[256] = {
