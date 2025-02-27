@@ -425,7 +425,7 @@ void SeplosParser::set_update_interval(int update_interval) {
   this->update_interval_ = update_interval*1000;
   ESP_LOGI("SeplosParser", "update interval: %d", update_interval);
 }
-bool should_update() {
+bool should_update(int bms_index) {
   if (bms_index < 0 || bms_index >= bms_count_) {
     return false; // Ungültiger Index
   }
