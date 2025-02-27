@@ -7,6 +7,7 @@
 namespace esphome {
 namespace seplos_parser {
 
+using esphome::helpers::join;
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
