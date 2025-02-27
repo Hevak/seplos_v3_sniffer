@@ -43,6 +43,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
 #endif
 
   void set_bms_count(int bms_count);
+  void set_update_interval(int update_interval);
   void setup() override;
   void loop() override;
   void dump_config() override;
@@ -54,7 +55,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
 
 private:
   int bms_count_;  // Variable zur Speicherung von bms_count
-  uint32_t update_interval_;
+  int update_interval_;
   uint32_t last_update_ = 0;
   //std::vector<uint8_t> buffer;
   std::deque<uint8_t> buffer;
