@@ -415,8 +415,8 @@ void SeplosParser::set_bms_count(int bms_count) {
   this->bms_count_ = bms_count;  // Wert speichern
   ESP_LOGI("SeplosParser", "BMS Count gesetzt auf: %d", bms_count);
 }
-void SeplosParser::set_bms_count(int update_interval) {
-  this->update_interval_ = update_interval;
+void SeplosParser::set_update_interval(int update_interval) {
+  this->update_interval_ = update_interval*1000;
   ESP_LOGI("SeplosParser", "update interval: %d", update_interval);
 }
 
