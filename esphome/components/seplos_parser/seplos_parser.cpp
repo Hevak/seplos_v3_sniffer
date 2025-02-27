@@ -11,6 +11,10 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
+   // Initialisiere die Timer für jedes BMS-Gerät
+   for (int i = 0; i < bms_count_; i++) {
+     last_updates_[i] = millis();
+    }
    // Initialisierung der Sensorvektoren
    std::vector<std::vector<sensor::Sensor *> *> sensor_vectors = {
        &pack_voltage_, &current_, &remaining_capacity_, &total_capacity_,
@@ -344,13 +348,15 @@ void SeplosParser::process_packet(size_t length) {
     if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | " + join_list(high_temp_cells, ", ");
     else temp_str += join_list(high_temp_cells, ", ");
 
-    if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
-    if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
-    if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(join_list(balancing_cells, ", "));
-    if (system_status_[bms_index]) system_status_[bms_index]->publish_state(join_list(system_status, ", "));
-    if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join_list(fet_status, ", "));
-    if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(join_list(active_alarms, ", "));
-    if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(join_list(active_protections, ", "));
+    if (should_update(bms_index)) {
+      if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
+      if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
+      if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(join_list(balancing_cells, ", "));
+      if (system_status_[bms_index]) system_status_[bms_index]->publish_state(join_list(system_status, ", "));
+      if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join_list(fet_status, ", "));
+      if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(join_list(active_alarms, ", "));
+      if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(join_list(active_protections, ", "));
+    }
   }
 }
 
@@ -418,6 +424,18 @@ void SeplosParser::set_bms_count(int bms_count) {
 void SeplosParser::set_update_interval(int update_interval) {
   this->update_interval_ = update_interval*1000;
   ESP_LOGI("SeplosParser", "update interval: %d", update_interval);
+}
+bool should_update() {
+  if (bms_index < 0 || bms_index >= bms_count_) {
+    return false; // Ungültiger Index
+  }
+
+  uint32_t now = millis();
+  if (now - last_updates_[bms_index] >= update_interval_) {
+    last_updates_[bms_index] = now; // Setze den Timer für dieses BMS-Gerät zurück
+    return true;
+  }
+  return false;
 }
 
 }  // namespace seplos_parser
