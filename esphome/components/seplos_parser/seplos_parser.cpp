@@ -403,17 +403,19 @@ void SeplosParser::dump_config(){
         LOG_SENSOR("  ", "Sensor", sensor);
     }
     
-//    for(auto *text_sensor : this->text_sensors_){
-//        LOG_TEXT_SENSOR("  ", "Text sensor", text_sensor);
-//    }
-//
+    for(auto *text_sensor : this->text_sensors_){
+        LOG_TEXT_SENSOR("  ", "Text sensor", text_sensor);
+    }
+
 //    for(auto *binary_sensor : this->binary_sensors_){
 //        LOG_BINARY_SENSOR("  ", "Binary sensor", binary_sensor);
 //    }
 }
-void SeplosParser::set_bms_count(int bms_count) {
+void SeplosParser::set_bms_count(int bms_count, uint32_t update_interval) {
   this->bms_count_ = bms_count;  // Wert speichern
+  this->update_interval_ = update_interval;
   ESP_LOGI("SeplosParser", "BMS Count gesetzt auf: %d", bms_count);
+  ESP_LOGI("SeplosParser", "update interval: %d", update_interval);
 }
 
 }  // namespace seplos_parser
