@@ -54,7 +54,7 @@ class SeplosParser : public uart::UARTDevice, public Component {
   void process_packet(size_t length);
   uint16_t calculate_modbus_crc(const std::deque<uint8_t> &data, size_t length);
 
-private:
+public:
   int bms_count_;  // Variable zur Speicherung von bms_count
   uint32_t update_interval_;
   std::array<uint32_t, 16> last_updates_; // Timer für jedes BMS-Gerät
