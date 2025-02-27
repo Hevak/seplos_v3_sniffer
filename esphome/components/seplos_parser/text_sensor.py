@@ -13,7 +13,7 @@ CONFIG_SCHEMA = (
 
 
 async def to_code(config):
-    paren = await cg.get_variable(confif[CONF_SEPLOS_PARSER_ID])
+    paren = await cg.get_variable(config[CONF_SEPLOS_PARSER_ID])
     var = await text_sensor.new_text_sensor(config)
 
     cg.add(paren.register_text_sensor(var))
