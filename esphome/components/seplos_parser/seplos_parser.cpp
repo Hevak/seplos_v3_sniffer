@@ -2,12 +2,13 @@
 #include "esphome/core/log.h"
 #include "esphome/components/uart/uart.h"
 #include "esphome/core/helpers.h"
+#include "esphome/core/strings.h"
 #include <unordered_map>
 
 namespace esphome {
 namespace seplos_parser {
 
-using esphome::helpers::join;
+using esphome::string::join;
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
