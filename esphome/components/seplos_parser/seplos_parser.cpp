@@ -344,7 +344,7 @@ void SeplosParser::process_packet(size_t length) {
     if (!temp_str.empty() && !high_temp_cells.empty()) temp_str += " | " + join_list(high_temp_cells, ", ");
     else temp_str += join_list(high_temp_cells, ", ");
 
-    if (should_update(bms_index)) {
+    //if (should_update(bms_index)) {
       if (cell_voltage_alarms_[bms_index]) cell_voltage_alarms_[bms_index]->publish_state(volt_str);
       if (cell_temperature_alarms_[bms_index]) cell_temperature_alarms_[bms_index]->publish_state(temp_str);
       if (active_balancing_cells_[bms_index]) active_balancing_cells_[bms_index]->publish_state(join_list(balancing_cells, ", "));
@@ -352,7 +352,7 @@ void SeplosParser::process_packet(size_t length) {
       if (FET_status_[bms_index]) FET_status_[bms_index]->publish_state(join_list(fet_status, ", "));
       if (active_alarms_[bms_index]) active_alarms_[bms_index]->publish_state(join_list(active_alarms, ", "));
       if (active_protections_[bms_index]) active_protections_[bms_index]->publish_state(join_list(active_protections, ", "));
-    }
+    //}
   }
 }
 
@@ -403,7 +403,7 @@ uint16_t SeplosParser::calculate_modbus_crc(const std::deque<uint8_t> &data, siz
 void SeplosParser::dump_config(){
     for (int i = 0; i < bms_count_; i++) {
      last_updates_[i] = millis();
-     ESP_LOGD("SeplosParser", "Initialisiere Timer für BMS %d: %u", i, last_updates_[i]);
+     //ESP_LOGD("SeplosParser", "Initialisiere Timer für BMS %d: %u", i, last_updates_[i]);
     }
     for (auto *sensor : this->sensors_) {
         LOG_SENSOR("  ", "Sensor", sensor);
