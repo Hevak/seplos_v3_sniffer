@@ -231,6 +231,7 @@ void SeplosParser::process_packet(size_t length) {
     }
   }
   if (buffer[2] == 0x12) {
+    ESP_LOGW("seplos", "BMS-ID 0x12: %d", buffer[0]);
     std::vector<std::string> active_alarms;
     std::vector<std::string> active_protections;
     std::vector<int> low_voltage_cells, high_voltage_cells;
