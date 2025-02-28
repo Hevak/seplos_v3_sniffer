@@ -2,35 +2,18 @@
 
 [www.seplos.com](https://www.seplos.com/)
 
-This adapter was developed to read the Seplos V3 BMS in a multipack configuration. In the V3 generation, the first BMS acts as the Modbus master, while all other BMS act as slaves. In this configuration, it is no longer possible to access the BMS via Modbus from a third device, since two master devices cannot exist in an RS-485 Modbus system. The adapter passively detects the communication between the devices, which means that the communication of the individual BMS is not disrupted. It can communicate either via a local interface (e.g. /dec/ttyS0) or via Ser2Net (tcp://ip:2001).
+This package is designed to read the Seplos V3 BMS in a multipack configuration. In the V3 generation, the first BMS acts as a Modbus master while all other BMS act as slaves. In this configuration, it is no longer possible to access the BMS from a third device via Modbus, since two master devices cannot exist in an RS-485 Modbus system. The package passively detects the communication between the devices, which does not disrupt the communication of the individual BMS.
 
-The adapter automatically detects the number of available devices and creates the corresponding data points. The BMS transmits a new data set every 200 ms. The update interval can be adjusted on the adapter's configuration page (default value: 5 seconds).
+In the YAML, all required data must be inserted/modified.
+Every 200 ms, the BMS transmits a new data set. The update interval can be changed (default: 5 seconds).
 
 ![seplos 4x](https://github.com/user-attachments/assets/9d710287-069d-44b6-acda-e96764642a33)
 
-To establish a connection, pins 1/8 (B), 2/7 (A) and 5 (GND) must be connected to the RS485 adapter. Various RS485 adapters can be used, such as RS485 to USB or RS485 to TTL. It is important to check how the system has detected the respective adapter and enter the interface accordingly in "serial adapter" (e.g. /dev/ttyUSB0 or ​​/dev/ttyS0). If Ser2Net is used, the address tcp://ip:2001 should be entered. The Ser2Net server must be configured to provide the data in RAW format. An easy way is to use an ESP8266/ESP32 with ESPHome (see my example below).
+To establish a connection, pins 1/8 (B), 2/7 (A) and 5 (GND) must be connected to the RS485 adapter of the ESP8622/ESP32. Various RS485 to TTL adapters can be used.
 
-In my tests, I found that the 120 ohm terminator in the adapter is not necessary. There is also no terminator in the original Seplos V3 USB adapter. If only one BMS is to be read, it is necessary to connect pin 6 (B) to pin 5 (GND) so that the master can send data independently.
+During my tests, I found that the 120 Ohm terminator in the adapter is not necessary. There is also no terminator in the original Seplos V3 USB adapter. If only one BMS is to be read, it is necessary to connect pin 6 (B) to pin 5 (GND) so that the master can send data independently.
 
 ![pinout](https://github.com/user-attachments/assets/1c8ec271-d20f-4a5d-baf4-87e5a98fc35a)
-
-The Ser2Net connection was tested with ESPHome.
-```
-external_components:
-  - source: github://oxan/esphome-stream-server
-
-uart:
-- id: seplos
-  tx_pin: GPIO17
-  rx_pin: GPIO16
-  baud_rate: 19200
-  rx_buffer_size: 2048
-
-stream_server:
-   uart_id: seplos
-   port: 2001
-   buffer_size: 2048
-```
 
 The following data points are currently read out:
 ```
