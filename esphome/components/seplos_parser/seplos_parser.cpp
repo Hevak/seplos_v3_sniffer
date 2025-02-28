@@ -101,7 +101,7 @@ void SeplosParser::loop() {
     uint8_t byte = read();
     buffer.push_back(byte);
 
-    if (buffer.sitze() > 100) {
+    if (buffer.size() > 100) {
       buffer.pop_front();
     }
    
