@@ -435,7 +435,7 @@ bool SeplosParser::should_update(int bms_index) {
 
   uint32_t now = millis();
   //ESP_LOGD("SeplosParser", "BMS %d: now=%u, last_update=%u, interval=%u", 
-            bms_index, now, last_updates_[bms_index], update_interval_);
+  //          bms_index, now, last_updates_[bms_index], update_interval_);
   if (now - last_updates_[bms_index] >= update_interval_) {
     last_updates_[bms_index] = now; // Setze den Timer für dieses BMS-Gerät zurück
     //ESP_LOGD("SeplosParser", "Update für BMS %d durchgeführt", bms_index);
