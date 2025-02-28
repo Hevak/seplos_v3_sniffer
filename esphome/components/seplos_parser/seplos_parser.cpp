@@ -419,6 +419,7 @@ void SeplosParser::dump_config(){
 }
 void SeplosParser::set_bms_count(int bms_count) {
   this->bms_count_ = bms_count;  // Wert speichern
+  last_updates_.resize(bms_count, 0);  // Dynamische Größe
   ESP_LOGI("SeplosParser", "BMS Count gesetzt auf: %d", bms_count);
 }
 void SeplosParser::set_update_interval(int update_interval) {
