@@ -11,10 +11,6 @@ namespace seplos_parser {
 static const char *TAG = "seplos_parser.component";
 
 void SeplosParser::setup() {
-   // Initialisiere die Timer für jedes BMS-Gerät
-   for (int i = 0; i < bms_count_; i++) {
-     last_updates_[i] = millis();
-    }
    // Initialisierung der Sensorvektoren
    std::vector<std::vector<sensor::Sensor *> *> sensor_vectors = {
        &pack_voltage_, &current_, &remaining_capacity_, &total_capacity_,
@@ -405,6 +401,10 @@ uint16_t SeplosParser::calculate_modbus_crc(const std::deque<uint8_t> &data, siz
 }
 
 void SeplosParser::dump_config(){
+    for (int i = 0; i < bms_count_; i++) {
+     last_updates_[i] = millis();
+     ESP_LOGD("SeplosParser", "Initialisiere Timer für BMS %d: %u", i, last_updates_[i]);
+    }
     for (auto *sensor : this->sensors_) {
         LOG_SENSOR("  ", "Sensor", sensor);
     }
