@@ -1,7 +1,5 @@
 # seplos_v3_sniffer
 
-## seplos-v3-sniffer adapter for ioBroker
-
 [www.seplos.com](https://www.seplos.com/)
 
 This adapter was developed to read the Seplos V3 BMS in a multipack configuration. In the V3 generation, the first BMS acts as the Modbus master, while all other BMS act as slaves. In this configuration, it is no longer possible to access the BMS via Modbus from a third device, since two master devices cannot exist in an RS-485 Modbus system. The adapter passively detects the communication between the devices, which means that the communication of the individual BMS is not disrupted. It can communicate either via a local interface (e.g. /dec/ttyS0) or via Ser2Net (tcp://ip:2001).
@@ -82,41 +80,6 @@ FET_status
 active_alarms
 active_protections
 ```
-
-## Changelog
-<!--
-	Placeholder for the next version (at the beginning of the line):
-	### **WORK IN PROGRESS**
--->
-### 0.1.1 (2025-02-28)
-* (DpunktS) bugfix
-
-### 0.1.0 (2025-02-25)
-* (DpunktS) infos, alarms and protections messages added
-
-### 0.0.8 (2025-02-22)
-* (DpunktS) ioBroker repository checker bugfix
-
-### 0.0.7 (2025-02-19)
-* (DpunktS) ioBroker repository checker Issues #9 fix
-
-### 0.0.6 (2025-02-13)
-* (DpunktS) adapter-dev 1.0.1 > 1.3.0
-
-### 0.0.5 (2025-02-12)
-* (DpunktS) connections status added
-
-### 0.0.4 (2025-02-12)
-* (DpunktS) bugfix
-
-### 0.0.3 (2025-02-12)
-* (DpunktS) bugfix
-
-### 0.0.2 (2025-02-12)
-* (DpunktS) npm release
-
-### 0.0.1 (2025-01-11)
-* (DpunktS) initial release
 
 ## License
 MIT License
