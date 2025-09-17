@@ -31,7 +31,7 @@ void SeplosParser::setup() {
    std::vector<std::vector<text_sensor::TextSensor *> *> text_sensor_vectors = {
        &system_status_, &active_balancing_cells_, &cell_temperature_alarms_,
        &cell_voltage_alarms_, &FET_status_, &active_alarms_, &active_protections_,
-       &factory_names_
+      //  &factory_names_
    };
 
    for (auto *vec : text_sensor_vectors) {
@@ -63,7 +63,7 @@ void SeplosParser::setup() {
        {"cell_temperature_alarms", &cell_temperature_alarms_}, {"cell_voltage_alarms", &cell_voltage_alarms_},
        {"FET_status", &FET_status_}, {"active_alarms", &active_alarms_},
        {"active_protections", &active_protections_},
-       {"factory_names", &factory_names_}
+      //  {"factory_names", &factory_names_}
    };
 
    // Zuordnung der Sensor-Objekte
@@ -213,7 +213,7 @@ void SeplosParser::process_packet(size_t length) {
     updates.emplace_back(cell_5_[bms_index], (buffer[11] << 8 | buffer[12]) / 1000.0f);
     updates.emplace_back(cell_6_[bms_index], (buffer[13] << 8 | buffer[14]) / 1000.0f);
     updates.emplace_back(cell_7_[bms_index], (buffer[15] << 8 | buffer[16]) / 1000.0f);
-    updates.emplace_back(cell_8_[bms_index], (buffer[17] << 8 | buffer[18]) / 1000.0);
+    updates.emplace_back(cell_8_[bms_index], (buffer[17] << 8 | buffer[18]) / 1000.0f);
     updates.emplace_back(cell_9_[bms_index], (buffer[19] << 8 | buffer[20]) / 1000.0f);
     updates.emplace_back(cell_10_[bms_index], (buffer[21] << 8 | buffer[22]) / 1000.0f);
     updates.emplace_back(cell_11_[bms_index], (buffer[23] << 8 | buffer[24]) / 1000.0f);
@@ -246,6 +246,7 @@ void SeplosParser::process_packet(size_t length) {
     std::vector<int> balancing_cells;
     std::vector<std::string> system_status;
     std::vector<std::string> fet_status;
+    // std::vector<std::string> factory_names;
 
     auto parse_bits = [](uint8_t byte, int offset) {
       std::vector<int> result;
