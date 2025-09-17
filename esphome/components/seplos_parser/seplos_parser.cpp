@@ -30,7 +30,8 @@ void SeplosParser::setup() {
 
    std::vector<std::vector<text_sensor::TextSensor *> *> text_sensor_vectors = {
        &system_status_, &active_balancing_cells_, &cell_temperature_alarms_,
-       &cell_voltage_alarms_, &FET_status_, &active_alarms_, &active_protections_
+       &cell_voltage_alarms_, &FET_status_, &active_alarms_, &active_protections_,
+       &factory_names_
    };
 
    for (auto *vec : text_sensor_vectors) {
@@ -61,7 +62,8 @@ void SeplosParser::setup() {
        {"system_status", &system_status_}, {"active_balancing_cells", &active_balancing_cells_},
        {"cell_temperature_alarms", &cell_temperature_alarms_}, {"cell_voltage_alarms", &cell_voltage_alarms_},
        {"FET_status", &FET_status_}, {"active_alarms", &active_alarms_},
-       {"active_protections", &active_protections_}
+       {"active_protections", &active_protections_},
+       {"factory_names", &factory_names_}
    };
 
    // Zuordnung der Sensor-Objekte
