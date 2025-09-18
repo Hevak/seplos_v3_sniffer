@@ -1,0 +1,22 @@
+text_sensor:
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} system_status
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} active_balancing_cells
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} cell_temperature_alarms
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} cell_voltage_alarms
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} FET_status
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} active_alarms
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} active_protections
