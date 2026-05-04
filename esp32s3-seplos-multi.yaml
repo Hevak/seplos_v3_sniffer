@@ -63,21 +63,44 @@ seplos_parser:
   uart_id: uart_0  # SeplosParser verwendet diese UART ID
 
 packages:
-  sensors_bms0: !include 
-    file: "seplos/seplos_mono_sensor.yaml"
-    vars:
-      bms: bms0
-      delta: ${delta}
-  sensors_bms1: !include
-    file: "seplos/seplos_mono_sensor.yaml"
-    vars:
-      bms: bms1
-      delta: ${delta}
-  text_sensors_bms0: !include 
-    file: "seplos/seplos_mono_text_sensor.yaml"
-    vars:
-      bms: bms0
-  text_sensors_bms1: !include
-    file: "seplos/seplos_mono_text_sensor.yaml"
-    vars:
-      bms: bms1
+  remote:
+    url: https://github.com/Hevak/seplos_v3_sniffer
+    files:
+      - path: seplos/seplos_mono_sensor.yaml
+        vars:
+          bms: bms0
+          delta: ${delta}
+      - path: seplos/seplos_mono_text_sensor.yaml
+        vars:
+          bms: bms0
+          delta: ${delta}
+      - path: seplos/seplos_mono_sensor.yaml
+        vars:
+          bms: bms1
+          delta: ${delta}
+      - path: seplos/seplos_mono_text_sensor.yaml
+        vars:
+          bms: bms1
+          delta: ${delta}
+    ref: main
+    refresh: 1min
+
+# packages:
+#   sensors_bms0: !include 
+#     file: "seplos/seplos_mono_sensor.yaml"
+#     vars:
+#       bms: bms0
+#       delta: ${delta}
+#   sensors_bms1: !include
+#     file: "seplos/seplos_mono_sensor.yaml"
+#     vars:
+#       bms: bms1
+#       delta: ${delta}
+#   text_sensors_bms0: !include 
+#     file: "seplos/seplos_mono_text_sensor.yaml"
+#     vars:
+#       bms: bms0
+#   text_sensors_bms1: !include
+#     file: "seplos/seplos_mono_text_sensor.yaml"
+#     vars:
+#       bms: bms1
