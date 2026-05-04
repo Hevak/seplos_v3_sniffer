@@ -76,6 +76,15 @@ sensor:
     accuracy_decimals: 3
     filters:
       - throttle: ${delta}s
+      
+  - platform: seplos_parser
+    seplos_parser_id: seplos_v3
+    name: ${bms} delta_cell_voltage
+    unit_of_measurement: mV
+    accuracy_decimals: 0
+    filters:
+        - throttle: ${delta}s
+        
   - platform: seplos_parser
     seplos_parser_id: seplos_v3
     name: ${bms} min_cell_voltage
